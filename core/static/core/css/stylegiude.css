@@ -1,0 +1,193 @@
+@import url("https://fonts.googleapis.com/css?family=Plus+Jakarta+Sans:700,500,600");
+
+:root {
+    --black: rgba(0,0,0,1);
+    --licorice2: rgba(19,19,19,0.6);
+    --licorice-22: rgba(19,19,19,1);
+    --mirage: rgba(26,32,44,1);
+    --royal-blue: rgba(53,99,233,1);
+    --east-bay: rgba(61,82,120,1);
+    --blue-jeans: rgba(92,175,251,1);
+    --nepal: rgba(144,163,191,1);
+    --polo-blue: rgba(147,166,202,1);
+    --periwinkle: rgba(195,212,233,1);
+    --white: rgba(255,255,255,1);
+
+
+    --font-size-xs: 12px;
+    --font-size-s: 15px;
+    --font-size-m2: 18px;
+    --font-size-l2: 20px;
+    --font-size-xl2: 22px;
+    --font-size-xxl2: 40px;
+
+    --font-family-plus-jakarta_sans: "Plus Jakarta Sans";
+}
+
+.plusjakartasans-medium-white-18px {
+    color: var(--white);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-m2);
+    font-weight: 500;
+    font-style: normal;
+}
+
+.plusjakartasans-semi-bold-licorice-15px {
+    color: var(--licorice-22);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-s);
+    font-weight: 600;
+    font-style: normal;
+}
+
+.plusjakartasans-medium-east-bey-15px {
+    color: var(--east-bay);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-s);
+    font-weight: 500;
+    font-style: normal;
+}
+
+.plusjakartasans-semi-bold-royal-blue-15px {
+    color: var(--royal-blue);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-s);
+    font-weight: 600;
+    font-style: normal;
+}
+
+.plusjakartasans-medium-white-12px {
+    color: var(--white);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    font-style: normal;
+}
+
+.plusjakartasans-medium-black-15px {
+    color: var(--black);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-s);
+    font-weight: 500;
+    font-style: normal;
+}
+
+.plusjakartasans-semi-bold-black-20px {
+    color: var(--black);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-l2);
+    font-weight: 600;
+    font-style: normal;
+}
+
+.plusjakartasans-bold-mirage-15px {
+    color: var(--mirage);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-s);
+    font-weight: 700;
+    font-style: normal;
+}
+
+.plusjakartasans-medium-nepal-12px {
+    color: var(--nepal);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    font-style: normal;
+}
+
+.plusjakartasans-medium-nepal-15px {
+    color: var(--nepal);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-s);
+    font-weight: 500;
+    font-style: normal;
+}
+
+.plusjakartasans-semi-bold-white-15px {
+    color: var(--white);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-s);
+    font-weight: 600;
+    font-style: normal;
+}
+
+.plusjakartasans-medium-east-bay-12px {
+    color: var(--east-bay);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    font-style: normal;
+}
+
+.plusjakartasans-semi-bold-white-12px {
+    color: var(--white);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    font-style: normal;
+}
+
+.plusjakartasans-bold-white-15px {
+    color: var(--white);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-s);
+    font-weight: 700;
+    font-style: normal;
+}
+
+.plusjakartasans-semi-bold-white-22px {
+    color: var(--white);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-xl2);
+    font-weight: 600;
+    font-style: normal;
+}
+
+.plusjakartasans-bold-royal-blue-40px {
+    color: var(--royal-blue);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-xxl2);
+    font-weight: 700;
+    font-style: normal;
+}
+
+.plusjakartasans-semi-bold-polo-blue-15px {
+    color: var(--polo-blue);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-s);
+    font-weight: 600;
+    font-style: normal;
+}
+
+.plusjakartasans-semi-bold-white-20px {
+    color: var(--white);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-l2);
+    font-weight: 600;
+    font-style: normal;
+}
+
+.plusjakartasans-semi-bold-east-bay-12px {
+    color: var(--east-bay);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    font-style: normal;
+}
+
+.plusjakartasans-medium-licorice-12px{
+    color: var(--licorice2);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    font-style: normal;
+}
+
+.plusjakartasans-bold-nepal-12px {
+    color: var(--nepal);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    font-style: normal;
+}

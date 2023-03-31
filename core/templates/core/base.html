@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="{% static 'core/css/index.css' %}" rel="stylesheet" type="text/css">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <div class="main screen">
+        <!--HEADER-->
+        <header class="header">
+            <div class="logo">
+                <h1 class="logo-1 valign-text-middle">MORENT</h1>
+            </div>
+            <div class="menu">
+              <a class="menu-item valign-text-middle plusjakartasans-semi-bold-black-20px" href="#">About</a>
+              <a class="menu-item valign-text-middle plusjakartasans-semi-bold-black-20px" href="#">Community</a>
+              <a class="menu-item valign-text-middle plusjakartasans-semi-bold-black-20px" href="#">Socials</a>
+            </div>
+            <div class="button-login button">
+              <a class="login valign-text-middle plusjakartasans-semi-bold-white-20px" href="#">Login</a>
+            </div>
+        </header>
+        <!--END HEADER-->
+
+        {% block content %}
+        <!--EXTEND CONTENT HERE-->
+        {% endblock %}
+
+        <!--FOOTER-->
+        <footer>
+            <div class="footer-text">
+            <a class="copyright valign-text-middle plusjakartasans-semi-bold-licorice-15px" href="#">
+                ©2022 MORENT. All rights reserved
+            </a>
+            <a class="privacy-policy valign-text-middle plusjakartasans-semi-bold-licorice-15px" href="#">
+                Privacy & Policy
+            </a>
+            <a class="terms-condition valign-text-middle plusjakartasans-semi-bold-licorice-15px" href="#">
+                Terms & Condition
+            </a>
+            </div>
+        </footer>
+        <!--END FOOTER-->
+    </div>
+</body>
+</html>

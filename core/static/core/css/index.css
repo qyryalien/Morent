@@ -1,0 +1,615 @@
+@import "stylegiude.css";
+
+body {
+    width: 100%;
+    margin: 0;
+}
+
+.main {
+    align-items: stretch;
+    background-color: var(--white);
+    display: flex;
+    margin-left:auto;
+    margin-right:auto;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    height: 100%;
+    width: 1280px;
+}
+
+.main .overlap {
+    height: 255px;
+    position: relative;
+}
+
+.main .button {
+    border-radius: 5px;
+    display: flex;
+    position: relative;
+}
+
+.valign-text-middle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+/*HEADER*/
+.header {
+    align-items: center;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 1;
+    padding: 0 3vh;
+    justify-content: space-between;
+    mix-blend-mode: normal;
+    width: calc(100% - 6vh);
+}
+
+.logo {
+    align-items: flex-start;
+    display: flex;
+    min-width: 186px;
+}
+
+.logo-1 {
+    color: var(--royal-blue);
+    font-family: var(--font-family-plus-jakarta_sans);
+    font-size: var(--font-size-xxl2);
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    line-height: 48px;
+    text-align: center;
+    width: 186px;
+}
+
+.menu {
+    align-items: center;
+    display: flex;
+    gap: 50px;
+    position: relative;
+    width: fit-content;
+}
+
+.menu-item {
+    height: 20px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    text-align: center;
+    width: 150px;
+}
+
+.button-login {
+    align-items: center;
+    background-color: var(--royal-blue);
+    height: 30px;
+    padding: 10px 15px;
+    width: 120px;
+}
+
+.login {
+    align-self: stretch;
+    flex: 1;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    text-align: center;
+}
+/*END HEADER*/
+
+/*CONTENT BODY*/
+.content {
+    align-items: flex-start;
+    background-color: #f6f6f9;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+}
+
+.filter-plus-rows {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.switch-page {
+    align-items: center;
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    min-width: 152px;
+}
+
+.switch-page-button-left {
+    align-items: flex-start;
+    background-color: var(--royal-blue);
+    gap: 10px;
+    padding: 14px 7px;
+    width: fit-content;
+    rotate: 180deg;
+    justify-content: center;
+}
+
+.switch-page-button-right {
+    align-items: flex-start;
+    background-color: var(--royal-blue);
+    gap: 10px;
+    padding: 14px 7px;
+    width: fit-content;
+    justify-content: center;
+}
+
+.switch-page-button-arrow {
+    width: 70%;
+}
+
+/*ADS*/
+.ads {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    gap: 50px;
+    height: 330px;
+    width: 100%;
+}
+
+.ads-1 {
+    align-items: flex-end;
+    background-color: var(--blue-jeans);
+    border-radius: 15px;
+    display: flex;
+    height: 280px;
+    overflow: hidden;
+    width: 593px;
+}
+
+.overlap-group {
+    margin-left: 25px;
+    width: 568px;
+}
+
+.bg {
+    height: 132px;
+    left: 153px;
+    position: absolute;
+    top: 123px;
+    width: 415px;
+}
+
+.ads-2 {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 320px;
+}
+
+.button-rent {
+    align-items: center;
+    background-color: var(--royal-blue);
+    gap: 10px;
+    justify-content: center;
+    padding: 7px 20px;
+    width: fit-content;
+}
+
+.rent {
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -0.79px;
+    position: relative;
+    text-align: center;
+    width: fit-content;
+}
+
+.main .title-2 {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.title {
+    height: 102px;
+    margin-right: -24px;
+    width: 344px;
+}
+
+.the-best-platform-for-car-rental {
+    height: 25px;
+    letter-spacing: -0.22px;
+    line-height: 26.4px;
+    margin-top: 5px;
+    position: relative;
+    width: 200px;
+}
+
+.ease-of-doing-a-car {
+    height: 43px;
+    letter-spacing: 0.36px;
+    line-height: 28.8px;
+    margin-bottom: -9.61px;
+    position: relative;
+    width: 344px;
+}
+
+.ads-2-1 {
+    align-items: flex-end;
+    background-color: var(--royal-blue);
+    border-radius: 15px;
+    display: flex;
+    height: 280px;
+    overflow: hidden;
+    padding: 0 5px;
+    width: 592px;
+}
+
+.overlap-group1 {
+    margin-left: 20px;
+    width: 562px;
+}
+
+.bg-1 {
+    height: 174px;
+    left: 201px;
+    position: absolute;
+    top: 81px;
+    width: 361px;
+}
+
+.ads-3 {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    height: 201px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 320px;
+    gap: 35px;
+}
+
+
+
+.button-rent-1 {
+    align-items: center;
+    background-color: var(--blue-jeans);
+    gap: 10px;
+    justify-content: center;
+    padding: 7px 20px;
+    width: fit-content;
+}
+
+.rent {
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -0.79px;
+    position: relative;
+    text-align: center;
+    width: fit-content;
+}
+
+.main .title-2 {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.title-1 {
+    width: 320px;
+}
+
+.ease-way-to-rent-a-car-at-a-low-price {
+    height: 25px;
+    letter-spacing: -0.22px;
+    line-height: 26.4px;
+    margin-top: 5px;
+    position: relative;
+    width: 240px;
+}
+
+.providing-cheap-car {
+    height: 43px;
+    letter-spacing: 0.36px;
+    line-height: 28.8px;
+    position: relative;
+    width: 344px;
+}
+/*END ADS*/
+
+/*FILTER*/
+.filter {
+    align-items: flex-end;
+    background-color: var(--white);
+    border-radius: 15px 15px 15px 15px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    overflow: hidden;
+    padding: 20px 20px 20px 20px;
+    width: 200px;
+}
+
+.category {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    margin-right: 0;
+    min-height: 275px;
+    width: 186px;
+}
+
+.category-title {
+    height: 23px;
+    letter-spacing: 0.3px;
+    line-height: 22.5px;
+    white-space: nowrap;
+}
+
+.category-name {
+    align-items: flex-start;
+    display: flex;
+    margin-top: 5px;
+    min-width: 127px;
+}
+
+.category-name-text-box {
+    justify-content: flex-end;
+}
+
+.category-name-text {
+    height: 26px;
+    letter-spacing: -0.24px;
+    line-height: 18px;
+    margin-top: -1px;
+    text-align: justify;
+    width: 127px;
+}
+
+.main .category-name-2 {
+    align-items: flex-start;
+    display: flex;
+    min-width: 127px;
+}
+/*END FILTER*/
+/*CARDS*/
+.flex-col {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    min-height: 655px;
+    width: 1010px;
+}
+
+.cards {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    border-radius: 20px 20px 20px 20px;
+}
+
+.cards ul {
+    margin: 0;
+    padding: 0;
+    padding-inline-start: 0;
+}
+
+.card {
+    align-items: center;
+    background-color: var(--white);
+    border-radius: 4px;
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    overflow: hidden;
+    padding: 10px;
+    position: relative;
+    width: 1010px;
+}
+
+.car-name {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 80px;
+}
+
+.car-main-name {
+    height: 13px;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -0.4px;
+    position: relative;
+    width: 142px;
+}
+
+.car-sub-name {
+    height: 13px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    width: 77px;
+}
+
+.car {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    width: fit-content;
+}
+
+.car-photo {
+    height: 67px;
+    min-width: 206px;
+    position: relative;
+}
+
+.specification {
+    align-items: center;
+    display: flex;
+    gap: 11px;
+    padding: 0 10px;
+    position: relative;
+    width: fit-content;
+}
+
+.main .gasoline {
+    align-items: flex-start;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    position: relative;
+    width: fit-content;
+}
+
+.gasoline-text {
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -0.4px;
+}
+
+.engine-type {
+    align-items: flex-start;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    position: relative;
+    width: fit-content;
+}
+
+.main .engine-text {
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -0.4px;
+    position: relative;
+    width: fit-content;
+}
+
+.capacity {
+    align-items: flex-start;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding: 3px 0;
+    position: relative;
+    width: fit-content;
+}
+
+.capacity-text {
+    margin-top: -0.4px;
+    position: relative;
+    width: fit-content;
+}
+
+.price {
+    align-items: flex-start;
+    display: flex;
+    gap: 10px;
+}
+
+.main .price-8 {
+    position: relative;
+    width: fit-content;
+}
+
+.price-text-box {
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -0.4px;
+    position: relative;
+    width: fit-content;
+}
+
+.button-about {
+    align-items: flex-start;
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--royal-blue);
+    gap: 10px;
+    padding: 10px 15px;
+    width: fit-content;
+}
+
+.button-about-text {
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+    width: fit-content;
+}
+
+.button-rental {
+    align-items: flex-start;
+    background-color: var(--royal-blue);
+    gap: 10px;
+    padding: 10px 7px;
+    width: fit-content;
+}
+
+.button-rental-text {
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -0.79px;
+    position: relative;
+    text-align: center;
+    width: fit-content;
+}
+/*END CARDS*/
+/*END CONTENT BODY*/
+
+/*FOOTER*/
+.footer-text {
+    align-items: center;
+    background-color: var(--white);
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 1;
+    gap: 100px;
+    height: 90px;
+    justify-content: center;
+    width: 100%;
+}
+
+.copyright {
+    height: 30px;
+    letter-spacing: -0.15px;
+    line-height: 30px;
+    position: relative;
+}
+
+.privacy-policy {
+    height: 30px;
+    letter-spacing: -0.15px;
+    line-height: 30px;
+    position: relative;
+}
+
+.terms-condition {
+    height: 30px;
+    letter-spacing: -0.15px;
+    line-height: 30px;
+    position: relative;
+}
+/*END FOOTER*/
+
+a {
+    text-decoration: none;
+}
+
+
