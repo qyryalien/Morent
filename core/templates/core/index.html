@@ -1,3 +1,6 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
 {% load static %}
     <!--CONTENT-->
     <div class="content">
@@ -53,461 +56,115 @@
                     <div class="category-title valign-text-middle plusjakartasans-semi-bold-polo-blue-15px">
                         T Y P E
                     </div>
-                    <ul>
-                        <li>
-                            <div class="category-name">
-                                <div class="category-name-text-box category-name-2">
-                                    <div class="category-name-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
-                                        <span>
-                                            <a class="plusjakartasans-semi-bold-east-bay-12px" href="#">
-                                                Sport
-                                            </a>
-                                            <a class="plusjakartasans-medium-nepal-12px" href="#">
-                                                &nbsp;&nbsp;(10)
-                                            </a>
-                                        </span>
-                                    </div>
+                    {% for c in cats %}
+                        <div class="category-name">
+                            <div class="category-name-text-box category-name-2">
+                                <div class="category-name-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
+                                    <span>
+                                        <a class="plusjakartasans-semi-bold-east-bay-12px" href="{{ c.get_absolute_url }}">
+                                            {{ c.name }}
+                                        </a>
+                                    </span>
                                 </div>
                             </div>
-                        </li>
-                    </ul>
-                </div>
-                <!--END Category 1-->
-                <!--Category 2-->
-                <div class="category">
+                        </div>
+                    {% endfor %}
+                    <div class="category-title valign-text-middle plusjakartasans-semi-bold-polo-blue-15px">
+                        S T E E R I N G
+                    </div>
+                    {% for s in steer %}
+                        <div class="category-name">
+                            <div class="category-name-text-box category-name-2">
+                                <div class="category-name-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
+                                    <span>
+                                        <a class="plusjakartasans-semi-bold-east-bay-12px" href="{{ s.get_absolute_url }}">
+                                            {{ s.name }}
+                                        </a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
                     <div class="category-title valign-text-middle plusjakartasans-semi-bold-polo-blue-15px">
                         C A P A C I T Y
                     </div>
-                    <ul>
-                        <li>
-                            <div class="category-name">
-                                <div class="category-name-text-box category-name-2">
-                                    <div class="category-name-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
-                                        <span>
-                                            <span class="plusjakartasans-semi-bold-east-bay-12px">
-                                                Capacity
-                                            </span>
-                                            <span class="plusjakartasans-medium-nepal-12px">
-                                                &nbsp;&nbsp;(10)
-                                            </span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="category-name">
-                                <div class="category-name-text-box category-name-2">
-                                    <div class="category-name-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
-                                        <span>
-                                            <span class="plusjakartasans-semi-bold-east-bay-12px">
-                                                Capacity 2
-                                            </span>
-                                            <span class="plusjakartasans-medium-nepal-12px">
-                                                &nbsp;&nbsp;(10)
-                                            </span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="category-name">
-                                <div class="category-name-text-box category-name-2">
-                                    <div class="category-name-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
-                                        <span>
-                                            <span class="plusjakartasans-semi-bold-east-bay-12px">
-                                                Capacity 3
-                                            </span>
-                                            <span class="plusjakartasans-medium-nepal-12px">
-                                                &nbsp;&nbsp;(10)
-                                            </span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="category-name">
-                                <div class="category-name-text-box category-name-2">
-                                    <div class="category-name-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
-                                        <span>
-                                            <span class="plusjakartasans-semi-bold-east-bay-12px">
-                                                Capacity 4
-                                            </span>
-                                            <span class="plusjakartasans-medium-nepal-12px">
-                                                &nbsp;&nbsp;(10)
-                                            </span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="category-name">
-                                <div class="category-name-text-box category-name-2">
-                                    <div class="category-name-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
-                                        <span>
-                                            <span class="plusjakartasans-semi-bold-east-bay-12px">
-                                                Capacity 5
-                                            </span>
-                                            <span class="plusjakartasans-medium-nepal-12px">
-                                                &nbsp;&nbsp;(10)
-                                            </span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="category-name">
-                                <div class="category-name-text-box category-name-2">
-                                    <div class="category-name-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
-                                        <span>
-                                            <span class="plusjakartasans-semi-bold-east-bay-12px">
-                                                Capacity 6
-                                            </span>
-                                            <span class="plusjakartasans-medium-nepal-12px">
-                                                &nbsp;&nbsp;(10)
-                                            </span>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
                 </div>
-                <!--END Category 2-->
+                {% for cap in capas %}
+                    <div class="category-name">
+                        <div class="category-name-text-box category-name-2">
+                            <div class="category-name-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
+                                <span>
+                                    <a class="plusjakartasans-semi-bold-east-bay-12px" href="{{ cap.get_absolute_url }}">
+                                        {{ cap.name }}
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                <!--END Category 1-->
             </div>
         </div>
         <!--Cards-->
         <div class="flex-col">
                     <div class="cards">
                         <ul>
-                            <li>
+                            {% for c in cars %}
+                                <li>
                                 <div class="card">
-                            <div class="car-name">
-                                <div class="car-main-name valign-text-middle plusjakartasans-bold-mirage-15px">
-                                    Koenigsegg
-                                </div>
-                                <div class="car-sub-name valign-text-middle plusjakartasans-bold-nepal-12px">
-                                    Sport
-                                </div>
-                            </div>
-                            <div class="car">
-                                <img class="car-photo" src="{% static 'core/images/car.png' %}" alt="Car"/>
-                            </div>
-                            <div class="specification">
-                                <div class="gasoline">
-                                    <div class="gasoline-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        90L
+                                    <div class="car-name">
+                                        <div class="car-main-name valign-text-middle plusjakartasans-bold-mirage-15px">
+                                            {{ c.title }}
+                                        </div>
+                                        <div class="car-sub-name valign-text-middle plusjakartasans-bold-nepal-12px">
+                                            {{ c.cat }}
+                                        </div>
+                                    </div>
+                                    <div class="car">
+                                        <img class="car-photo" src="{{ c.main_photo.url }}" alt="Car"/>
+                                    </div>
+                                    <div class="specification">
+                                        <div class="gasoline">
+                                            <div class="gasoline-text valign-text-middle plusjakartasans-medium-nepal-12px">
+                                                {{ c.gasoline }}L
+                                            </div>
+                                        </div>
+                                        <div class="engine-type">
+                                            <div class="engine-text valign-text-middle plusjakartasans-medium-nepal-12px">
+                                                {{ c.engine }}
+                                            </div>
+                                        </div>
+                                        <div class="capacity">
+                                            <div class="capacity-text valign-text-middle plusjakartasans-medium-nepal-12px">
+                                                {{ c.capacity }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="price price-8">
+                                        <div class="price-text-box valign-text-middle plusjakartasans-semi-bold-white-12px">
+                                            <span>
+                                                <span class="plusjakartasans-bold-mirage-15px">
+                                                    ${{ c.price }}/
+                                                </span>
+                                                <span class="plusjakartasans-bold-nepal-12px">
+                                                    day
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="button-about button">
+                                        <a class="button-about-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px" href="#">
+                                            About
+                                        </a>
+                                    </div>
+                                    <div class="button-rental button">
+                                        <a class="button-rental-text valign-text-middle plusjakartasans-semi-bold-white-15px" href="#">
+                                            Rent now
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="engine-type">
-                                    <div class="engine-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        Manual
-                                    </div>
-                                </div>
-                                <div class="capacity">
-                                    <div class="capacity-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        2 People
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="price price-8">
-                                <div class="price-text-box valign-text-middle plusjakartasans-semi-bold-white-12px">
-                                    <span>
-                                        <span class="plusjakartasans-bold-mirage-15px">
-                                            $99.00
-                                        </span>
-                                        <span class="plusjakartasans-bold-nepal-12px">
-                                            day
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="button-about button">
-                                <a class="button-about-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px" href="#">
-                                    About
-                                </a>
-                            </div>
-                            <div class="button-rental button">
-                                <a class="button-rental-text valign-text-middle plusjakartasans-semi-bold-white-15px" href="#">
-                                    Rent now
-                                </a>
-                            </div>
-                        </div>
                             </li>
-                            <li>
-                                <div class="card">
-                            <div class="car-name">
-                                <div class="car-main-name valign-text-middle plusjakartasans-bold-mirage-15px">
-                                    Koenigsegg
-                                </div>
-                                <div class="car-sub-name valign-text-middle plusjakartasans-bold-nepal-12px">
-                                    Sport
-                                </div>
-                            </div>
-                            <div class="car">
-                                <img class="car-photo" src="{% static 'core/images/car.png' %}" alt="Car"/>
-                            </div>
-                            <div class="specification">
-                                <div class="gasoline">
-                                    <div class="gasoline-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        90L
-                                    </div>
-                                </div>
-                                <div class="engine-type">
-                                    <div class="engine-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        Manual
-                                    </div>
-                                </div>
-                                <div class="capacity">
-                                    <div class="capacity-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        2 People
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="price price-8">
-                                <div class="price-text-box valign-text-middle plusjakartasans-semi-bold-white-12px">
-                                    <span>
-                                        <span class="plusjakartasans-bold-mirage-15px">
-                                            $99.00
-                                        </span>
-                                        <span class="plusjakartasans-bold-nepal-12px">
-                                            day
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="button-about button">
-                                <div class="button-about-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
-                                    About
-                                </div>
-                            </div>
-                            <div class="button-rental button">
-                                <div class="button-rental-text valign-text-middle plusjakartasans-semi-bold-white-15px">
-                                    Rent now
-                                </div>
-                            </div>
-                        </div>
-                            </li>
-                            <li>
-                                <div class="card">
-                            <div class="car-name">
-                                <div class="car-main-name valign-text-middle plusjakartasans-bold-mirage-15px">
-                                    Koenigsegg
-                                </div>
-                                <div class="car-sub-name valign-text-middle plusjakartasans-bold-nepal-12px">
-                                    Sport
-                                </div>
-                            </div>
-                            <div class="car">
-                                <img class="car-photo" src="{% static 'core/images/car.png' %}" alt="Car"/>
-                            </div>
-                            <div class="specification">
-                                <div class="gasoline">
-                                    <div class="gasoline-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        90L
-                                    </div>
-                                </div>
-                                <div class="engine-type">
-                                    <div class="engine-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        Manual
-                                    </div>
-                                </div>
-                                <div class="capacity">
-                                    <div class="capacity-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        2 People
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="price price-8">
-                                <div class="price-text-box valign-text-middle plusjakartasans-semi-bold-white-12px">
-                                    <span>
-                                        <span class="plusjakartasans-bold-mirage-15px">
-                                            $99.00
-                                        </span>
-                                        <span class="plusjakartasans-bold-nepal-12px">
-                                            day
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="button-about button">
-                                <div class="button-about-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
-                                    About
-                                </div>
-                            </div>
-                            <div class="button-rental button">
-                                <div class="button-rental-text valign-text-middle plusjakartasans-semi-bold-white-15px">
-                                    Rent now
-                                </div>
-                            </div>
-                        </div>
-                            </li>
-                            <li>
-                                <div class="card">
-                            <div class="car-name">
-                                <div class="car-main-name valign-text-middle plusjakartasans-bold-mirage-15px">
-                                    Koenigsegg
-                                </div>
-                                <div class="car-sub-name valign-text-middle plusjakartasans-bold-nepal-12px">
-                                    Sport
-                                </div>
-                            </div>
-                            <div class="car">
-                                <img class="car-photo" src="{% static 'core/images/car.png' %}" alt="Car"/>
-                            </div>
-                            <div class="specification">
-                                <div class="gasoline">
-                                    <div class="gasoline-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        90L
-                                    </div>
-                                </div>
-                                <div class="engine-type">
-                                    <div class="engine-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        Manual
-                                    </div>
-                                </div>
-                                <div class="capacity">
-                                    <div class="capacity-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        2 People
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="price price-8">
-                                <div class="price-text-box valign-text-middle plusjakartasans-semi-bold-white-12px">
-                                    <span>
-                                        <span class="plusjakartasans-bold-mirage-15px">
-                                            $99.00
-                                        </span>
-                                        <span class="plusjakartasans-bold-nepal-12px">
-                                            day
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="button-about button">
-                                <div class="button-about-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
-                                    About
-                                </div>
-                            </div>
-                            <div class="button-rental button">
-                                <div class="button-rental-text valign-text-middle plusjakartasans-semi-bold-white-15px">
-                                    Rent now
-                                </div>
-                            </div>
-                        </div>
-                            </li>
-                            <li>
-                                <div class="card">
-                            <div class="car-name">
-                                <div class="car-main-name valign-text-middle plusjakartasans-bold-mirage-15px">
-                                    Koenigsegg
-                                </div>
-                                <div class="car-sub-name valign-text-middle plusjakartasans-bold-nepal-12px">
-                                    Sport
-                                </div>
-                            </div>
-                            <div class="car">
-                                <img class="car-photo" src="{% static 'core/images/car.png' %}" alt="Car"/>
-                            </div>
-                            <div class="specification">
-                                <div class="gasoline">
-                                    <div class="gasoline-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        90L
-                                    </div>
-                                </div>
-                                <div class="engine-type">
-                                    <div class="engine-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        Manual
-                                    </div>
-                                </div>
-                                <div class="capacity">
-                                    <div class="capacity-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        2 People
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="price price-8">
-                                <div class="price-text-box valign-text-middle plusjakartasans-semi-bold-white-12px">
-                                    <span>
-                                        <span class="plusjakartasans-bold-mirage-15px">
-                                            $99.00
-                                        </span>
-                                        <span class="plusjakartasans-bold-nepal-12px">
-                                            day
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="button-about button">
-                                <div class="button-about-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
-                                    About
-                                </div>
-                            </div>
-                            <div class="button-rental button">
-                                <div class="button-rental-text valign-text-middle plusjakartasans-semi-bold-white-15px">
-                                    Rent now
-                                </div>
-                            </div>
-                        </div>
-                            </li>
-                            <li>
-                                <div class="card">
-                            <div class="car-name">
-                                <div class="car-main-name valign-text-middle plusjakartasans-bold-mirage-15px">
-                                    Koenigsegg
-                                </div>
-                                <div class="car-sub-name valign-text-middle plusjakartasans-bold-nepal-12px">
-                                    Sport
-                                </div>
-                            </div>
-                            <div class="car">
-                                <img class="car-photo" src="{% static 'core/images/car.png' %}" alt="Car"/>
-                            </div>
-                            <div class="specification">
-                                <div class="gasoline">
-                                    <div class="gasoline-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        90L
-                                    </div>
-                                </div>
-                                <div class="engine-type">
-                                    <div class="engine-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        Manual
-                                    </div>
-                                </div>
-                                <div class="capacity">
-                                    <div class="capacity-text valign-text-middle plusjakartasans-medium-nepal-12px">
-                                        2 People
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="price price-8">
-                                <div class="price-text-box valign-text-middle plusjakartasans-semi-bold-white-12px">
-                                    <span>
-                                        <span class="plusjakartasans-bold-mirage-15px">
-                                            $99.00
-                                        </span>
-                                        <span class="plusjakartasans-bold-nepal-12px">
-                                            day
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="button-about button">
-                                <div class="button-about-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
-                                    About
-                                </div>
-                            </div>
-                            <div class="button-rental button">
-                                <div class="button-rental-text valign-text-middle plusjakartasans-semi-bold-white-15px">
-                                    Rent now
-                                </div>
-                            </div>
-                        </div>
-                            </li>
+                            {% endfor %}
                         </ul>
                     </div>
                     <!--END Cards-->
@@ -528,21 +185,4 @@
         </div>
     </div>
     <!--END CONTENT-->
-    <!--FOOTER-->
-    <footer>
-        <div class="footer-text">
-        <a class="copyright valign-text-middle plusjakartasans-semi-bold-licorice-15px" href="#">
-            ©2022 MORENT. All rights reserved
-        </a>
-        <a class="privacy-policy valign-text-middle plusjakartasans-semi-bold-licorice-15px" href="#">
-            Privacy & Policy
-        </a>
-        <a class="terms-condition valign-text-middle plusjakartasans-semi-bold-licorice-15px" href="#">
-            Terms & Condition
-        </a>
-        </div>
-    </footer>
-    <!--END FOOTER-->
-</div>
-</body>
-</html>
+{% endblock %}
