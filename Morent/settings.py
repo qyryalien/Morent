@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-q763ns-3#x6yqekmg2qsvqrg1ma4ge)9tphbz+61^kbg7t-#t=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -78,8 +78,7 @@ WSGI_APPLICATION = 'Morent.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'NAME': BASE_DIR / 'db.sqlite3',}
 }
 
 
