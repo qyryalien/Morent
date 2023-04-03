@@ -12,7 +12,7 @@ class Car(models.Model):
     is_published = models.BooleanField(default=True, verbose_name="Публикация")
     gasoline = models.IntegerField(verbose_name="Обьем топливного бака")
     rent_count = models.IntegerField( verbose_name="Количество аренд")
-    price = models.ImageField(verbose_name="Цена")
+    price = models.CharField(max_length=50, verbose_name="Цена")
 
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name="Категория")
     engine = models.ForeignKey('Steering', on_delete=models.PROTECT, verbose_name="Двигатель")
@@ -33,7 +33,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('category', kwargs={'category_slug': self.slug})
+        return reverse('category', kwargs={'cat_slug': self.slug})
 
 
 class Steering(models.Model):
