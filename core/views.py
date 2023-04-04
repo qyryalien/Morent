@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DetailView
 
 from .forms import RegisterUserForm, LoginUserForm
 from .utils import *
@@ -71,6 +71,18 @@ class CarCapacity(DataMixin, ListView):
         c = Capacity.objects.get(slug=self.kwargs['capacity_slug'])
         c_def = self.get_user_context(title="Вместимость - " + str(c.name),
                                       cat_selected=c.pk)
+        return context | c_def
+
+
+class ShowCar(DataMixin, DetailView):
+    model = Car
+    template_name = 'core/auto.html'
+    slug_url_kwarg = 'car_slug'
+    context_object_name = 'car'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        c_def = self.get_user_context(title=context['car'])
         return context | c_def
 
 
