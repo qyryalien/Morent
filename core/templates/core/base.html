@@ -20,9 +20,15 @@
               <a class="menu-item valign-text-middle plusjakartasans-semi-bold-black-20px" href="#">Community</a>
               <a class="menu-item valign-text-middle plusjakartasans-semi-bold-black-20px" href="#">Socials</a>
             </div>
-            <div class="button-login button">
-              <a class="login valign-text-middle plusjakartasans-semi-bold-white-20px" href="{% url 'login' %}">Login</a>
-            </div>
+            {% if request.user.is_authenticated %}
+                <div class="button-login button">
+                  <a class="login valign-text-middle plusjakartasans-semi-bold-white-20px" href="{% url 'logout' %}">Logout</a>
+                </div>
+            {% else %}
+                <div class="button-login button">
+                  <a class="login valign-text-middle plusjakartasans-semi-bold-white-20px" href="{% url 'login' %}">Login</a>
+                </div>
+            {% endif %}
         </header>
         <!--END HEADER-->
 
