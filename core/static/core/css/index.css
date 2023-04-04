@@ -563,7 +563,7 @@ body {
     align-items: flex-start;
     background-color: var(--royal-blue);
     gap: 10px;
-    padding: 10px 7px;
+    padding: 10px 15px;
     width: fit-content;
 }
 
@@ -640,4 +640,195 @@ a {
     font-size: 16px;
 }
 /*END FORM*/
+
+/*DETAIL INFO*/
+.detail {
+    align-items: center;
+    background-color: var(--white);
+    border-radius: 20px;
+    display: flex;
+    width: 800px;
+    height: 380px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    justify-content: space-evenly;
+}
+
+.detail-col {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 49px;
+    min-height: 325px;
+    width: 475px;
+}
+
+.detail-title {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    position: relative;
+    width: fit-content;
+}
+
+.detail-title-text {
+    height: 20px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    width: 170px;
+}
+
+.review {
+    display: flex;
+    gap: 5px;
+    height: 20px;
+    position: relative;
+    width: 200px;
+}
+
+.star {
+    align-items: flex-start;
+    display: flex;
+    position: relative;
+    height: 20px;
+}
+
+.star-image {
+    height: 16px;
+}
+
+.review-text {
+    letter-spacing: 0.3px;
+    line-height: normal;
+    position: relative;
+    width: 118px;
+    height: 20px;
+}
+
+.detail-info-block {
+    align-items: flex-end;
+    flex-direction: column;
+    gap: 43px;
+    height: 232px;
+    justify-content: flex-end;
+    display: flex;
+    position: relative;
+    width: fit-content;
+}
+
+.detail-info {
+    align-items: center;
+    gap: 85px;
+    display: flex;
+    position: relative;
+    width: fit-content;
+}
+
+.detail-info-text {
+    position: relative;
+    width: 250px;
+    line-height: 30px;
+    letter-spacing: -0.3px;
+}
+
+.detail-info-specification {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+}
+
+.specification-item {
+    display: flex;
+    gap: 15px;
+}
+
+.specification-item-title {
+    letter-spacing: -0.15px;
+    line-height: normal;
+    margin-top: -0.62px;
+    position: relative;
+}
+
+.specification-item-text {
+    letter-spacing: -0.3px;
+    line-height: normal;
+    margin-top: -0.62px;
+    position: relative;
+    width: fit-content;
+    white-space: nowrap;
+}
+
+.button-for-info-page {
+    align-items: flex-start;
+    display: flex;
+    gap: 20px;
+    position: relative;
+    width: fit-content;
+}
+
+.button-back-to-main {
+    align-items: flex-start;
+    background-color: var(--white);
+    border: 1px solid;
+    border-color: var(--royal-blue);
+    gap: 10px;
+    padding: 10px 15px;
+    width: fit-content;
+}
+
+.button-back-to-main-text {
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+    width: fit-content;
+}
+
+.detail-photo {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 12.35px;
+    margin-top: 0;
+    position: relative;
+    width: fit-content;
+}
+
+.main-photo-box {
+    background-color: var(--royal-blue);
+    border-radius: 5px;
+    height: 100px;
+    min-width: 250px;
+    position: relative;
+}
+
+.main-photo {
+    height: 60px;
+    left: 25px;
+    position: absolute;
+    top: 20px;
+    width: 200px;
+}
+
+.other-car-photo {
+    height: 100px;
+    min-width: 250px;
+    object-fit: cover;
+    position: relative;
+}
+
+.detail-content {
+    align-items: center;
+    background-color: #f6f6f9;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+}
+/*END DETAIL INFO*/
 
