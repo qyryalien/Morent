@@ -7,7 +7,7 @@ from .models import *
 class CarAdmin(admin.ModelAdmin):
     list_display = ('id', 'title', 'price', 'get_html_photo', 'is_published')
     fields = ('title', 'slug', 'gasoline', 'rent_count', 'cat', 'engine', 'capacity', 'price', 'main_photo',
-              'get_html_photo', 'is_published')
+              'inside_photo_one', 'inside_photo_two', 'get_html_photo', 'is_published')
     search_fields = ('title',)
     list_editable = ('is_published',)
     prepopulated_fields = {"slug": ("title",)}
