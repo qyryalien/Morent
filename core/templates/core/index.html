@@ -88,8 +88,7 @@
                     <div class="category-title valign-text-middle plusjakartasans-semi-bold-polo-blue-15px">
                         C A P A C I T Y
                     </div>
-                </div>
-                {% for cap in capas %}
+                    {% for cap in capas %}
                     <div class="category-name">
                         <div class="category-name-text-box category-name-2">
                             <div class="category-name-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px">
@@ -102,6 +101,8 @@
                         </div>
                     </div>
                 {% endfor %}
+                </div>
+
                 <!--END Category 1-->
             </div>
         </div>
@@ -153,7 +154,7 @@
                                         </div>
                                     </div>
                                     <div class="button-about button">
-                                        <a class="button-about-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px" href="#">
+                                        <a class="button-about-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px" href="{{ c.get_absolute_url }}">
                                             About
                                         </a>
                                     </div>
