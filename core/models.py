@@ -1,3 +1,5 @@
+from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
@@ -11,7 +13,7 @@ class Car(models.Model):
     inside_photo_two = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name="Второе фото внутри")
     is_published = models.BooleanField(default=True, verbose_name="Публикация")
     gasoline = models.IntegerField(verbose_name="Обьем топливного бака")
-    rent_count = models.IntegerField( verbose_name="Количество аренд")
+    rent_count = models.IntegerField(verbose_name="Количество аренд")
     price = models.CharField(max_length=50, verbose_name="Цена")
 
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name="Категория")
@@ -56,3 +58,34 @@ class Capacity(models.Model):
 
     def get_absolute_url(self):
         return reverse('capacity', kwargs={'capacity_slug': self.slug})
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.PROTECT, related_name='uploaded_by')
+    names = models.CharField(max_length=40)
+    lastname = models.CharField(max_length=50)
+    email = models.EmailField()
+
+
+class Order(models.Model):
+    username = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="username")
+    name = models.CharField(max_length=50, verbose_name="name")
+    adress = models.CharField(max_length=100, verbose_name="adress")
+    phone_number = models.IntegerField(verbose_name="phone_number")
+    city = models.CharField(max_length=50, verbose_name="city")
+    pick_up_location = models.CharField(max_length=50, verbose_name="pick_up_location")
+    pick_up_date = models.DateField(max_length=50, verbose_name="pick_up_date")
+    pick_up_time = models.TimeField(max_length=50, verbose_name="pick_up_time")
+    car = models.CharField(null=True, blank=True, max_length=50, verbose_name="car")
+    drop_off_location = models.CharField(max_length=50, verbose_name="drop_off_location")
+    drop_off_date = models.DateField(max_length=50, verbose_name="drop_off_date")
+    drop_off_time = models.TimeField(max_length=50, verbose_name="drop_off_time")
+    card_number = models.IntegerField(verbose_name="card_number")
+    expration_date = models.CharField(max_length=50, verbose_name="expration_date")
+    card_holder = models.CharField(max_length=50, verbose_name="card_holder")
+    cvc = models.IntegerField(verbose_name="cvc")
+    confirmation_one = models.BooleanField(verbose_name="confirmation_one")
+    confirmation_two = models.BooleanField(verbose_name="confirmation_two")
+
+    def __str__(self):
+        return self.name
