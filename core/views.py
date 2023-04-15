@@ -1,11 +1,13 @@
 from django.contrib.auth import login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
-from django.http import HttpResponseNotFound
-from django.shortcuts import render, redirect
+from django.http import HttpResponseNotFound, request
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, DetailView
+from django.utils.decorators import method_decorator
+from django.views.generic import ListView, CreateView, DetailView, FormView
 
-from .forms import RegisterUserForm, LoginUserForm
+from .forms import RegisterUserForm, LoginUserForm, PaymentForm
 from .utils import *
 from .models import *
 
@@ -84,6 +86,30 @@ class ShowCar(DataMixin, DetailView):
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title=context['car'])
         return context | c_def
+
+
+class Payment(CreateView):
+    form_class = PaymentForm
+    success_url = reverse_lazy('home')
+    template_name = 'core/payment.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super(Payment, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Payment'
+        context['car'] = self.kwargs['car']
+        c_def = context
+        return context | c_def
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        order = form.save(commit=False)
+        order.username = self.request.user
+        order.save()
+        return redirect('home')
 
 
 class RegisterUser(DataMixin, CreateView):
