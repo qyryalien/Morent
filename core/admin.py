@@ -7,6 +7,7 @@ from .models import *
 
 
 class CarAdmin(admin.ModelAdmin):
+    """Class for displaying the Car model in the admin panel."""
     list_display = ('id', 'title', 'price', 'get_html_photo', 'is_published')
     fields = ('title', 'slug', 'gasoline', 'rent_count', 'cat', 'engine', 'capacity', 'price', 'main_photo',
               'inside_photo_one', 'inside_photo_two', 'get_html_photo', 'is_published')
@@ -17,6 +18,7 @@ class CarAdmin(admin.ModelAdmin):
     save_on_top = True
 
     def get_html_photo(self, object):
+        """Method for displaying photo in the admin panel"""
         if object.main_photo:
             return mark_safe(f"<img src='{object.main_photo.url}'width=50>")
 
@@ -24,6 +26,7 @@ class CarAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
+    """Class for displaying the Category model in the admin panel."""
     list_display = ('id', 'name')
     list_display_links = ('id', 'name')
     search_fields = ('name',)
@@ -31,6 +34,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 class SteeringAdmin(admin.ModelAdmin):
+    """Class for displaying the Steering model in the admin panel."""
     list_display = ('id', 'name')
     list_display_links = ('id', 'name')
     search_fields = ('name',)
@@ -38,6 +42,7 @@ class SteeringAdmin(admin.ModelAdmin):
 
 
 class CapacityAdmin(admin.ModelAdmin):
+    """Class for displaying the Capacity model in the admin panel."""
     list_display = ('id', 'name')
     list_display_links = ('id', 'name')
     search_fields = ('name',)
@@ -45,6 +50,7 @@ class CapacityAdmin(admin.ModelAdmin):
 
 
 class OrderAdmin(admin.ModelAdmin):
+    """Class for displaying the Order model in the admin panel."""
     list_display = ('id', 'username', 'name', 'adress',
                     'phone_number', 'city', 'pick_up_location',
                     'pick_up_date', 'pick_up_time', 'car',

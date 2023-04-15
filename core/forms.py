@@ -8,6 +8,7 @@ from core.models import Order
 
 
 class PaymentForm(forms.ModelForm):
+    """Form for Order model"""
     class Meta:
         model = Order
         fields = ['name', 'adress',
@@ -66,6 +67,7 @@ class PaymentForm(forms.ModelForm):
         }
 
     def clean_phone_number(self):
+        """A method for checking if the phone_number field is entered correctly"""
         phone_number = self.cleaned_data['phone_number']
         print(phone_number)
         a_string = str(phone_number)
@@ -74,6 +76,7 @@ class PaymentForm(forms.ModelForm):
         return phone_number
 
     def clean_card_number(self):
+        """A method for checking if the card_number field is entered correctly"""
         card_number = self.cleaned_data['card_number']
         print(card_number)
         a_string = str(card_number)
@@ -82,6 +85,7 @@ class PaymentForm(forms.ModelForm):
         return card_number
 
     def clean_cvc(self):
+        """A method for checking if the cvc field is entered correctly"""
         cvc = self.cleaned_data['cvc']
         print(cvc)
         a_string = str(cvc)
@@ -91,6 +95,7 @@ class PaymentForm(forms.ModelForm):
 
 
 class RegisterUserForm(UserCreationForm):
+    """User registration form"""
     username = forms.CharField(label='Логин', widget=forms.TextInput(
         attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
                'placeholder': 'Your login'}))
@@ -110,6 +115,7 @@ class RegisterUserForm(UserCreationForm):
 
 
 class LoginUserForm(AuthenticationForm):
+    """User login form"""
     username = forms.CharField(label='Логин', widget=forms.TextInput(
         attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
                'placeholder': 'Your login'}))

@@ -6,6 +6,7 @@ from django.urls import reverse
 
 # Create your models here.
 class Car(models.Model):
+    """Model for cars that we are going to rent out"""
     title = models.CharField(max_length=50, verbose_name="Название машины")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
     main_photo = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name="Фото cо стороны")
@@ -24,10 +25,12 @@ class Car(models.Model):
         return self.title
 
     def get_absolute_url(self):
+        """Method for returning the absolute path by slug"""
         return reverse('car', kwargs={'car_slug': self.slug})
 
 
 class Category(models.Model):
+    """Model defining the category of the car"""
     name = models.CharField(max_length=50, db_index=True, verbose_name="Категория")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
 
@@ -35,10 +38,12 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
+        """Method for returning the absolute path by slug"""
         return reverse('category', kwargs={'cat_slug': self.slug})
 
 
 class Steering(models.Model):
+    """Model defining the steering of the car"""
     name = models.CharField(max_length=50, db_index=True, verbose_name="Двигатель")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
 
@@ -46,10 +51,12 @@ class Steering(models.Model):
         return self.name
 
     def get_absolute_url(self):
+        """Method for returning the absolute path by slug"""
         return reverse('steering', kwargs={'steering_slug': self.slug})
 
 
 class Capacity(models.Model):
+    """Model defining the capacity of the car"""
     name = models.CharField(max_length=50, db_index=True, verbose_name="Вместимость")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
 
@@ -57,10 +64,12 @@ class Capacity(models.Model):
         return self.name
 
     def get_absolute_url(self):
+        """Method for returning the absolute path by slug"""
         return reverse('capacity', kwargs={'capacity_slug': self.slug})
 
 
 class UserProfile(models.Model):
+    """Model for user profile"""
     user = models.OneToOneField(User, on_delete=models.PROTECT, related_name='uploaded_by')
     names = models.CharField(max_length=40)
     lastname = models.CharField(max_length=50)
@@ -68,6 +77,7 @@ class UserProfile(models.Model):
 
 
 class Order(models.Model):
+    """Model for user orders"""
     username = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="username")
     name = models.CharField(max_length=50, verbose_name="name")
     adress = models.CharField(max_length=100, verbose_name="adress")
