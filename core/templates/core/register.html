@@ -1,17 +1,87 @@
 {% extends 'core/base.html' %}
 
 {% block content %}
-<h1>{{title}}</h1>
-
+{% load static %}
 <form method="post">
     {% csrf_token %}
-
-    {% for f in form %}
-        <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
-        <div class="form-error">{{ f.errors }}</div>
-    {% endfor %}
-
-    <button type="submit">Регистрация</button>
+    <div class="content-registration">
+        <div class="registration-content-box">
+            <div class="flex-row-registration">
+                <div class="info-title-box">
+                    <div class="info-title valign-text-middle plusjakartasans-semi-bold-black-20px">
+                        Registration
+                    </div>
+                    <p class="info-help valign-text-middle plusjakartasans-medium-nepal-15px">
+                        Please enter your registration info
+                    </p>
+                </div>
+            </div>
+            <div class="field-box">
+                <div class="field-box-element">
+                    <div class="field-box-element-label valign-text-middle plusjakartasans-bold-mirage-15px">
+                        Login {{ form.username.errors }}
+                    </div>
+                    <div class="field-box-element-text-box">
+                        <div class="overlap-group-field overlap-field">
+                            <div class="element-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                                {{ form.username }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field-box-element">
+                    <div class="field-box-element-label valign-text-middle plusjakartasans-bold-mirage-15px">
+                        Email {{ form.email.errors }}
+                    </div>
+                    <div class="field-box-element-text-box">
+                        <div class="overlap-group-field overlap-field">
+                            <div class="element-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                                {{ form.email }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="field-box">
+                <div class="field-box-element">
+                    <div class="field-box-element-label valign-text-middle plusjakartasans-bold-mirage-15px">
+                        Password {{ form.password1.errors }}
+                    </div>
+                    <div class="field-box-element-text-box">
+                        <div class="overlap-group-field overlap-field">
+                            <div class="element-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                                {{ form.password1 }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field-box-element">
+                    <div class="field-box-element-label valign-text-middle plusjakartasans-bold-mirage-15px">
+                        Confirm password {{ form.password2.errors }}
+                    </div>
+                    <div class="field-box-element-text-box">
+                        <div class="overlap-group-field overlap-field">
+                            <div class="element-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                                {{ form.password2 }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="authorisation-button">
+                <div class="button-for-info-page">
+                    <div class="button-back-to-main button">
+                        <a class="button-back-to-main-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px" href="{% url 'home' %}">
+                            Back to main
+                        </a>
+                    </div>
+                    <div class="button-rental button">
+                        <input class="button-rental-text valign-text-middle plusjakartasans-semi-bold-white-15px" type="submit" value="Register">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
 
 {% endblock %}
