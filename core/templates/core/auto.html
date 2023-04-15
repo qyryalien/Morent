@@ -64,12 +64,12 @@
                 </div>
                 <div class="button-for-info-page">
                     <div class="button-back-to-main button">
-                        <a class="button-back-to-main-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px" href="#">
+                        <a class="button-back-to-main-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px" href="{% url 'home' %}">
                             Back to main
                         </a>
                     </div>
                     <div class="button-rental button">
-                        <a class="button-rental-text valign-text-middle plusjakartasans-semi-bold-white-15px" href="#">
+                        <a class="button-rental-text valign-text-middle plusjakartasans-semi-bold-white-15px" href="/payment/{{ car.title }}">
                             Rent now
                         </a>
                     </div>
