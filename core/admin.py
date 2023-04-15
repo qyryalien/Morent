@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 from .models import *
+
+
 # Register your models here.
 
 
@@ -42,7 +44,18 @@ class CapacityAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ("name",)}
 
 
+class OrderAdmin(admin.ModelAdmin):
+    list_display = ('id', 'username', 'name', 'adress',
+                    'phone_number', 'city', 'pick_up_location',
+                    'pick_up_date', 'pick_up_time', 'car',
+                    'drop_off_location', 'drop_off_date', 'drop_off_time',
+                    'card_number', 'expration_date', 'card_holder',
+                    'cvc', 'confirmation_one', 'confirmation_two')
+    list_display_links = ('id', 'username')
+
+
 admin.site.register(Car, CarAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Steering, SteeringAdmin)
 admin.site.register(Capacity, CapacityAdmin)
+admin.site.register(Order, OrderAdmin)
