@@ -19,6 +19,7 @@ class CarHome(DataMixin, ListView):
     model = Car
     template_name = 'core/index.html'
     context_object_name = 'cars'
+    #test
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """Method that passes the context"""
