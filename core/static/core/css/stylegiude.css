@@ -96,7 +96,7 @@
     font-style: normal;
 }
 
-.plusjakartasans-medium-nepal-15px {
+.plusjakartasans-medium-nepal-15px, .plusjakartasans-medium-nepal-15px::placeholder {
     color: var(--nepal);
     font-family: var(--font-family-plus-jakarta_sans);
     font-size: var(--font-size-s);
