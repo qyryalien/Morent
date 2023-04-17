@@ -54,6 +54,10 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'username', 'name', 'adress',
                     'phone_number', 'city', 'pick_up_location',
                     'pick_up_date', 'pick_up_time', 'car',
+                    'drop_off_location', 'drop_off_date', 'drop_off_time',)
+    fields = ('id', 'username', 'name', 'adress',
+                    'phone_number', 'city', 'pick_up_location',
+                    'pick_up_date', 'pick_up_time', 'car',
                     'drop_off_location', 'drop_off_date', 'drop_off_time',
                     'card_number', 'expration_date', 'card_holder',
                     'cvc', 'confirmation_one', 'confirmation_two')

@@ -4,20 +4,24 @@ from django.contrib.auth.models import User
 from django import forms
 from django.core.exceptions import ValidationError
 
-from core.models import Order
+from core.models import Order, Car
 
 
 class PaymentForm(forms.ModelForm):
     """Form for Order model"""
+
     class Meta:
         model = Order
+        car = forms.ModelChoiceField(
+            queryset=Car.objects.all(),
+            to_field_name='title',
+        )
         fields = ['name', 'adress',
                   'phone_number', 'city', 'pick_up_location',
                   'pick_up_date', 'pick_up_time', 'car',
                   'drop_off_location', 'drop_off_date', 'drop_off_time',
                   'card_number', 'expration_date', 'card_holder',
                   'cvc', 'confirmation_one', 'confirmation_two']
-
         widgets = {
             'name': forms.TextInput(
                 attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
@@ -61,33 +65,28 @@ class PaymentForm(forms.ModelForm):
             'cvc': forms.TextInput(
                 attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
                        'placeholder': 'CVC'}),
-            'car': forms.TextInput(
-                attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
-                       'placeholder': 'Your car'}),
+            'car': forms.Select(
+                    attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
+                           'placeholder': 'Your car'}),
         }
 
     def clean_phone_number(self):
         """A method for checking if the phone_number field is entered correctly"""
         phone_number = self.cleaned_data['phone_number']
-        print(phone_number)
-        a_string = str(phone_number)
-        if len(a_string) != 12:
+        if len(phone_number) != 12:
             raise ValidationError('The length of the phone number must be 12.')
         return phone_number
 
     def clean_card_number(self):
         """A method for checking if the card_number field is entered correctly"""
         card_number = self.cleaned_data['card_number']
-        print(card_number)
-        a_string = str(card_number)
-        if len(a_string) != 12:
+        if len(card_number) != 12:
             raise ValidationError('The length of the card number must be 12.')
         return card_number
 
     def clean_cvc(self):
         """A method for checking if the cvc field is entered correctly"""
         cvc = self.cleaned_data['cvc']
-        print(cvc)
         a_string = str(cvc)
         if len(a_string) != 3:
             raise ValidationError('The length of the cvc must be 3.')
