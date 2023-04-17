@@ -145,9 +145,13 @@
                         <div class="field-box-element-text-box">
                             <div class="overlap-group-field overlap-field">
                                 <div class="element-text valign-text-middle plusjakartasans-medium-nepal-15px">
-                                    <label for="id_car"></label><input type="text" name="car"
+                                    {% if car != 'auto' %}
+                                        <label for="id_car"></label><input type="text" name="car"
                                                class="element-text valign-text-middle plusjakartasans-medium-nepal-15px"
                                                placeholder="Your car" required="" id="id_car" value="{{ car }}">
+                                    {% else %}
+                                        {{ form.car }}
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
