@@ -70,32 +70,36 @@ class Capacity(models.Model):
 
 class UserProfile(models.Model):
     """Model for user profile"""
-    user = models.OneToOneField(User, on_delete=models.PROTECT, related_name='uploaded_by')
-    names = models.CharField(max_length=40)
-    lastname = models.CharField(max_length=50)
+    username = models.OneToOneField(User, on_delete=models.PROTECT, related_name='uploaded_by')
+    first_name = models.CharField(max_length=40)
+    last_name = models.CharField(max_length=50)
     email = models.EmailField()
 
 
 class Order(models.Model):
     """Model for user orders"""
-    username = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="username")
-    name = models.CharField(max_length=50, verbose_name="name")
-    adress = models.CharField(max_length=100, verbose_name="adress")
-    phone_number = models.IntegerField(verbose_name="phone_number")
-    city = models.CharField(max_length=50, verbose_name="city")
-    pick_up_location = models.CharField(max_length=50, verbose_name="pick_up_location")
-    pick_up_date = models.DateField(max_length=50, verbose_name="pick_up_date")
-    pick_up_time = models.TimeField(max_length=50, verbose_name="pick_up_time")
-    car = models.CharField(null=True, blank=True, max_length=50, verbose_name="car")
-    drop_off_location = models.CharField(max_length=50, verbose_name="drop_off_location")
-    drop_off_date = models.DateField(max_length=50, verbose_name="drop_off_date")
-    drop_off_time = models.TimeField(max_length=50, verbose_name="drop_off_time")
-    card_number = models.IntegerField(verbose_name="card_number")
-    expration_date = models.CharField(max_length=50, verbose_name="expration_date")
-    card_holder = models.CharField(max_length=50, verbose_name="card_holder")
-    cvc = models.IntegerField(verbose_name="cvc")
-    confirmation_one = models.BooleanField(verbose_name="confirmation_one")
-    confirmation_two = models.BooleanField(verbose_name="confirmation_two")
+    username = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="User name")
+    name = models.CharField(max_length=50, verbose_name="Name")
+    adress = models.CharField(max_length=100, verbose_name="Adress")
+    phone_number = models.CharField(max_length=15, verbose_name="Phone number")
+    city = models.CharField(max_length=50, verbose_name="City")
+    pick_up_location = models.CharField(max_length=50, verbose_name="Pick-up location")
+    pick_up_date = models.DateField(max_length=50, verbose_name="Pick-up date")
+    pick_up_time = models.TimeField(max_length=50, verbose_name="Pick-up time")
+    car = models.ForeignKey('Car', on_delete=models.PROTECT, verbose_name="Car")
+    drop_off_location = models.CharField(max_length=50, verbose_name="Drop-off location")
+    drop_off_date = models.DateField(max_length=50, verbose_name="Drop-off date")
+    drop_off_time = models.TimeField(max_length=50, verbose_name="Drop-off time")
+    card_number = models.CharField(max_length=15, verbose_name="Card number")
+    expration_date = models.DateField(max_length=50, verbose_name="Expration date")
+    card_holder = models.CharField(max_length=50, verbose_name="Card holder")
+    cvc = models.IntegerField(verbose_name="CVC")
+    confirmation_one = models.BooleanField(verbose_name="Confirmation one")
+    confirmation_two = models.BooleanField(verbose_name="Confirmation two")
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        """Method for returning the absolute path by slug"""
+        return reverse('username', kwargs={'username': self.username})
