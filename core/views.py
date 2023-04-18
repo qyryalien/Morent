@@ -29,7 +29,7 @@ class CarHome(DataMixin, ListView):
 
     def get_queryset(self):
         """Method that selects all published records from the Car model"""
-        return Car.objects.filter(is_published=True).select_related('cat')
+        return Car.objects.filter(is_published=True).select_related('cat', 'engine', 'capacity')
 
 
 class CarCategory(DataMixin, ListView):
@@ -40,7 +40,7 @@ class CarCategory(DataMixin, ListView):
 
     def get_queryset(self):
         """A method that selects all published records from the Car model, where the category is Category"""
-        return Car.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True).select_related('cat')
+        return Car.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True).select_related('cat', 'engine', 'capacity')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """Method that passes the context"""
@@ -59,7 +59,7 @@ class CarSteering(DataMixin, ListView):
 
     def get_queryset(self):
         """A method that selects all published records from the Car model, where the category is Steering"""
-        return Car.objects.filter(engine__slug=self.kwargs['steering_slug'], is_published=True).select_related('cat')
+        return Car.objects.filter(engine__slug=self.kwargs['steering_slug'], is_published=True).select_related('cat', 'engine', 'capacity')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """Method that passes the context"""
@@ -78,7 +78,7 @@ class CarCapacity(DataMixin, ListView):
 
     def get_queryset(self):
         """A method that selects all published records from the Car model, where the category is Capacity"""
-        return Car.objects.filter(capacity__slug=self.kwargs['capacity_slug'], is_published=True).select_related('cat')
+        return Car.objects.filter(capacity__slug=self.kwargs['capacity_slug'], is_published=True).select_related('cat', 'engine', 'capacity')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """Method that passes the context"""
