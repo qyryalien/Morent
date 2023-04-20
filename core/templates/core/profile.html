@@ -1,0 +1,186 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+{% load static %}
+<div class="profile-content">
+    <div class="profile">
+        <div class="profile-col">
+            <div class="profile-title valign-text-middle plusjakartasans-semi-bold-black-20px">
+                Your Profile
+            </div>
+                <div class="profile-info-detail">
+                    <div class="profile-info-detail-item">
+                        <div class="profile-info-detail-item-title valign-text-middle plusjakartasans-bold-mirage-15px">
+                            Username
+                        </div>
+                        <div class="profile-info-detail-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            {{ profile.user.username }}
+                        </div>
+                    </div>
+                    <div class="profile-info-detail-item">
+                        <div class="profile-info-detail-item-title valign-text-middle plusjakartasans-bold-mirage-15px">
+                            Email
+                        </div>
+                        <div class="profile-info-detail-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            {{ profile.user.email }}
+                        </div>
+                    </div>
+                    <div class="profile-info-detail-item">
+                        <div class="profile-info-detail-item-title valign-text-middle plusjakartasans-bold-mirage-15px">
+                            First name
+                        </div>
+                        <div class="profile-info-detail-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            {{ profile.user.first_name }}
+                        </div>
+                    </div>
+                    <div class="profile-info-detail-item">
+                        <div class="profile-info-detail-item-title valign-text-middle plusjakartasans-bold-mirage-15px">
+                            Last name
+                        </div>
+                        <div class="profile-info-detail-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            {{ profile.user.last_name }}
+                        </div>
+                    </div>
+                    <div class="profile-info-detail-item">
+                        <div class="profile-info-detail-item-title valign-text-middle plusjakartasans-bold-mirage-15px">
+                            Date of registration
+                        </div>
+                        <div class="profile-info-detail-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            {{ profile.user.date_joined }}
+                        </div>
+                    </div>
+                </div>
+            <div class="button-profile">
+                <div class="button-for-info-page">
+                    <div class="button-back-to-main button">
+                        <a class="button-back-to-main-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px" href="{% url 'home' %}">
+                            Back to main
+                        </a>
+                    </div>
+                    <div class="button-change button">
+                        <a class="button-change-text valign-text-middle plusjakartasans-semi-bold-white-15px" href="#">
+                            Change info
+                        </a>
+                    </div>
+                    <div class="button-change button">
+                        <a class="button-change-text valign-text-middle plusjakartasans-semi-bold-white-15px" href="#">
+                            Change password
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="order">
+                <div class="order-title valign-text-middle plusjakartasans-semi-bold-black-20px">
+                    Your orders
+                </div>
+                <div class="order-labels">
+                    <div class="order-labels-item valign-text-middle plusjakartasans-bold-mirage-15px">
+                        Car name
+                    </div>
+                    <div class="order-labels-item valign-text-middle plusjakartasans-bold-mirage-15px">
+                        Pick-up city
+                    </div>
+                    <div class="order-labels-item valign-text-middle plusjakartasans-bold-mirage-15px">
+                        Drop-off city
+                    </div>
+                    <div class="order-labels-item valign-text-middle plusjakartasans-bold-mirage-15px">
+                        Status
+                    </div>
+                </div>
+                <div class="order-box">
+                    {% for order in orders %}
+                    <div class="order-box-item">
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            {{ order.car.title }}
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            {{ order.pick_up_location }}
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            {{ order.drop_off_location }}
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Complete
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="order-box-item">
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Nissan GT-T
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Lviv
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Kiev
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Complete
+                        </div>
+                    </div>
+                    <div class="order-box-item">
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Nissan GT-T
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Lviv
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Kiev
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Complete
+                        </div>
+                    </div>
+                    <div class="order-box-item">
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Nissan GT-T
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Lviv
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Kiev
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Complete
+                        </div>
+                    </div>
+                    <div class="order-box-item">
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Nissan GT-T
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Lviv
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Kiev
+                        </div>
+                        <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                            Complete
+                        </div>
+                    </div>
+                </div>
+                <div class="switch-page-profile">
+                    <div class="switch-page">
+
+                            <a class="switch-page-button-left button" href="?page={{ page_obj.previous_page_number }}">
+                                <img class="switch-page-button-arrow" src="{% static 'core/images/img.png' %}" alt="arrow"/>
+                            </a>
+
+                        <div class="page-number-text valign-text-middle plusjakartasans-bold-nepal-12px">
+                            1 of 5
+                        </div>
+
+                            <a class="switch-page-button-right button" href="?page={{ page_obj.next_page_number }}">
+                                <img class="switch-page-button-arrow" src="{% static 'core/images/img.png' %}" alt="arrow"/>
+                            </a>
+
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+{% endblock %}
