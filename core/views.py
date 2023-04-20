@@ -2,12 +2,13 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseNotFound, request
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import ListView, CreateView, DetailView, FormView
+from django.views.generic import ListView, CreateView, DetailView
+from django.contrib import messages
 
-from .forms import RegisterUserForm, LoginUserForm, PaymentForm
+from .forms import RegisterUserForm, LoginUserForm, PaymentForm, ChangeUserDataForm
 from .utils import *
 from .models import *
 
@@ -19,12 +20,14 @@ class CarHome(DataMixin, ListView):
     model = Car
     template_name = 'core/index.html'
     context_object_name = 'cars'
-    #test
+
+    # test
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """Method that passes the context"""
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title="Главная страница")
+        context['profile_name'] = self.request.user.pk
         return context | c_def
 
     def get_queryset(self):
@@ -40,7 +43,8 @@ class CarCategory(DataMixin, ListView):
 
     def get_queryset(self):
         """A method that selects all published records from the Car model, where the category is Category"""
-        return Car.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True).select_related('cat', 'engine', 'capacity')
+        return Car.objects.filter(cat__slug=self.kwargs['cat_slug'], is_published=True).select_related('cat', 'engine',
+                                                                                                       'capacity')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """Method that passes the context"""
@@ -48,6 +52,7 @@ class CarCategory(DataMixin, ListView):
         c = Category.objects.get(slug=self.kwargs['cat_slug'])
         c_def = self.get_user_context(title="Категория - " + str(c.name),
                                       cat_selected=c.pk)
+        context['profile_name'] = self.request.user.pk
         return context | c_def
 
 
@@ -59,7 +64,9 @@ class CarSteering(DataMixin, ListView):
 
     def get_queryset(self):
         """A method that selects all published records from the Car model, where the category is Steering"""
-        return Car.objects.filter(engine__slug=self.kwargs['steering_slug'], is_published=True).select_related('cat', 'engine', 'capacity')
+        return Car.objects.filter(engine__slug=self.kwargs['steering_slug'], is_published=True).select_related('cat',
+                                                                                                               'engine',
+                                                                                                               'capacity')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """Method that passes the context"""
@@ -67,6 +74,7 @@ class CarSteering(DataMixin, ListView):
         c = Steering.objects.get(slug=self.kwargs['steering_slug'])
         c_def = self.get_user_context(title="Двигатель - " + str(c.name),
                                       cat_selected=c.pk)
+        context['profile_name'] = self.request.user.pk
         return context | c_def
 
 
@@ -78,7 +86,9 @@ class CarCapacity(DataMixin, ListView):
 
     def get_queryset(self):
         """A method that selects all published records from the Car model, where the category is Capacity"""
-        return Car.objects.filter(capacity__slug=self.kwargs['capacity_slug'], is_published=True).select_related('cat', 'engine', 'capacity')
+        return Car.objects.filter(capacity__slug=self.kwargs['capacity_slug'], is_published=True).select_related('cat',
+                                                                                                                 'engine',
+                                                                                                                 'capacity')
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """Method that passes the context"""
@@ -86,6 +96,7 @@ class CarCapacity(DataMixin, ListView):
         c = Capacity.objects.get(slug=self.kwargs['capacity_slug'])
         c_def = self.get_user_context(title="Вместимость - " + str(c.name),
                                       cat_selected=c.pk)
+        context['profile_name'] = self.request.user.pk
         return context | c_def
 
 
@@ -100,6 +111,7 @@ class ShowCar(DataMixin, DetailView):
         """Method that passes the context"""
         context = super().get_context_data(**kwargs)
         c_def = self.get_user_context(title=context['car'])
+        context['profile_name'] = self.request.user.pk
         return context | c_def
 
 
@@ -118,7 +130,12 @@ class Payment(CreateView):
         """Method that passes the context"""
         context = super().get_context_data(**kwargs)
         context['title'] = 'Payment'
-        context['car'] = self.kwargs['car']
+        car_name = self.kwargs['car']
+        if self.kwargs['car'] != 'auto':
+            car = Car.objects.get(title=self.kwargs['car'])
+            context['car_id'] = car.id
+        context['car_name'] = car_name
+        context['profile_name'] = self.request.user.pk
         c_def = context
         return context | c_def
 
@@ -175,3 +192,45 @@ def logout_user(request):
 def pageNotFound(request, exception):
     """Viewer 404 page function"""
     return HttpResponseNotFound("Страница не найдена")
+
+
+class Profile(DetailView):
+    model = UserProfile
+    template_name = "core/profile.html"
+    context_object_name = 'profile'
+    paginate_by = 5
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        """Method that passes the context"""
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Profile'
+        context['orders'] = Order.objects.all()
+        context['profile_name'] = self.request.user.pk
+        c_def = context
+        return context | c_def
+
+    def get_queryset(self):
+        return UserProfile.objects.filter(user=self.request.user).prefetch_related('user')
+
+
+class ChangeUserData(CreateView):
+    form_class = ChangeUserDataForm
+    success_url = reverse_lazy("profile")
+    template_name = "core/change_user_data.html"
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        """Method with the decorator, which requires user authorization for further work"""
+        return super(ChangeUserData, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        """Method that passes the context"""
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Edit profile'
+        c_def = context
+        return context | c_def
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(request, f'Your account has been updated!')
+        return redirect('profile')
