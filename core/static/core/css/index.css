@@ -1131,6 +1131,15 @@ input[type=checkbox]:checked:after {
     height: 20px;
     margin: 0;
 }
+
+.element-text-car_id {
+    height: 24px;
+    letter-spacing: 0;
+    line-height: 28px;
+    white-space: nowrap;
+    width: fit-content;
+    display: none;
+}
 /*END PAYMENT INFO*/
 
 /*AUTHENTICATION FORM*/
