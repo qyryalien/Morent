@@ -9,8 +9,26 @@ from core.models import Order, Car
 
 class PaymentForm(forms.ModelForm):
     """Form for Order model"""
+    card_number = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
+               'placeholder': 'Card Number'}))
+    expration_date = forms.DateField(widget=forms.TextInput(
+        attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
+               'placeholder': 'DD/MM/YY'}))
+    card_holder = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
+               'placeholder': 'Card Holder'}))
+    cvc = forms.IntegerField(widget=forms.TextInput(
+        attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
+               'placeholder': 'CVC'}))
+    car_name_text = forms.CharField(widget=forms.TextInput(
+        attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
+               'placeholder': 'Car name'}))
+    confirmation_one = forms.BooleanField()
+    confirmation_two = forms.BooleanField()
 
     class Meta:
+
         model = Order
         car = forms.ModelChoiceField(
             queryset=Car.objects.all(),
@@ -19,9 +37,8 @@ class PaymentForm(forms.ModelForm):
         fields = ['name', 'adress',
                   'phone_number', 'city', 'pick_up_location',
                   'pick_up_date', 'pick_up_time', 'car',
-                  'drop_off_location', 'drop_off_date', 'drop_off_time',
-                  'card_number', 'expration_date', 'card_holder',
-                  'cvc', 'confirmation_one', 'confirmation_two']
+                  'drop_off_location', 'drop_off_date', 'drop_off_time', ]
+
         widgets = {
             'name': forms.TextInput(
                 attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
@@ -53,18 +70,6 @@ class PaymentForm(forms.ModelForm):
             'drop_off_time': forms.TimeInput(
                 attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
                        'placeholder': 'Enter your time'}),
-            'card_number': forms.TextInput(
-                attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
-                       'placeholder': 'Card Number'}),
-            'expration_date': forms.TextInput(
-                attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
-                       'placeholder': 'DD/MM/YY'}),
-            'card_holder': forms.TextInput(
-                attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
-                       'placeholder': 'Card Holder'}),
-            'cvc': forms.TextInput(
-                attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
-                       'placeholder': 'CVC'}),
             'car': forms.Select(
                 attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
                        'placeholder': 'Your car'}),
@@ -220,9 +225,9 @@ class LoginUserForm(AuthenticationForm):
 
 class ChangeUserDataForm(forms.ModelForm):
     """Change user data form"""
-    username = forms.CharField(label='Логин', widget=forms.TextInput(
+    username = forms.CharField(label='Username', widget=forms.EmailInput(
         attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
-               'placeholder': 'Your login'}))
+               'placeholder': 'Your username'}))
     email = forms.EmailField(label='Email', widget=forms.EmailInput(
         attrs={'class': 'element-text valign-text-middle plusjakartasans-medium-nepal-15px',
                'placeholder': 'Your email'}))
@@ -235,5 +240,5 @@ class ChangeUserDataForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name', 'last_name')
+        fields = ('username','email', 'first_name', 'last_name')
 
