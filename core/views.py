@@ -5,6 +5,7 @@ from django.http import HttpResponseNotFound, request
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.generic import ListView, CreateView, DetailView
 from django.contrib import messages
 
@@ -204,7 +205,7 @@ class Profile(DetailView):
         """Method that passes the context"""
         context = super().get_context_data(**kwargs)
         context['title'] = 'Profile'
-        context['orders'] = Order.objects.all()
+        context['orders'] = Order.objects.all().select_related('car')
         context['profile_name'] = self.request.user.pk
         c_def = context
         return context | c_def
@@ -213,7 +214,7 @@ class Profile(DetailView):
         return UserProfile.objects.filter(user=self.request.user).prefetch_related('user')
 
 
-class ChangeUserData(CreateView):
+class ChangeUserData(View):
     form_class = ChangeUserDataForm
     success_url = reverse_lazy("profile")
     template_name = "core/change_user_data.html"
@@ -223,14 +224,17 @@ class ChangeUserData(CreateView):
         """Method with the decorator, which requires user authorization for further work"""
         return super(ChangeUserData, self).dispatch(*args, **kwargs)
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        """Method that passes the context"""
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Edit profile'
-        c_def = context
-        return context | c_def
+    def get(self, *args, **kwargs):
+        form = ChangeUserDataForm(instance=self.request.user)
+        context = {'form': form, 'title': 'Edit profile', 'pk': self.kwargs['pk']}
+        return render(self.request, 'core/change_user_data.html', context)
 
-    def form_valid(self, form):
-        form.save()
-        messages.success(request, f'Your account has been updated!')
-        return redirect('profile')
+    def post(self, *args, **kwargs):
+        form = ChangeUserDataForm(self.request.POST or None, instance=self.request.user)
+        if form.is_valid():
+            form.save()
+            link_pk = self.kwargs['pk']
+            link = f'/profile/{link_pk}/'
+            return redirect(link)
+        context = {'form': form, 'title': 'Edit profile', 'pk': self.kwargs['pk']}
+        return render(self.request, 'core/change_user_data.html', context)
