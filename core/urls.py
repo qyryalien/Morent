@@ -12,5 +12,5 @@ urlpatterns = [
     path('logout/', logout_user, name='logout'),
     path('profile/<slug:pk>/', Profile.as_view(), name='profile'),
     path('payment/<car>/', Payment.as_view(), name='payment'),
-    path('profile/edit', ChangeUserData.as_view(), name='profile_edit'),
+    path('profile/<slug:pk>/edit', ChangeUserData.as_view(), name='profile_edit'),
 ]
