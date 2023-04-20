@@ -70,10 +70,10 @@ class Capacity(models.Model):
 
 class UserProfile(models.Model):
     """Model for user profile"""
-    username = models.OneToOneField(User, on_delete=models.PROTECT, related_name='uploaded_by')
-    first_name = models.CharField(max_length=40)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user')
+
+    def __str__(self):
+        return f'{self.user.username} Profile'
 
 
 class Order(models.Model):
