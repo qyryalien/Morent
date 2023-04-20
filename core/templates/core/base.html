@@ -22,7 +22,7 @@
             </div>
             {% if request.user.is_authenticated %}
                 <div class="button-login button">
-                  <a class="login valign-text-middle plusjakartasans-semi-bold-white-20px" href="{% url 'logout' %}">Logout</a>
+                  <a class="login valign-text-middle plusjakartasans-semi-bold-white-20px" href="/profile/{{ profile_name }}">Profile</a>
                 </div>
             {% else %}
                 <div class="button-login button">
