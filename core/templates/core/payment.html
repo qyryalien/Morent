@@ -138,6 +138,20 @@
                             </div>
                         </div>
                     </div>
+                    {% if car_name == 'auto' %}
+                        <div class="field-box-element">
+                            <div class="field-box-element-label valign-text-middle plusjakartasans-bold-mirage-15px">
+                                Car
+                            </div>
+                            <div class="field-box-element-text-box">
+                                <div class="overlap-group-field overlap-field">
+                                    <div class="element-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                                            {{ form.car }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
                     <div class="field-box-element">
                         <div class="field-box-element-label valign-text-middle plusjakartasans-bold-mirage-15px">
                             Car
@@ -145,17 +159,15 @@
                         <div class="field-box-element-text-box">
                             <div class="overlap-group-field overlap-field">
                                 <div class="element-text valign-text-middle plusjakartasans-medium-nepal-15px">
-                                    {% if car != 'auto' %}
-                                        <label for="id_car"></label><input type="text" name="car"
-                                               class="element-text valign-text-middle plusjakartasans-medium-nepal-15px"
-                                               placeholder="Your car" required="" id="id_car" value="{{ car }}">
-                                    {% else %}
-                                        {{ form.car }}
-                                    {% endif %}
+                                   <label for="id_car"></label>
+                                     <input type="text" name="car"
+                                        class="element-text valign-text-middle plusjakartasans-medium-nepal-15px"
+                                        placeholder="{{ car_name }}" required="" id="id_car" value="{{ car_id }}" readonly>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    {% endif %}
             </div>
             <div class="mark-box">
                 <div class="mark">
@@ -207,12 +219,12 @@
                 </div>
                 <div class="field-box-element">
                     <div class="field-box-element-label valign-text-middle plusjakartasans-bold-mirage-15px">
-                        Time
+                        Status
                     </div>
                     <div class="field-box-element-text-box">
                         <div class="overlap-group-field overlap-field">
                             <div class="element-text valign-text-middle plusjakartasans-medium-nepal-15px">
-                                Enter your time
+                                Your status
                             </div>
                         </div>
                     </div>
