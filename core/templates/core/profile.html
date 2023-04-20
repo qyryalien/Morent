@@ -58,7 +58,7 @@
                         </a>
                     </div>
                     <div class="button-change button">
-                        <a class="button-change-text valign-text-middle plusjakartasans-semi-bold-white-15px" href="#">
+                        <a class="button-change-text valign-text-middle plusjakartasans-semi-bold-white-15px" href="/profile/{{ profile_name }}/edit">
                             Change info
                         </a>
                     </div>
@@ -101,7 +101,7 @@
                             {{ order.drop_off_location }}
                         </div>
                         <div class="order-box-item-text valign-text-middle plusjakartasans-medium-nepal-15px">
-                            Complete
+                            {{ order.status }}
                         </div>
                     </div>
                     {% endfor %}
