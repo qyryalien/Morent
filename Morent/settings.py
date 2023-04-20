@@ -70,7 +70,7 @@ TEMPLATES = [
         },
     },
 ]
-
+APP_DIRS: True
 WSGI_APPLICATION = 'Morent.wsgi.application'
 
 
