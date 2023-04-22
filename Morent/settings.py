@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
-from dotenv import dotenv_values
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'core'
+    'core',
+    'rest_framework',
+    'knox',
 ]
 
 MIDDLEWARE = [
@@ -134,11 +136,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
-secrets = dotenv_values(".env")
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'knox.auth.TokenAuthentication',
+    ]
+}
+
+load_dotenv()
+api_key = os.getenv("KEY_ID")
+api_secret = os.getenv("ACCESS_KEY")
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
-AWS_ACCESS_KEY_ID = secrets["KEY_ID"]
-AWS_SECRET_ACCESS_KEY = secrets["ACCESS_KEY"]
+AWS_ACCESS_KEY_ID = api_key
+AWS_SECRET_ACCESS_KEY = api_secret
 AWS_SES_REGION_NAME = 'eu-central-1'
 AWS_SES_REGION_ENDPOINT ='email.eu-central-1.amazonaws.com'
