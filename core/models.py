@@ -70,14 +70,27 @@ class Capacity(models.Model):
 
 class UserProfile(models.Model):
     """Model for user profile"""
-    username = models.OneToOneField(User, on_delete=models.PROTECT, related_name='uploaded_by')
-    first_name = models.CharField(max_length=40)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField()
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user')
+
+    def __str__(self):
+        return f'{self.user.username} Profile'
 
 
 class Order(models.Model):
     """Model for user orders"""
+    COMPLETE = "Complete"
+    PROGRESS = "In progress"
+    WAIT = "Waiting for you"
+    DECLINE = "Decline"
+    CHECK = "Checking your order"
+    STATUS_CHOICES = [
+        (COMPLETE, "Complete"),
+        (PROGRESS, "In progress"),
+        (WAIT, "Waiting for you"),
+        (DECLINE, "Decline"),
+        (CHECK, "Checking your order")
+    ]
+
     username = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="User name")
     name = models.CharField(max_length=50, verbose_name="Name")
     adress = models.CharField(max_length=100, verbose_name="Adress")
@@ -90,12 +103,7 @@ class Order(models.Model):
     drop_off_location = models.CharField(max_length=50, verbose_name="Drop-off location")
     drop_off_date = models.DateField(max_length=50, verbose_name="Drop-off date")
     drop_off_time = models.TimeField(max_length=50, verbose_name="Drop-off time")
-    card_number = models.CharField(max_length=15, verbose_name="Card number")
-    expration_date = models.DateField(max_length=50, verbose_name="Expration date")
-    card_holder = models.CharField(max_length=50, verbose_name="Card holder")
-    cvc = models.IntegerField(verbose_name="CVC")
-    confirmation_one = models.BooleanField(verbose_name="Confirmation one")
-    confirmation_two = models.BooleanField(verbose_name="Confirmation two")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=CHECK)
 
     def __str__(self):
         return self.name
