@@ -1,0 +1,99 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+{% load static %}
+<form method="post">
+    {% csrf_token %}
+    <div class="content-registration">
+        <div class="registration-content-box">
+            <div class="flex-row-registration">
+                <div class="info-title-box">
+                    <div class="info-title valign-text-middle plusjakartasans-semi-bold-black-20px">
+                        Profile edit
+                    </div>
+                    <p class="info-help valign-text-middle plusjakartasans-medium-nepal-15px">
+                        Please enter your profile info
+                    </p>
+                </div>
+            </div>
+            <div class="field-box">
+                <div class="field-box-element">
+                    <div class="field-box-element-label valign-text-middle plusjakartasans-bold-mirage-15px">
+                        Login {{ form.username.errors }}
+                    </div>
+                    <div class="field-box-element-text-box">
+                        <div class="overlap-group-field overlap-field">
+                            <div class="element-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                                <label for="id_username"></label>
+                                <input type="text" name="username"
+                                    class="element-text valign-text-middle plusjakartasans-medium-nepal-15px"
+                                    placeholder="Last name" required="" id="id_username" value="{{ user.username }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field-box-element">
+                    <div class="field-box-element-label valign-text-middle plusjakartasans-bold-mirage-15px">
+                        Email {{ form.email.errors }}
+                    </div>
+                    <div class="field-box-element-text-box">
+                        <div class="overlap-group-field overlap-field">
+                            <div class="element-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                                <label for="id_email"></label>
+                                <input type="text" name="email"
+                                    class="element-text valign-text-middle plusjakartasans-medium-nepal-15px"
+                                    placeholder="Last name" required="" id="id_email" value="{{ user.email }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="field-box">
+                <div class="field-box-element">
+                    <div class="field-box-element-label valign-text-middle plusjakartasans-bold-mirage-15px">
+                        First name {{ form.first_name.errors }}
+                    </div>
+                    <div class="field-box-element-text-box">
+                        <div class="overlap-group-field overlap-field">
+                            <div class="element-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                                <label for="id_first_name"></label>
+                                <input type="text" name="first_name"
+                                    class="element-text valign-text-middle plusjakartasans-medium-nepal-15px"
+                                    placeholder="Last name" required="" id="id_first_name" value="{{ user.first_name }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field-box-element">
+                    <div class="field-box-element-label valign-text-middle plusjakartasans-bold-mirage-15px">
+                        Last name {{ form.last_name.errors }}
+                    </div>
+                    <div class="field-box-element-text-box">
+                        <div class="overlap-group-field overlap-field">
+                            <div class="element-text valign-text-middle plusjakartasans-medium-nepal-15px">
+                                <label for="id_last_name"></label>
+                                <input type="text" name="last_name"
+                                    class="element-text valign-text-middle plusjakartasans-medium-nepal-15px"
+                                    placeholder="Last name" required="" id="id_last_name" value="{{ user.last_name }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="authorisation-button">
+                <div class="button-for-info-page">
+                    <div class="button-back-to-main button">
+                        <a class="button-back-to-main-text valign-text-middle plusjakartasans-semi-bold-royal-blue-15px" href="{% url 'home' %}">
+                            Back to main
+                        </a>
+                    </div>
+                    <div class="button-rental button">
+                        <input class="button-rental-text valign-text-middle plusjakartasans-semi-bold-white-15px" type="submit" value="Confirm">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
