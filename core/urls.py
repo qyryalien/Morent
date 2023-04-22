@@ -1,4 +1,6 @@
 from django.urls import path
+
+from . import views
 from .views import *
 
 urlpatterns = [
@@ -13,4 +15,5 @@ urlpatterns = [
     path('profile/<slug:pk>/', Profile.as_view(), name='profile'),
     path('payment/<car>/', Payment.as_view(), name='payment'),
     path('profile/<slug:pk>/edit', ChangeUserData.as_view(), name='profile_edit'),
+    path('profile/password_reset', views.password_reset_request, name='password_reset'),
 ]
