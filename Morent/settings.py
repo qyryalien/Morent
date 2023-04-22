@@ -133,3 +133,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+
+EMAIL_BACKEND = 'django_ses.SESBackend'
+AWS_ACCESS_KEY_ID = 'AKIA3537CX6DEWQ6IWFC'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_SES_REGION_NAME = 'eu-central-1'
+AWS_SES_REGION_ENDPOINT ='email.eu-central-1.amazonaws.com'
