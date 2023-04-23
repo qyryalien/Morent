@@ -2,7 +2,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, INTERNAL_RESET_SESSION_TOKEN
 from django.core.mail import send_mail, BadHeaderError
 from django.db.models import Q
 from django.http import HttpResponseNotFound, request, HttpResponse
@@ -11,10 +11,15 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.views import View
 from django.views.generic import ListView, CreateView, DetailView
 from django.contrib import messages
+from rest_framework.decorators import api_view
+from rest_framework.exceptions import ValidationError
+from rest_framework.generics import RetrieveUpdateAPIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 
 from .forms import RegisterUserForm, LoginUserForm, PaymentForm, ChangeUserDataForm
 from .utils import *
@@ -22,14 +27,15 @@ from .models import *
 
 # API
 
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer
+from .serializers import UserSerializer, RegisterSerializer, ChangePasswordSerializer
 from django.contrib.auth import login
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 from knox.auth import TokenAuthentication
+
 
 # Create your views here.
 
@@ -222,7 +228,7 @@ class Profile(DetailView):
         """Method that passes the context"""
         context = super().get_context_data(**kwargs)
         context['title'] = 'Profile'
-        context['orders'] = Order.objects.all().select_related('car')
+        context['orders'] = Order.objects.filter(username_id=self.request.user.pk).select_related('car')
         context['profile_name'] = self.request.user.pk
         c_def = context
         return context | c_def
@@ -304,9 +310,152 @@ class RegisterAPI(generics.GenericAPIView):
 class LoginAPI(KnoxLoginView):
     permission_classes = (permissions.AllowAny,)
     authentication_classes = (TokenAuthentication,)
+
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         login(request, user)
         return super(LoginAPI, self).post(request, format=None)
+
+
+class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
+    serializer_class = UserSerializer
+
+    def get_user(self, pk):
+        obj = User.objects.get(pk=pk)
+        return obj
+
+    def retrieve(self, request, *args, **kwargs):
+        try:
+            serializer = self.serializer_class(self.get_user(pk=kwargs.get("pk")))
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            message = {
+                'detail': 'User getting error'
+            }
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+    def update(self, request, *args, **kwargs):
+        serializer = self.serializer_class(self.get_user(pk=kwargs.get("pk")), data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+        else:
+            return Response(serializer.data, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def SendChangePasswordEmailView(request):
+    data = request.data
+    email = data['email']
+    user_list = User.objects.filter(email=email)
+    if User.objects.filter(email=email).exists():
+        for user in user_list:
+            subject = "Password Reset Requested"
+            email_template_name = "core/password/password_reset_email.txt"
+            c = {
+                "email": user.email,
+                'domain': '127.0.0.1:8000',
+                'site_name': 'Morent',
+                "uid": urlsafe_base64_encode(force_bytes(user.pk)),
+                "user": user,
+                'token': default_token_generator.make_token(user),
+                'protocol': 'http',
+            }
+            email = render_to_string(email_template_name, c)
+            try:
+                send_mail(subject, email, 'qyryalien@gmail.com', [user.email], fail_silently=False)
+            except BadHeaderError:
+                message = {
+                    'detail': 'Some Error Message'}
+                return Response(message, status=status.HTTP_400_BAD_REQUEST)
+            message = {
+                'detail': 'Success Message'}
+            return Response(message, status=status.HTTP_200_OK)
+    else:
+        message = {
+            'detail': 'User with this email is not exist'}
+        return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CheckChangePasswordTokenView(generics.GenericAPIView):
+    reset_url_token = "set-password"
+    token_generator = default_token_generator
+
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        if "uidb64" not in data or "token" not in data:
+            message = {
+                'detail': 'The URL path must contain uidb64 and token parameters.'}
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+        user = self.get_user(data['uidb64'])
+        if user is not None:
+            token = data['token']
+            if token == self.reset_url_token:
+                session_token = self.request.session.get(INTERNAL_RESET_SESSION_TOKEN)
+                if self.token_generator.check_token(user, session_token):
+                    # If the token is valid, display the password reset form.
+                    message = {
+                        'detail': 'Token check success'}
+                    return Response(message, status=status.HTTP_200_OK)
+                else:
+                    message = {
+                        'detail': 'Token check unsuccessful'}
+                    return Response(message, status=status.HTTP_400_BAD_REQUEST)
+            else:
+                if self.token_generator.check_token(user, token):
+                    message = {
+                        'detail': 'Token check success'}
+                    return Response(message, status=status.HTTP_200_OK)
+                else:
+                    message = {
+                        'detail': 'Token check unsuccessful'}
+                    return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+    def get_user(self, uidb64):
+        try:
+            # urlsafe_base64_decode() decodes to bytestring
+            uid = urlsafe_base64_decode(uidb64).decode()
+            user = User.objects.get(pk=uid)
+        except (
+                TypeError,
+                ValueError,
+                OverflowError,
+                User.DoesNotExist,
+                ValidationError,
+        ):
+            user = None
+        return user
+
+
+class ChangePasswordView(generics.UpdateAPIView):
+    """
+    An endpoint for changing password.
+    """
+    serializer_class = ChangePasswordSerializer
+    model = User
+
+    def get_object(self, queryset=None):
+        obj = self.request.user
+        return obj
+
+    def update(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            # Check if password1 equal to password2
+            if serializer.data.get("new_password") is not None:
+                if serializer.data.get("new_password") == serializer.data.get("new_password_again"):
+                    # set_password also hashes the password that the user will get
+                    user.set_password(serializer.data.get("new_password"))
+                    user.save()
+                    message = {
+                        'detail': 'Password updated successfully'}
+                    return Response(message, status=status.HTTP_200_OK)
+            else:
+                message = {
+                    'detail': 'Passwords not equal'}
+                return Response(message, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
