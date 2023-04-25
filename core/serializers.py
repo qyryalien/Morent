@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
-from core.models import Car, Order
+from core.models import *
 
 
 # User Serializer
@@ -51,6 +51,7 @@ class CarListSerializer(serializers.ModelSerializer):
     cat_name = serializers.CharField(source='cat.name')
     engine_name = serializers.CharField(source='engine.name')
     capacity_name = serializers.CharField(source='capacity.name')
+
     class Meta:
         model = Car
         exclude = ('inside_photo_one', 'inside_photo_two')
@@ -60,13 +61,33 @@ class CarSerializer(serializers.ModelSerializer):
     cat_name = serializers.CharField(source='cat.name')
     engine_name = serializers.CharField(source='engine.name')
     capacity_name = serializers.CharField(source='capacity.name')
+
     class Meta:
         model = Car
         fields = "__all__"
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = "__all__"
+
+
+class SteeringSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Steering
+        fields = "__all__"
+
+
+class CapacitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Capacity
+        fields = "__all__"
+
+
 class OrderSerializer(serializers.ModelSerializer):
     car_name = serializers.CharField(source='car.title')
+
     class Meta:
         model = Order
         fields = "__all__"
