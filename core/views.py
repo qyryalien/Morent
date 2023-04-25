@@ -1,36 +1,25 @@
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import INTERNAL_RESET_SESSION_TOKEN
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponseNotFound
-from django.shortcuts import redirect
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 # API IMPORT
-from django.views.generic import CreateView
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, RetrieveAPIView, CreateAPIView
 import django_filters.rest_framework
 from rest_framework.permissions import IsAuthenticated
-
-from .forms import PaymentForm
-from .models import *
-
-# API
-
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, RegisterSerializer, ChangePasswordSerializer, CarListSerializer, CarSerializer, \
-    OrderSerializer
+from .serializers import *
 from django.contrib.auth import login
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 from knox.auth import TokenAuthentication
+
 
 def pageNotFound(request, exception):
     """Viewer 404 page function"""
@@ -219,6 +208,21 @@ class CarFilterListAPIView(ListAPIView):
     queryset = Car.objects.all()
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_fields = ['cat', 'engine', 'capacity']
+
+
+class CategoryListAPIView(ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+
+class SteeringListAPIView(ListAPIView):
+    queryset = Steering.objects.all()
+    serializer_class = SteeringSerializer
+
+
+class CapacityListAPIView(ListAPIView):
+    queryset = Capacity.objects.all()
+    serializer_class = CapacitySerializer
 
 
 class OrderListAPIView(ListAPIView):
