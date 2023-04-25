@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
+from core.models import Car, Order
+
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -13,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'first_name', 'last_name', 'date_joined')
 
     def update(self, instance, validated_data):
-        for(key, value) in validated_data.items():
+        for (key, value) in validated_data.items():
             setattr(instance, key, value)
         instance.save()
         return instance
@@ -43,3 +45,28 @@ class ChangePasswordSerializer(serializers.Serializer):
 
     new_password = serializers.CharField(required=True)
     new_password_confirm = serializers.CharField(required=True)
+
+
+class CarListSerializer(serializers.ModelSerializer):
+    cat_name = serializers.CharField(source='cat.name')
+    engine_name = serializers.CharField(source='engine.name')
+    capacity_name = serializers.CharField(source='capacity.name')
+    class Meta:
+        model = Car
+        exclude = ('inside_photo_one', 'inside_photo_two')
+
+
+class CarSerializer(serializers.ModelSerializer):
+    cat_name = serializers.CharField(source='cat.name')
+    engine_name = serializers.CharField(source='engine.name')
+    capacity_name = serializers.CharField(source='capacity.name')
+    class Meta:
+        model = Car
+        fields = "__all__"
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    car_name = serializers.CharField(source='car.title')
+    class Meta:
+        model = Order
+        fields = "__all__"
