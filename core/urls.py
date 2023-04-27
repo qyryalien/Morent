@@ -1,7 +1,6 @@
 from django.urls import path, include
 from knox import views as knox_views
-from . import views
-from .views import *
+from core.views import *
 
 urlpatterns = [
     # API
