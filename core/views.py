@@ -1,5 +1,7 @@
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import INTERNAL_RESET_SESSION_TOKEN
+from django.core.cache import cache
+import redis
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponseNotFound
 from django.template.loader import render_to_string
@@ -10,15 +12,17 @@ from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, RetrieveAPIView, CreateAPIView
 import django_filters.rest_framework
-from rest_framework.permissions import IsAuthenticated
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import *
+
+from core.serializers import *
 from django.contrib.auth import login
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 from knox.auth import TokenAuthentication
+
+redis_instance = redis.StrictRedis(host='127.0.0.1', port=6379, db=1)
 
 
 def pageNotFound(request, exception):
@@ -194,13 +198,44 @@ class ChangePasswordView(generics.UpdateAPIView):
 
 
 class CarListAPIView(ListAPIView):
-    queryset = Car.objects.filter(is_published=True)
-    serializer_class = CarListSerializer
+    queryset = Car.objects.filter(is_published=True).prefetch_related('cat', 'engine', 'capacity')
+
+    def get(self, request, *args, **kwargs):
+        cache_key = 'cars'
+
+        if cache_key in cache:
+            print("redis")
+            queryset = cache.get(cache_key)
+            return Response(queryset)
+        else:
+            print('db')
+            queryset = Car.objects.filter(is_published=True).prefetch_related('cat', 'engine', 'capacity')
+            serializer_class = CarSerializer(queryset, many=True)
+
+            cache.set(cache_key, serializer_class.data, timeout=300)
+            return Response(serializer_class.data)
 
 
 class CarRetrieveAPIView(RetrieveAPIView):
     queryset = Car.objects.filter(is_published=True)
-    serializer_class = CarSerializer
+
+    def get(self, request, *args, **kwargs):
+        first_name = self.kwargs.get("pk")
+
+        if first_name is not None:
+            cache_key = 'car' + first_name
+        else:
+            cache_key = 'car'
+
+        if cache_key in cache:
+            queryset = cache.get(cache_key)
+            return Response(queryset)
+        else:
+            queryset = Car.objects.filter(is_published=True, pk=kwargs.get("pk")).prefetch_related('cat', 'engine',
+                                                                                                   'capacity')
+            serializer_class = CarSerializer(queryset, many=True)
+            cache.set(cache_key, serializer_class.data, timeout=60)
+            return Response(serializer_class.data)
 
 
 class CarFilterListAPIView(ListAPIView):
@@ -210,19 +245,28 @@ class CarFilterListAPIView(ListAPIView):
     filterset_fields = ['cat', 'engine', 'capacity']
 
 
-class CategoryListAPIView(ListAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+class AllCategoryListAPIView(ListAPIView):
 
+    def get(self, request, *args, **kwargs):
+        cat = Category.objects.all()
+        engine = Steering.objects.all()
+        capacity = Capacity.objects.all()
 
-class SteeringListAPIView(ListAPIView):
-    queryset = Steering.objects.all()
-    serializer_class = SteeringSerializer
-
-
-class CapacityListAPIView(ListAPIView):
-    queryset = Capacity.objects.all()
-    serializer_class = CapacitySerializer
+        try:
+            cat_serializer = CategorySerializer(cat, many=True)
+            engine_serializer = SteeringSerializer(engine, many=True)
+            capacity_serializer = CapacitySerializer(capacity, many=True)
+        except:
+            message = {
+                'detail': "Serialization error"
+            }
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+        message = {
+            'cat': cat_serializer.data,
+            'engine': engine_serializer.data,
+            'capacity': capacity_serializer.data,
+        }
+        return Response(message, status=status.HTTP_200_OK)
 
 
 class OrderListAPIView(ListAPIView):

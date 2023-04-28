@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'knox',
     'django_rest_passwordreset',
     'django_filters',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -53,7 +54,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware'
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
 ]
 
 ROOT_URLCONF = 'Morent.urls'
@@ -83,8 +86,13 @@ WSGI_APPLICATION = 'Morent.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',}
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'Morent',
+        'USER': 'postgres',
+        'PASSWORD': 'qyry1308',
+        'PORT': '5432',
+        'HOST': 'localhost',
+        }
 }
 
 
@@ -143,9 +151,22 @@ REST_FRAMEWORK = {
         'knox.auth.TokenAuthentication',
     ]
 }
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
+CACHE_TTL = 60 * 1
+CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": "redis://127.0.0.1:6379/1",
+            "OPTIONS": {
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            },
+        }
+    }
 
-
-
+CORS_ORIGIN_ALLOW_ALL = True
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
 AWS_ACCESS_KEY_ID = ACCESS_KEY_ID
