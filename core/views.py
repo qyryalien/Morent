@@ -1,12 +1,8 @@
-import time
-
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import INTERNAL_RESET_SESSION_TOKEN
 from django.core.cache import cache
 import redis
-from django.core.cache.backends.base import DEFAULT_TIMEOUT
 from django.core.mail import send_mail, BadHeaderError
-from django.forms import model_to_dict
 from django.http import HttpResponseNotFound
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
@@ -19,7 +15,6 @@ import django_filters.rest_framework
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from knox.models import AuthToken
-from rest_framework.views import APIView
 
 from core.serializers import *
 from django.contrib.auth import login
@@ -250,19 +245,28 @@ class CarFilterListAPIView(ListAPIView):
     filterset_fields = ['cat', 'engine', 'capacity']
 
 
-class CategoryListAPIView(ListAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+class AllCategoryListAPIView(ListAPIView):
 
+    def get(self, request, *args, **kwargs):
+        cat = Category.objects.all()
+        engine = Steering.objects.all()
+        capacity = Capacity.objects.all()
 
-class SteeringListAPIView(ListAPIView):
-    queryset = Steering.objects.all()
-    serializer_class = SteeringSerializer
-
-
-class CapacityListAPIView(ListAPIView):
-    queryset = Capacity.objects.all()
-    serializer_class = CapacitySerializer
+        try:
+            cat_serializer = CategorySerializer(cat, many=True)
+            engine_serializer = SteeringSerializer(engine, many=True)
+            capacity_serializer = CapacitySerializer(capacity, many=True)
+        except:
+            message = {
+                'detail': "Serialization error"
+            }
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+        message = {
+            'cat': cat_serializer.data,
+            'engine': engine_serializer.data,
+            'capacity': capacity_serializer.data,
+        }
+        return Response(message, status=status.HTTP_200_OK)
 
 
 class OrderListAPIView(ListAPIView):
