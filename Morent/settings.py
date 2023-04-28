@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'knox',
     'django_rest_passwordreset',
     'django_filters',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware'
 ]
 
 ROOT_URLCONF = 'Morent.urls'
@@ -163,7 +166,7 @@ CACHES = {
         }
     }
 
-
+CORS_ORIGIN_ALLOW_ALL = True
 
 EMAIL_BACKEND = 'django_ses.SESBackend'
 AWS_ACCESS_KEY_ID = ACCESS_KEY_ID
