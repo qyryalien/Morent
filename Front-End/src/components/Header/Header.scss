@@ -1,0 +1,88 @@
+@import "style";
+
+.header {
+	@include adaptiveValue("padding-top", 25, 10);
+	@include adaptiveValue("padding-bottom", 25, 10);
+
+	&__container {
+		min-height: 70px;
+		display: flex;
+		align-items: center;
+
+		@media(max-width: $mobile) {
+			flex-direction: column;
+			row-gap: 20px;
+			align-items: center;
+			padding-top: 20px;
+		}
+	}
+
+	&__menu {
+		flex: 1 1 auto;
+	}
+}
+
+.logo {
+	color: #3563e9;
+	font-weight: 700;
+	line-height: 120%;
+
+	&__text {
+		@include adaptiveValue("font-size", 40, 20);
+	}
+}
+
+.menu {
+
+	&__items {
+		@include adaptiveValue("margin-left", 115, 10);
+		display: flex;
+		// max-width: 400px;
+
+		@include adaptiveValue("column-gap", 85, 10);
+		flex-wrap: wrap;
+		row-gap: 10px;
+
+		// column-gap: 85px;
+		@media(max-width: $mobile) {
+			margin-left: 0px;
+		}
+	}
+
+	&__item {
+		row-gap: 86px;
+	}
+
+	&__item-link {
+		text-decoration: underline;
+		font-size: 20px;
+		@include adaptiveValue("font-size", 20, 16);
+		font-weight: 600;
+		line-height: 25.2px;
+	}
+}
+
+.btn {
+	background: #3563E9;
+	border-radius: 5px;
+	padding: 10px 40px;
+	text-align: center;
+	color: white;
+}
+
+.login {
+	margin-left: 20px;
+
+	@media(max-width: $mobile) {
+		margin-left: 0px;
+	}
+
+	&__link {
+
+		vertical-align: baseline;
+		font-weight: 600;
+		font-size: 15px;
+		line-height: 150%;
+
+	}
+}
