@@ -86,7 +86,7 @@ class CapacitySerializer(serializers.ModelSerializer):
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    car_name = serializers.CharField(source='car.title')
+    car_name = serializers.CharField(source='car.title', required=False)
 
     class Meta:
         model = Order

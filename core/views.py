@@ -15,6 +15,7 @@ import django_filters.rest_framework
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from knox.models import AuthToken
+from rest_framework.views import APIView
 
 from core.serializers import *
 from django.contrib.auth import login
@@ -32,6 +33,25 @@ def pageNotFound(request, exception):
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
+    """
+    An endpoint for registration.
+
+    request data:
+        username
+        password
+        email
+
+    response data:
+        user:
+            id
+            username
+            email
+            first_name
+            last_name
+            date_join
+        token
+
+    """
     serializer_class = RegisterSerializer
 
     def post(self, request, *args, **kwargs):
@@ -45,6 +65,19 @@ class RegisterAPI(generics.GenericAPIView):
 
 
 class LoginAPI(KnoxLoginView):
+    """
+        An endpoint for loging.
+
+        request data:
+            username
+            password
+            token
+
+        response data:
+            expiry (data-time)
+            token
+
+    """
     permission_classes = (permissions.AllowAny,)
     authentication_classes = (TokenAuthentication,)
 
@@ -57,6 +90,22 @@ class LoginAPI(KnoxLoginView):
 
 
 class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
+    """
+        An endpoint for user profile.
+
+        kwargs:
+            id
+
+        response data:
+            id
+            username
+            email
+            first_name
+            last_name
+            date_joined
+
+    """
+
     serializer_class = UserSerializer
 
     def get_user(self, pk):
@@ -84,13 +133,24 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
 
 @api_view(['POST'])
 def SendChangePasswordEmailView(request):
+    """
+        An endpoint for sending password reset email.
+
+        request data:
+            email
+
+        response data:
+            detail
+
+    """
+
     data = request.data
     email = data['email']
     user_list = User.objects.filter(email=email)
     if User.objects.filter(email=email).exists():
         for user in user_list:
             subject = "Password Reset Requested"
-            email_template_name = "core/password/password_reset_email.txt"
+            email_template_name = "password_reset_email.html"
             c = {
                 "email": user.email,
                 'domain': '127.0.0.1:8000',
@@ -102,7 +162,7 @@ def SendChangePasswordEmailView(request):
             }
             email = render_to_string(email_template_name, c)
             try:
-                send_mail(subject, email, 'qyryalien@gmail.com', [user.email], fail_silently=False)
+                send_mail(subject, email, 'dimon22052000@gmail.com', [user.email], fail_silently=False)
             except BadHeaderError:
                 message = {
                     'detail': 'Some Error Message'}
@@ -117,6 +177,17 @@ def SendChangePasswordEmailView(request):
 
 
 class CheckChangePasswordTokenView(generics.GenericAPIView):
+    """
+        An endpoint for check password reset token.
+
+        kwargs:
+            uidb64
+            token
+
+        response data:
+            pk
+
+    """
     reset_url_token = "set-password"
     token_generator = default_token_generator
     serializer_class = ChangePasswordSerializer
@@ -164,7 +235,18 @@ class CheckChangePasswordTokenView(generics.GenericAPIView):
 
 class ChangePasswordView(generics.UpdateAPIView):
     """
-    An endpoint for changing password.
+        An endpoint for changing password.
+
+        kwargs:
+            pk
+
+        request data:
+            new_password
+            new_password_confirm
+
+        response data:
+            detail
+
     """
     serializer_class = ChangePasswordSerializer
     model = User
@@ -198,25 +280,63 @@ class ChangePasswordView(generics.UpdateAPIView):
 
 
 class CarListAPIView(ListAPIView):
+    """
+        An endpoint for cars list.
+
+        response data:
+            id
+            cat_name
+            engine_name
+            capacity_name
+            title
+            slug
+            main_photo
+            is_published
+            gasoline
+            rent_count
+            price
+            cat
+            engine
+            capacity
+    """
     queryset = Car.objects.filter(is_published=True).prefetch_related('cat', 'engine', 'capacity')
 
     def get(self, request, *args, **kwargs):
         cache_key = 'cars'
 
         if cache_key in cache:
-            print("redis")
             queryset = cache.get(cache_key)
-            return Response(queryset)
+            return Response(queryset, status=status.HTTP_200_OK)
         else:
-            print('db')
             queryset = Car.objects.filter(is_published=True).prefetch_related('cat', 'engine', 'capacity')
-            serializer_class = CarSerializer(queryset, many=True)
+            serializer_class = CarListSerializer(queryset, many=True)
 
             cache.set(cache_key, serializer_class.data, timeout=300)
-            return Response(serializer_class.data)
+            return Response(serializer_class.data, status=status.HTTP_200_OK)
 
 
 class CarRetrieveAPIView(RetrieveAPIView):
+    """
+        An endpoint for one car.
+
+        response data:
+            id
+            cat_name
+            engine_name
+            capacity_name
+            title
+            slug
+            main_photo
+            inside_photo_one
+            inside_photo_two
+            is_published
+            gasoline
+            rent_count
+            price
+            cat
+            engine
+            capacity
+    """
     queryset = Car.objects.filter(is_published=True)
 
     def get(self, request, *args, **kwargs):
@@ -239,43 +359,185 @@ class CarRetrieveAPIView(RetrieveAPIView):
 
 
 class CarFilterListAPIView(ListAPIView):
+    """
+        An endpoint for filtered cars list.
+
+        param:
+            cat (requirement = False)
+            engine (requirement = False)
+            capacity (requirement = False)
+
+        response data:
+            id
+            cat_name
+            engine_name
+            capacity_name
+            title
+            slug
+            main_photo
+            is_published
+            gasoline
+            rent_count
+            price
+            cat
+            engine
+            capacity
+    """
     serializer_class = CarListSerializer
-    queryset = Car.objects.all()
+    queryset = Car.objects.all().select_related('cat', 'engine', 'capacity')
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     filterset_fields = ['cat', 'engine', 'capacity']
 
 
 class AllCategoryListAPIView(ListAPIView):
+    """
+        An endpoint for all category's list.
 
+        response data:
+            cat:
+                id
+                name
+                slug
+            engine:
+                id
+                name
+                slug
+            capacity:
+                id
+                name
+                slug
+    """
     def get(self, request, *args, **kwargs):
-        cat = Category.objects.all()
-        engine = Steering.objects.all()
-        capacity = Capacity.objects.all()
 
-        try:
-            cat_serializer = CategorySerializer(cat, many=True)
-            engine_serializer = SteeringSerializer(engine, many=True)
-            capacity_serializer = CapacitySerializer(capacity, many=True)
-        except:
+        cache_key = 'all_category'
+
+        if cache_key in cache:
+            queryset = cache.get(cache_key)
+            return Response(queryset, status=status.HTTP_200_OK)
+        else:
+            cat = Category.objects.all()
+            engine = Steering.objects.all()
+            capacity = Capacity.objects.all()
+
+            try:
+                cat_serializer = CategorySerializer(cat, many=True)
+                engine_serializer = SteeringSerializer(engine, many=True)
+                capacity_serializer = CapacitySerializer(capacity, many=True)
+            except:
+                message = {
+                    'detail': 'Serialization error'
+                }
+                return Response(message, status=status.HTTP_400_BAD_REQUEST)
             message = {
-                'detail': "Serialization error"
+                'cat': cat_serializer.data,
+                'engine': engine_serializer.data,
+                'capacity': capacity_serializer.data,
             }
-            return Response(message, status=status.HTTP_400_BAD_REQUEST)
-        message = {
-            'cat': cat_serializer.data,
-            'engine': engine_serializer.data,
-            'capacity': capacity_serializer.data,
-        }
-        return Response(message, status=status.HTTP_200_OK)
+            cache.set(cache_key, message, timeout=300)
+            return Response(message, status=status.HTTP_200_OK)
 
 
-class OrderListAPIView(ListAPIView):
+class OrdersAPIView(APIView):
+    """
+        An endpoint for all orders selected user.
+
+        kwargs:
+            pk
+
+        response data:
+            id
+            car_name
+            name
+            adress
+            phone_number
+            city
+            pick_up_location
+            pick_up_date
+            pick_up_time
+            drop_off_location
+            drop_off_date
+            drop_off_time
+            status
+            username
+            car
+
+    """
     serializer_class = OrderSerializer
 
-    def get_queryset(self):
+    def get(self, request, *args, **kwargs):
+
         user = self.kwargs.get("pk")
-        return Order.objects.filter(username_id=user)
+        if user is None:
+            message = {
+                'detail': 'User kwargs is empty'
+            }
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+        cache_key = 'orders' + user
+        if cache_key in cache:
+            queryset = cache.get(cache_key)
+            return Response(queryset, status=status.HTTP_200_OK)
+        else:
+            try:
+                try:
+                    user_u = User.objects.get(pk=user)
+                except:
+                    message = {
+                        'detail': 'This user doesnt exist or dont have orders'
+                    }
+                    return Response(message, status=status.HTTP_400_BAD_REQUEST)
+                queryset = Order.objects.filter(username_id=user).prefetch_related('car')
+                if queryset.exists() is False:
+                    message = {
+                        'detail': 'This user dont have orders'
+                    }
+                    return Response(message, status=status.HTTP_400_BAD_REQUEST)
+                serializer_class = OrderSerializer(queryset, many=True)
+                cache.set(cache_key, serializer_class.data, timeout=30)
+            except:
+                message = {
+                    'detail': 'Serialization error'
+                }
+                return Response(message, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer_class.data, status=status.HTTP_200_OK)
 
 
 class OrderCreateAPIView(CreateAPIView):
+    """
+        An endpoint for all orders selected user.
+
+        request data:
+            name
+            adress
+            phone_number
+            city
+            pick_up_location
+            pick_up_date
+            pick_up_time
+            drop_off_location
+            drop_off_date
+            drop_off_time
+            username
+            car
+
+        response data:
+            detail
+
+    """
+
     serializer_class = OrderSerializer
+
+    def post(self, request, *args, **kwargs):
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+        except:
+            message = {
+                'detail': 'Serialization error'
+            }
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+        message = {
+            'detail': 'Success order creation'
+        }
+        return Response(message, status=status.HTTP_200_OK)

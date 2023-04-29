@@ -77,6 +77,12 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATE_LOADERS = (
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )
+
 APP_DIRS: True
 WSGI_APPLICATION = 'Morent.wsgi.application'
 
