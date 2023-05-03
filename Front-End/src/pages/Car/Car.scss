@@ -1,0 +1,122 @@
+.car {
+
+    &__container {}
+}
+
+.car-promo-card {
+    display: flex;
+
+    &__body {
+        background: #fff;
+        margin: 30px auto;
+        padding: 27px 30px;
+        border-radius: 20px;
+    }
+}
+
+.car-body {
+    display: flex;
+    column-gap: 65px;
+
+    &__description {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__galery {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        row-gap: 12px;
+
+        img {
+            width: 250px;
+        }
+    }
+}
+
+.car-description {
+
+    &__top-block {}
+
+    &__text-block {
+        margin-top: 50px;
+        width: 485px;
+        display: flex;
+    }
+
+    &__buttons-block {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 45px;
+
+    }
+}
+
+.top-block {
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: auto 1fr;
+    align-items: baseline;
+    column-gap: 10px;
+
+    &__title {
+        grid-column: 1/-1;
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 140%;
+        color: #1A202C;
+    }
+
+    &__rating {}
+
+    &__reviev {
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 19px;
+        color: #3D5278;
+    }
+}
+
+.text-block {
+
+    &__main-text {
+        max-width: 250px;
+        font-weight: 400;
+        font-size: 15px;
+        line-height: 200%;
+        color: #3D5278;
+    }
+
+    &__specs-block {
+        margin-left: 85px;
+
+        div:not(:last-child) {
+            margin-bottom: 20px;
+        }
+
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 19px;
+        color: #90A3BF;
+
+        span {
+            font-weight: 600;
+            color: #3D5278;
+            margin-left: 15px;
+        }
+    }
+}
+
+.specs-block {
+
+    &__gasoline {}
+
+    &__capacity {}
+
+    &__typecar {}
+
+    &__steering {}
+}
+
+.btn {}
