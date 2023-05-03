@@ -1,7 +1,12 @@
 import React from 'react';
-import "./CarItem.scss"
+import { Link } from "react-router-dom"
+import { setCurrentCarID } from '../../redux/slices/carList';
 
-export const CarItem = ({carName, carClass, imgUrl, specs, price}) => {
+import "./CarItem.scss"
+import { useDispatch } from 'react-redux';
+
+export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
+    const dispatch = useDispatch()
     return (
         <>
             <div className='item-body'>
@@ -19,7 +24,7 @@ export const CarItem = ({carName, carClass, imgUrl, specs, price}) => {
                     <p className='text'><span>{price}/</span>day</p>
                 </div>
                 <div className="item-body__btns">
-                    <div className="about btn"><a className="about__link">About</a></div>
+                    <div className="about btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}}  to="/car" className="about__link">About</Link></div>
                     <div className="rent-now btn"><a className="rent-now__link">Rent Now</a></div>
                 </div>
             </div>

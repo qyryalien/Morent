@@ -11,7 +11,7 @@ export const Pagination = ({reqLen}) => {
     let [currentPage, setCurrentPage] = React.useState(1);
     let endPoiner = currentPage * ChankSize;
     let startPoiner = endPoiner - ChankSize;
-
+    
     const {listOfCars} = useSelector(state => state.carssList);
     let renderPages = listOfCars.slice(startPoiner, endPoiner);
 

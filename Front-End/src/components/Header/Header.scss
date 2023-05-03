@@ -1,6 +1,7 @@
-@import "style";
+@import "../../style.scss";
 
 .header {
+	background: #fff;
 	@include adaptiveValue("padding-top", 25, 10);
 	@include adaptiveValue("padding-bottom", 25, 10);
 
@@ -65,9 +66,15 @@
 .btn {
 	background: #3563E9;
 	border-radius: 5px;
-	padding: 10px 40px;
+	padding: 10px 7px;
 	text-align: center;
 	color: white;
+}
+
+.btn_white {
+	border: 1px solid #3563E9;
+	background: white;
+	color: #3563E9;
 }
 
 .login {

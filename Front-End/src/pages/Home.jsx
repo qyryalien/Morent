@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux"
-import { fetchPosts } from '../redux/slices/carList';
+import { fetchAllCars } from '../redux/slices/carList';
 
 import "./Home.scss"
 // import "../style.scss"
@@ -11,17 +11,16 @@ import { AdsCard, Footer, Header, FiltersGroup, CarItem, Pagination } from '../c
 
 
 export const Home = () => {
+    const {renderList, listOfCars, status} = useSelector(state => state.carssList);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchPosts())
+        dispatch(fetchAllCars())
     }, [])
 
-    const {renderList, listOfCars, status} = useSelector(state => state.carssList);
     
     return(
         <>
-            <Header></Header>
             <main className="page">
                 <section className='adt'>
                     <div className="adt__container">
@@ -41,7 +40,7 @@ export const Home = () => {
                             <div className="car-list">
                                 {status === "Loading" 
                                     ? <h2>Loading...</h2> 
-                                    : renderList.map(data => <CarItem key={data.id} carName={data.title} carClass={data.cat_name} imgUrl={data.main_photo} specs={[data.gasoline, data.engine_name, data.capacity_name]} price={`$${data.price}.00`}></CarItem>)
+                                    : renderList.map(data => <CarItem key={data.id} id={data.id} carName={data.title} carClass={data.cat_name} imgUrl={data.main_photo} specs={[data.gasoline, data.engine_name, data.capacity_name]} price={`$${data.price}.00`}></CarItem>)
                                 }
                             </div>
                             <Pagination reqLen={listOfCars.length}></Pagination>
@@ -49,7 +48,6 @@ export const Home = () => {
                     </div>
                 </section>            
             </main>
-            <Footer></Footer>
         </>
     )
 }

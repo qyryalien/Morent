@@ -1,6 +1,7 @@
-@import "style";
+@import "../../style.scss";
 
 .footer {
+    background: #fff;
 
     &__container {
         display: flex;
