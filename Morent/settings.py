@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-q763ns-3#x6yqekmg2qsvqrg1ma4ge)9tphbz+61^kbg7t-#t=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -92,13 +92,13 @@ WSGI_APPLICATION = 'Morent.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'Morent',
-        'USER': 'postgres',
-        'PASSWORD': 'qyry1308',
-        'PORT': '5432',
-        'HOST': 'localhost',
-        }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('POSTGRES_NAME'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': 'db',
+        'PORT': 5432,
+    }
 }
 
 
@@ -157,20 +157,7 @@ REST_FRAMEWORK = {
         'knox.auth.TokenAuthentication',
     ]
 }
-REDIS_HOST = 'localhost'
-REDIS_PORT = 6379
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-SESSION_CACHE_ALIAS = "default"
-CACHE_TTL = 60 * 1
-CACHES = {
-        "default": {
-            "BACKEND": "django_redis.cache.RedisCache",
-            "LOCATION": "redis://127.0.0.1:6379/1",
-            "OPTIONS": {
-                "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            },
-        }
-    }
+
 
 CORS_ORIGIN_ALLOW_ALL = True
 
