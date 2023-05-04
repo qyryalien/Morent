@@ -7,6 +7,9 @@ from django.http import HttpResponseNotFound
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from knox.auth import TokenAuthentication
+from knox.models import AuthToken
+from knox.views import LoginView as KnoxLoginView
 # API IMPORT
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError
@@ -14,14 +17,11 @@ from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, Retrieve
 import django_filters.rest_framework
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from knox.models import AuthToken
 from rest_framework.views import APIView
 
 from core.serializers import *
 from django.contrib.auth import login
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-from knox.views import LoginView as KnoxLoginView
-from knox.auth import TokenAuthentication
 
 redis_instance = redis.StrictRedis(host='127.0.0.1', port=6379, db=1)
 
