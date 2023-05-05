@@ -24,7 +24,4 @@ services:
       - db
   redis:
     image: redis:alpine
-  frontend:
-    build: FrontEnd/
-    ports:
-      - "3000:3000"
+
