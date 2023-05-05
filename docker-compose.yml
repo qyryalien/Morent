@@ -24,5 +24,4 @@ services:
       - db
   redis:
     image: redis:alpine
-  frontend:
-    image: node:16-slim
+
