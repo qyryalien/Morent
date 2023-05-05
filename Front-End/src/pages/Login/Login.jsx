@@ -9,8 +9,10 @@ export const Login = () => {
             <div className="login">
                 <div className="login__container">
                     <div className="login__body">
-                        <div className="login__title"></div>
-                        <div className="login__sub-title"></div>
+                        <div className="login__title-block title-block">
+                            <div className="title-block__title ">Authorisation</div>
+                            <div className="title-block__sub-title">Please enter your authorisation info</div>
+                        </div>                        
                         <form action="">
                             <label >
                                 Login
