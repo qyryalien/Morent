@@ -68,21 +68,13 @@ class Capacity(models.Model):
         return reverse('capacity', kwargs={'capacity_slug': self.slug})
 
 
-class UserProfile(models.Model):
-    """Model for user profile"""
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='user')
-
-    def __str__(self):
-        return f'{self.user.username} Profile'
-
-
 class Order(models.Model):
     """Model for user orders"""
     COMPLETE = "Complete"
     PROGRESS = "In progress"
     WAIT = "Waiting for you"
     DECLINE = "Decline"
-    CHECK = "Checking your order"
+    CHECK = "Check your order"
     STATUS_CHOICES = [
         (COMPLETE, "Complete"),
         (PROGRESS, "In progress"),

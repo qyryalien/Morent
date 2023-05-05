@@ -1,0 +1,57 @@
+.wrapper {}
+
+.page {
+    flex: 1 1 auto;
+    background-color: #F6F7F9;
+}
+
+.adt {
+
+    &__container {}
+}
+
+.ads {
+
+    &__body {
+        display: flex;
+        justify-content: space-between;
+        row-gap: 30px;
+        flex-wrap: wrap;
+    }
+}
+
+
+.main-content {
+    margin-top: 25px;
+    margin-right: 40px;
+
+    &__container {
+        padding-left: 0px;
+        display: flex;
+        column-gap: 20px;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 20px;
+        margin-right: -40px;
+    }
+}
+
+.filters-block {
+    background-color: #fff;
+    padding: 20px 32px;
+    border-radius: 0px 15px 15px 0px;
+    min-width: 218px;
+    // row-gap: 20px;
+    height: 100%;
+}
+
+.car-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 5px;
+}
