@@ -19,5 +19,7 @@ urlpatterns = [
     path('api/filter/', CarFilterListAPIView.as_view(), name='filter'),
     path('api/profile/<pk>/orders', OrdersAPIView.as_view(), name='orders'),
     path('api/payment/', OrderCreateAPIView.as_view(), name='payment'),
-    path('api/all_category/', AllCategoryListAPIView.as_view(), name='all_category')
+    path('api/all_category/', AllCategoryListAPIView.as_view(), name='all_category'),
+    path('api/car/<pk>/reviews/', ReviewsListAPIView.as_view(), name='car_reviews'),
+    path('api/car/<pk>/create_review/', ReviewCreateAPIView.as_view(), name='create_review_for_car'),
 ]
