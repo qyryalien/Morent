@@ -407,6 +407,7 @@ class AllCategoryListAPIView(ListAPIView):
                 name
                 slug
     """
+
     def get(self, request, *args, **kwargs):
 
         cache_key = 'all_category'
@@ -483,10 +484,10 @@ class OrdersAPIView(APIView):
                     user_u = User.objects.get(pk=user)
                 except:
                     message = {
-                        'detail': 'This user doesnt exist or dont have orders'
+                        'detail': 'This user doesnt exist'
                     }
                     return Response(message, status=status.HTTP_400_BAD_REQUEST)
-                queryset = Order.objects.filter(username_id=user).prefetch_related('car')
+                queryset = Order.objects.filter(username=user_u).prefetch_related('car')
                 if queryset.exists() is False:
                     message = {
                         'detail': 'This user dont have orders'
@@ -541,3 +542,101 @@ class OrderCreateAPIView(CreateAPIView):
             'detail': 'Success order creation'
         }
         return Response(message, status=status.HTTP_200_OK)
+
+
+class ReviewCreateAPIView(CreateAPIView):
+    """
+        An endpoint for creation review for car.
+
+        kwargs:
+            pk
+
+        request data:
+            username
+            review_text
+            review_score
+            car
+
+        response data:
+            detail
+
+    """
+
+    serializer_class = ReviewSerializer
+
+    def post(self, request, *args, **kwargs):
+        reviewed_car = self.kwargs.get("pk")
+        if reviewed_car is None:
+            message = {
+                'detail': 'Car kwargs is empty'
+            }
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+        except:
+            message = {
+                'detail': 'Serialization error'
+            }
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+        message = {
+            'detail': 'Success review creation'
+        }
+        return Response(message, status=status.HTTP_200_OK)
+
+
+class ReviewsListAPIView(ListAPIView):
+    """
+        An endpoint for car reviews list.
+
+        kwargs:
+            pk
+
+        response data:
+            username
+            review_text
+            review_score
+            review_time
+            car
+
+    """
+
+    serializer_class = ReviewSerializer
+    queryset = Review.objects.all()
+
+    def get(self, request, *args, **kwargs):
+        reviewed_car = self.kwargs.get("pk")
+        if reviewed_car is None:
+            message = {
+                'detail': 'Car kwargs is empty'
+            }
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+        cache_key = 'reviews' + reviewed_car
+        if cache_key in cache:
+            queryset = cache.get(cache_key)
+            return Response(queryset, status=status.HTTP_200_OK)
+        else:
+            try:
+                try:
+                    car_id = Car.objects.get(pk=reviewed_car)
+                except:
+                    message = {
+                        'detail': 'This car doesnt exist'
+                    }
+                    return Response(message, status=status.HTTP_400_BAD_REQUEST)
+                queryset = Review.objects.filter(car=car_id)
+                if queryset.exists() is False:
+                    message = {
+                        'detail': 'This car dont have reviews'
+                    }
+                    return Response(message, status=status.HTTP_400_BAD_REQUEST)
+                serializer_class = ReviewSerializer(queryset, many=True)
+                cache.set(cache_key, serializer_class.data, timeout=30)
+            except:
+                message = {
+                    'detail': 'Serialization error'
+                }
+                return Response(message, status=status.HTTP_400_BAD_REQUEST)
+            return Response(serializer_class.data, status=status.HTTP_200_OK)
