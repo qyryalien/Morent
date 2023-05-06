@@ -83,16 +83,29 @@ class Order(models.Model):
         (CHECK, "Checking your order")
     ]
 
+    LVIV = "Lviv"
+    KIEV = "Kiev"
+    ODESA = "Odesa"
+    DNIPRO = "Dnipro"
+    CITY_CHOICES = [
+        (LVIV, "Lviv"),
+        (KIEV, "Kiev"),
+        (ODESA, "Odesa"),
+        (DNIPRO, "Dnipro"),
+    ]
+
     username = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="User name")
     name = models.CharField(max_length=50, verbose_name="Name")
     adress = models.CharField(max_length=100, verbose_name="Adress")
     phone_number = models.CharField(max_length=15, verbose_name="Phone number")
     city = models.CharField(max_length=50, verbose_name="City")
-    pick_up_location = models.CharField(max_length=50, verbose_name="Pick-up location")
+    pick_up_location = models.CharField(max_length=50, choices=CITY_CHOICES, default=KIEV,
+                                        verbose_name="Pick-up location")
     pick_up_date = models.DateField(max_length=50, verbose_name="Pick-up date")
     pick_up_time = models.TimeField(max_length=50, verbose_name="Pick-up time")
     car = models.ForeignKey('Car', on_delete=models.PROTECT, verbose_name="Car")
-    drop_off_location = models.CharField(max_length=50, verbose_name="Drop-off location")
+    drop_off_location = models.CharField(max_length=50, choices=CITY_CHOICES, default=KIEV,
+                                         verbose_name="Drop-off location")
     drop_off_date = models.DateField(max_length=50, verbose_name="Drop-off date")
     drop_off_time = models.TimeField(max_length=50, verbose_name="Drop-off time")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=CHECK)
@@ -103,3 +116,21 @@ class Order(models.Model):
     def get_absolute_url(self):
         """Method for returning the absolute path by slug"""
         return reverse('username', kwargs={'username': self.username})
+
+
+class Review(models.Model):
+    """Model for car reviews"""
+
+    class Score(models.IntegerChoices):
+        """Class for review score"""
+        BAD = 1
+        SO_SO = 2
+        NORMAL = 3
+        NICE = 4
+        PERFECT = 5
+
+    username = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="User name")
+    review_text = models.CharField(max_length=300, verbose_name="Review text")
+    review_time = models.DateTimeField(auto_now_add=True, verbose_name="Review data and time")
+    review_score = models.IntegerField(choices=Score.choices, verbose_name="Review score")
+    car = models.ForeignKey('Car', on_delete=models.PROTECT, verbose_name="Car")
