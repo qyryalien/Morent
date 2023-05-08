@@ -103,11 +103,11 @@ WSGI_APPLICATION = 'Morent.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'Morent',
-        'USER': 'postgres',
-        'PASSWORD': 'qyry1308',
-        'PORT': 5432,
+        # 'USER': 'postgres',
+        # 'PASSWORD': 'qyry1308',
+        # 'PORT': 5432,
     }
 }
 
