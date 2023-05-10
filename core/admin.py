@@ -52,16 +52,27 @@ class CapacityAdmin(admin.ModelAdmin):
 class OrderAdmin(admin.ModelAdmin):
     """Class for displaying the Order model in the admin panel."""
     list_display = ('id', 'username', 'name', 'adress',
-                    'phone_number', 'city', 'pick_up_location',
+                    'phone_number', 'city', 'pick_up_city',
                     'pick_up_date', 'pick_up_time', 'car',
-                    'drop_off_location', 'drop_off_date', 'drop_off_time',)
-    fields = ('id', 'username', 'name', 'adress',
-                    'phone_number', 'city', 'pick_up_location',
-                    'pick_up_date', 'pick_up_time', 'car',
-                    'drop_off_location', 'drop_off_date', 'drop_off_time',
-                    'card_number', 'expration_date', 'card_holder',
-                    'cvc', 'confirmation_one', 'confirmation_two')
+                    'drop_off_city', 'drop_off_date', 'drop_off_time',)
+    fields = ('username', 'name', 'adress',
+              'phone_number', 'city', 'pick_up_city',
+              'pick_up_date', 'pick_up_time', 'car',
+              'drop_off_city', 'drop_off_date', 'drop_off_time',)
     list_display_links = ('id', 'username')
+
+
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('id', 'username', 'review_text', 'review_time', 'review_score', 'car')
+    fields = ('username', 'review_text', 'review_time', 'review_score', 'car')
+    list_display_links = ('id', 'car')
+
+
+class CityAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+    fields = ('name', 'slug')
+    list_display_links = ('id', 'name')
+    prepopulated_fields = {"slug": ("name",)}
 
 
 admin.site.register(Car, CarAdmin)
@@ -69,3 +80,5 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Steering, SteeringAdmin)
 admin.site.register(Capacity, CapacityAdmin)
 admin.site.register(Order, OrderAdmin)
+admin.site.register(Review, ReviewAdmin)
+admin.site.register(City, CityAdmin)
