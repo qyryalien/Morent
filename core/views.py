@@ -13,7 +13,7 @@ from knox.views import LoginView as KnoxLoginView
 # API IMPORT
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, RetrieveAPIView, CreateAPIView
+from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, RetrieveAPIView, CreateAPIView, DestroyAPIView
 import django_filters.rest_framework
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
@@ -62,6 +62,35 @@ class RegisterAPI(generics.GenericAPIView):
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
             "token": AuthToken.objects.create(user)[1]
         })
+
+    def get(self, request, *args, **kwargs):
+        message = {
+            'form_object1':
+                {
+                    'label': 'Username',
+                    'placeholder': 'Enter your username',
+                    'type': 'input'
+                },
+            'form_object2':
+                {
+                    'label': 'Email',
+                    'placeholder': 'Enter your email',
+                    'type': 'input'
+                },
+            'form_object3':
+                {
+                    'label': 'Password',
+                    'placeholder': 'Enter your password',
+                    'type': 'password'
+                },
+            'form_object4':
+                {
+                    'label': 'Password again',
+                    'placeholder': 'Enter your password again',
+                    'type': 'password'
+                }
+        }
+        return Response(message, status=status.HTTP_200_OK)
 
 
 class LoginAPI(KnoxLoginView):
@@ -512,10 +541,10 @@ class OrderCreateAPIView(CreateAPIView):
             adress
             phone_number
             city
-            pick_up_location
+            pick_up_city
             pick_up_date
             pick_up_time
-            drop_off_location
+            drop_off_city
             drop_off_date
             drop_off_time
             username
@@ -605,6 +634,12 @@ class ReviewsListAPIView(ListAPIView):
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
 
+    def score_avg(self, queryset):
+        sum = 0
+        for item in queryset:
+            sum += item.review_score
+        return round((sum / len(queryset)), 0)
+
     def get(self, request, *args, **kwargs):
         reviewed_car = self.kwargs.get("pk")
         if reviewed_car is None:
@@ -634,9 +669,24 @@ class ReviewsListAPIView(ListAPIView):
                     return Response(message, status=status.HTTP_400_BAD_REQUEST)
                 serializer_class = ReviewSerializer(queryset, many=True)
                 cache.set(cache_key, serializer_class.data, timeout=30)
+
             except:
                 message = {
                     'detail': 'Serialization error'
                 }
                 return Response(message, status=status.HTTP_400_BAD_REQUEST)
-            return Response(serializer_class.data, status=status.HTTP_200_OK)
+            message = {
+                'data_set': serializer_class.data,
+                'score_svg': self.score_avg(queryset)
+            }
+            return Response(message, status=status.HTTP_200_OK)
+
+
+class ReviewDestroyAPIView(DestroyAPIView):
+    serializer_class = ReviewSerializer
+    queryset = Review.objects.all()
+
+
+class CityListAPIView(ListAPIView):
+    serializer_class = CitySerializer
+    queryset = City.objects.all()
