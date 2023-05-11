@@ -36,6 +36,9 @@ class RegisterAPI(generics.CreateAPIView):
     """
     An endpoint for registration.
 
+    method:
+        POST
+
     request data:
         username
         password
@@ -56,6 +59,9 @@ class LoginAPIView(KnoxLoginView):
     """
         An endpoint for loging.
 
+        method:
+            POST
+
         request data:
             username
             password
@@ -63,6 +69,8 @@ class LoginAPIView(KnoxLoginView):
         response data:
             expiry (data-time)
             token
+            user:
+                username
 
     """
     serializer_class = AuthSerializer
@@ -80,16 +88,16 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     """
         An endpoint for user profile.
 
-        kwargs:
-            id
+        method:
+            GET
+            POST
+
+        headers:
+            token
 
         response data:
-            id
-            username
-            email
-            first_name
-            last_name
-            date_joined
+            id, username, email,
+            first_name, last_name, date_joined
 
     """
 
@@ -271,21 +279,13 @@ class CarListAPIView(ListAPIView):
     """
         An endpoint for cars list.
 
+        method:
+            GET
+
         response data:
-            id
-            cat_name
-            engine_name
-            capacity_name
-            title
-            slug
-            main_photo
-            is_published
-            gasoline
-            rent_count
-            price
-            cat
-            engine
-            capacity
+            id, cat_name, engine_name, capacity_name, title,
+            slug, main_photo, is_published, gasoline,
+            rent_count, price, cat, engine, capacity
     """
     queryset = Car.objects.filter(is_published=True).prefetch_related('cat', 'engine', 'capacity')
 
@@ -307,23 +307,14 @@ class CarRetrieveAPIView(RetrieveAPIView):
     """
         An endpoint for one car.
 
+        method:
+            GET
+
         response data:
-            id
-            cat_name
-            engine_name
-            capacity_name
-            title
-            slug
-            main_photo
-            inside_photo_one
-            inside_photo_two
-            is_published
-            gasoline
-            rent_count
-            price
-            cat
-            engine
-            capacity
+            id, cat_name, engine_name, capacity_name,
+            title, slug, main_photo, inside_photo_one,
+            inside_photo_two, is_published, gasoline,
+            rent_count, price, cat, engine, capacity,
     """
     queryset = Car.objects.filter(is_published=True)
 
@@ -350,26 +341,18 @@ class CarFilterListAPIView(ListAPIView):
     """
         An endpoint for filtered cars list.
 
+        method:
+            GET
+
         param:
             cat (requirement = False)
             engine (requirement = False)
             capacity (requirement = False)
 
         response data:
-            id
-            cat_name
-            engine_name
-            capacity_name
-            title
-            slug
-            main_photo
-            is_published
-            gasoline
-            rent_count
-            price
-            cat
-            engine
-            capacity
+            id, cat_name, engine_name, capacity_name, title,
+            slug, main_photo, is_published, gasoline,
+            rent_count, price, cat, engine, capacity
     """
     serializer_class = CarListSerializer
     queryset = Car.objects.all().select_related('cat', 'engine', 'capacity')
@@ -381,19 +364,16 @@ class AllCategoryListAPIView(ListAPIView):
     """
         An endpoint for all category's list.
 
+        method:
+            GET
+
         response data:
             cat:
-                id
-                name
-                slug
+                id, name, slug
             engine:
-                id
-                name
-                slug
+                id, name, slug
             capacity:
-                id
-                name
-                slug
+                id, name, slug
     """
 
     def get(self, request, *args, **kwargs):
@@ -430,25 +410,18 @@ class OrdersAPIView(APIView):
     """
         An endpoint for all orders selected user.
 
+        method:
+            GET
+
         kwargs:
             pk
 
         response data:
-            id
-            car_name
-            name
-            adress
-            phone_number
-            city
-            pick_up_location
-            pick_up_date
-            pick_up_time
-            drop_off_location
-            drop_off_date
-            drop_off_time
-            status
-            username
-            car
+            id, car_name, name,
+            adress, phone_number, city,
+            pick_up_location, pick_up_date, pick_up_time,
+            drop_off_location, drop_off_date, drop_off_time,
+            status, username, car
 
     """
     serializer_class = OrderSerializer
@@ -499,19 +472,14 @@ class OrderCreateAPIView(CreateAPIView):
     """
         An endpoint for all orders selected user.
 
+        method:
+            POST
+
         request data:
-            name
-            adress
-            phone_number
-            city
-            pick_up_city
-            pick_up_date
-            pick_up_time
-            drop_off_city
-            drop_off_date
-            drop_off_time
-            username
-            car
+            name, adress, phone_number, city,
+            pick_up_city, pick_up_date, pick_up_time,
+            drop_off_city, drop_off_date, drop_off_time,
+            username, car
 
         response data:
             detail
@@ -540,14 +508,15 @@ class ReviewCreateAPIView(CreateAPIView):
     """
         An endpoint for creation review for car.
 
+        method:
+            POST
+
         kwargs:
             pk
 
         request data:
-            username
-            review_text
-            review_score
-            car
+            username, review_text,
+            review_score, car
 
         response data:
             detail
@@ -582,15 +551,15 @@ class ReviewsListAPIView(ListAPIView):
     """
         An endpoint for car reviews list.
 
+        method:
+            GET
+
         kwargs:
             pk
 
         response data:
-            username
-            review_text
-            review_score
-            review_time
-            car
+            username, review_text,
+            review_score, review_time, car
 
     """
 
@@ -646,10 +615,32 @@ class ReviewsListAPIView(ListAPIView):
 
 
 class ReviewDestroyAPIView(DestroyAPIView):
+    """
+        An endpoint for delete user review.
+
+        method:
+            DELETE
+
+        kwargs:
+            pk
+
+        response data:
+            detail
+    """
+
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
 
 
 class CityListAPIView(ListAPIView):
+    """
+        An endpoint for delete user review.
+
+        method:
+            GET
+
+        response data:
+            name
+    """
     serializer_class = CitySerializer
     queryset = City.objects.all()
