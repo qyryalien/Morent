@@ -32,7 +32,7 @@ def pageNotFound(request, exception):
 
 
 # Register API
-class RegisterAPI(generics.GenericAPIView):
+class RegisterAPI(generics.CreateAPIView):
     """
     An endpoint for registration.
 
@@ -48,74 +48,32 @@ class RegisterAPI(generics.GenericAPIView):
             email
             first_name
             last_name
-            date_join
-        token
-
     """
     serializer_class = RegisterSerializer
 
-    def post(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        return Response({
-            "user": UserSerializer(user, context=self.get_serializer_context()).data,
-            "token": AuthToken.objects.create(user)[1]
-        })
 
-    def get(self, request, *args, **kwargs):
-        message = {
-            'form_object1':
-                {
-                    'label': 'Username',
-                    'placeholder': 'Enter your username',
-                    'type': 'input'
-                },
-            'form_object2':
-                {
-                    'label': 'Email',
-                    'placeholder': 'Enter your email',
-                    'type': 'input'
-                },
-            'form_object3':
-                {
-                    'label': 'Password',
-                    'placeholder': 'Enter your password',
-                    'type': 'password'
-                },
-            'form_object4':
-                {
-                    'label': 'Password again',
-                    'placeholder': 'Enter your password again',
-                    'type': 'password'
-                }
-        }
-        return Response(message, status=status.HTTP_200_OK)
-
-
-class LoginAPI(KnoxLoginView):
+class LoginAPIView(KnoxLoginView):
     """
         An endpoint for loging.
 
         request data:
             username
             password
-            token
 
         response data:
             expiry (data-time)
             token
 
     """
+    serializer_class = AuthSerializer
     permission_classes = (permissions.AllowAny,)
-    authentication_classes = (TokenAuthentication,)
 
     def post(self, request, format=None):
         serializer = AuthTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         login(request, user)
-        return super(LoginAPI, self).post(request, format=None)
+        return super(LoginAPIView, self).post(request, format=None)
 
 
 class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
@@ -136,14 +94,15 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     """
 
     serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
-    def get_user(self, pk):
-        obj = User.objects.get(pk=pk)
-        return obj
+    def get_object(self):
+        """Retrieve and return authenticated user"""
+        return self.request.user
 
     def retrieve(self, request, *args, **kwargs):
         try:
-            serializer = self.serializer_class(self.get_user(pk=kwargs.get("pk")))
+            serializer = self.serializer_class(self.get_object())
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
             message = {
@@ -152,7 +111,7 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
-        serializer = self.serializer_class(self.get_user(pk=kwargs.get("pk")), data=request.data, partial=True)
+        serializer = self.serializer_class(self.get_object(), data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
         else:
@@ -494,23 +453,27 @@ class OrdersAPIView(APIView):
     """
     serializer_class = OrderSerializer
 
+    def get_object(self):
+        """Retrieve and return authenticated user"""
+        return self.request.user
+
     def get(self, request, *args, **kwargs):
 
-        user = self.kwargs.get("pk")
+        user = self.get_object()
         if user is None:
             message = {
-                'detail': 'User kwargs is empty'
+                'detail': 'User is empty'
             }
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
-        cache_key = 'orders' + user
+        cache_key = 'orders' + str(user)
         if cache_key in cache:
             queryset = cache.get(cache_key)
             return Response(queryset, status=status.HTTP_200_OK)
         else:
             try:
                 try:
-                    user_u = User.objects.get(pk=user)
+                    user_u = User.objects.get(pk=user.id)
                 except:
                     message = {
                         'detail': 'This user doesnt exist'
