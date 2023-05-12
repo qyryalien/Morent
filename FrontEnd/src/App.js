@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { Header, Footer } from "./components";
-import { About, Community, Home, Socials, Car, Login } from "./pages";
+import { About, Community, Home, Socials, Car, Login, Registration } from "./pages";
 // import { Home, FullPost, Registration, AddPost, Login } from "./pages";
 // import { fetchAuthMe, selectIsAuth } from "./redux/slices/auth";
 
@@ -25,6 +25,7 @@ function App() {
 				<Route path="/socials" element={<Socials />}></Route>
 				<Route path="/car" element={<Car />}></Route>
 				<Route path="/login" element={<Login />}></Route>
+				<Route path="/Registration" element={<Registration />}></Route>
 				{/* <Route path="/posts/:id" element={<FullPost />}></Route>
 				<Route path="/posts/:id/edit" element={<AddPost />}></Route>
 				<Route path="/add-post" element={<AddPost />}></Route>
