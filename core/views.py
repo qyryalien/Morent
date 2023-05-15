@@ -32,7 +32,7 @@ def pageNotFound(request, exception):
 
 
 # Register API
-class RegisterAPI(generics.CreateAPIView):
+class RegisterAPI(generics.GenericAPIView):
     """
     An endpoint for registration.
 
@@ -54,8 +54,16 @@ class RegisterAPI(generics.CreateAPIView):
     """
     serializer_class = RegisterSerializer
 
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+        })
 
-class LoginAPIView(KnoxLoginView):
+
+class LoginAPIView(generics.GenericAPIView):
     """
         An endpoint for loging.
 
@@ -73,15 +81,16 @@ class LoginAPIView(KnoxLoginView):
                 username
 
     """
-    serializer_class = AuthSerializer
-    permission_classes = (permissions.AllowAny,)
+    serializer_class = LoginSerializer
 
-    def post(self, request, format=None):
-        serializer = AuthTokenSerializer(data=request.data)
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        login(request, user)
-        return super(LoginAPIView, self).post(request, format=None)
+        user = serializer.validated_data
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)[1]
+        })
 
 
 class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):

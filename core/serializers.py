@@ -38,32 +38,15 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-class AuthSerializer(serializers.Serializer):
-    """
-        serializer for the user authentication object
-    """
+class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
-    password = serializers.CharField(
-        style={'input_type': 'password'},
-        trim_whitespace=False
-    )
+    password = serializers.CharField()
 
-    def validate(self, attrs):
-        username = attrs.get('username')
-        password = attrs.get('password')
-
-        user = authenticate(
-            request=self.context.get('request'),
-            username=username,
-            password=password
-        )
-
-        if not user:
-            msg = ('Unable to authenticate with provided credentials')
-            raise serializers.ValidationError(msg, code='authentication')
-
-        attrs['user'] = user
-        return
+    def validate(self, data):
+        user = authenticate(**data)
+        if user and user.is_active:
+            return user
+        raise serializers.ValidationError('Incorrect Credentials Passed.')
 
 
 class ChangePasswordSerializer(serializers.Serializer):
