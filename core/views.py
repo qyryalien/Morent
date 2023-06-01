@@ -13,7 +13,7 @@ from knox.views import LoginView as KnoxLoginView
 # API IMPORT
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError
-from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, RetrieveAPIView, CreateAPIView
+from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, RetrieveAPIView, CreateAPIView, DestroyAPIView
 import django_filters.rest_framework
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
@@ -36,6 +36,9 @@ class RegisterAPI(generics.GenericAPIView):
     """
     An endpoint for registration.
 
+    method:
+        POST
+
     request data:
         username
         password
@@ -48,9 +51,6 @@ class RegisterAPI(generics.GenericAPIView):
             email
             first_name
             last_name
-            date_join
-        token
-
     """
     serializer_class = RegisterSerializer
 
@@ -60,61 +60,66 @@ class RegisterAPI(generics.GenericAPIView):
         user = serializer.save()
         return Response({
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
-            "token": AuthToken.objects.create(user)[1]
         })
 
 
-class LoginAPI(KnoxLoginView):
+class LoginAPIView(generics.GenericAPIView):
     """
         An endpoint for loging.
+
+        method:
+            POST
 
         request data:
             username
             password
-            token
 
         response data:
             expiry (data-time)
             token
+            user:
+                username
 
     """
-    permission_classes = (permissions.AllowAny,)
-    authentication_classes = (TokenAuthentication,)
+    serializer_class = LoginSerializer
 
-    def post(self, request, format=None):
-        serializer = AuthTokenSerializer(data=request.data)
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        login(request, user)
-        return super(LoginAPI, self).post(request, format=None)
+        user = serializer.validated_data
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)[1]
+        })
 
 
 class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
     """
         An endpoint for user profile.
 
-        kwargs:
-            id
+        method:
+            GET
+            PUT, PATCH
+
+        headers:
+            token
 
         response data:
-            id
-            username
-            email
-            first_name
-            last_name
-            date_joined
+            id, username, email,
+            first_name, last_name, date_joined
 
     """
 
     serializer_class = UserSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
-    def get_user(self, pk):
-        obj = User.objects.get(pk=pk)
-        return obj
+    def get_object(self):
+        """Retrieve and return authenticated user"""
+        return self.request.user
 
     def retrieve(self, request, *args, **kwargs):
         try:
-            serializer = self.serializer_class(self.get_user(pk=kwargs.get("pk")))
+            serializer = self.serializer_class(self.get_object())
             return Response(serializer.data, status=status.HTTP_200_OK)
         except:
             message = {
@@ -123,7 +128,7 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
-        serializer = self.serializer_class(self.get_user(pk=kwargs.get("pk")), data=request.data, partial=True)
+        serializer = self.serializer_class(self.get_object(), data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
         else:
@@ -283,21 +288,13 @@ class CarListAPIView(ListAPIView):
     """
         An endpoint for cars list.
 
+        method:
+            GET
+
         response data:
-            id
-            cat_name
-            engine_name
-            capacity_name
-            title
-            slug
-            main_photo
-            is_published
-            gasoline
-            rent_count
-            price
-            cat
-            engine
-            capacity
+            id, cat_name, engine_name, capacity_name, title,
+            slug, main_photo, is_published, gasoline,
+            rent_count, price, cat, engine, capacity
     """
     queryset = Car.objects.filter(is_published=True).prefetch_related('cat', 'engine', 'capacity')
 
@@ -319,23 +316,14 @@ class CarRetrieveAPIView(RetrieveAPIView):
     """
         An endpoint for one car.
 
+        method:
+            GET
+
         response data:
-            id
-            cat_name
-            engine_name
-            capacity_name
-            title
-            slug
-            main_photo
-            inside_photo_one
-            inside_photo_two
-            is_published
-            gasoline
-            rent_count
-            price
-            cat
-            engine
-            capacity
+            id, cat_name, engine_name, capacity_name,
+            title, slug, main_photo, inside_photo_one,
+            inside_photo_two, is_published, gasoline,
+            rent_count, price, cat, engine, capacity,
     """
     queryset = Car.objects.filter(is_published=True)
 
@@ -362,26 +350,18 @@ class CarFilterListAPIView(ListAPIView):
     """
         An endpoint for filtered cars list.
 
+        method:
+            GET
+
         param:
             cat (requirement = False)
             engine (requirement = False)
             capacity (requirement = False)
 
         response data:
-            id
-            cat_name
-            engine_name
-            capacity_name
-            title
-            slug
-            main_photo
-            is_published
-            gasoline
-            rent_count
-            price
-            cat
-            engine
-            capacity
+            id, cat_name, engine_name, capacity_name, title,
+            slug, main_photo, is_published, gasoline,
+            rent_count, price, cat, engine, capacity
     """
     serializer_class = CarListSerializer
     queryset = Car.objects.all().select_related('cat', 'engine', 'capacity')
@@ -393,19 +373,16 @@ class AllCategoryListAPIView(ListAPIView):
     """
         An endpoint for all category's list.
 
+        method:
+            GET
+
         response data:
             cat:
-                id
-                name
-                slug
+                id, name, slug
             engine:
-                id
-                name
-                slug
+                id, name, slug
             capacity:
-                id
-                name
-                slug
+                id, name, slug
     """
 
     def get(self, request, *args, **kwargs):
@@ -442,46 +419,43 @@ class OrdersAPIView(APIView):
     """
         An endpoint for all orders selected user.
 
+        method:
+            GET
+
         kwargs:
             pk
 
         response data:
-            id
-            car_name
-            name
-            adress
-            phone_number
-            city
-            pick_up_location
-            pick_up_date
-            pick_up_time
-            drop_off_location
-            drop_off_date
-            drop_off_time
-            status
-            username
-            car
+            id, car_name, name,
+            adress, phone_number, city,
+            pick_up_location, pick_up_date, pick_up_time,
+            drop_off_location, drop_off_date, drop_off_time,
+            status, username, car
 
     """
     serializer_class = OrderSerializer
 
+    def get_object(self):
+        """Retrieve and return authenticated user"""
+        return self.request.user
+
     def get(self, request, *args, **kwargs):
 
-        user = self.kwargs.get("pk")
+        user = self.get_object()
         if user is None:
             message = {
-                'detail': 'User kwargs is empty'
+                'detail': 'User is empty'
             }
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
-        cache_key = 'orders' + user
+        cache_key = 'orders' + str(user)
         if cache_key in cache:
             queryset = cache.get(cache_key)
             return Response(queryset, status=status.HTTP_200_OK)
         else:
             try:
                 try:
-                    user_u = User.objects.get(pk=user)
+                    user_u = User.objects.get(pk=user.id)
                 except:
                     message = {
                         'detail': 'This user doesnt exist'
@@ -507,19 +481,14 @@ class OrderCreateAPIView(CreateAPIView):
     """
         An endpoint for all orders selected user.
 
+        method:
+            POST
+
         request data:
-            name
-            adress
-            phone_number
-            city
-            pick_up_location
-            pick_up_date
-            pick_up_time
-            drop_off_location
-            drop_off_date
-            drop_off_time
-            username
-            car
+            name, adress, phone_number, city,
+            pick_up_city, pick_up_date, pick_up_time,
+            drop_off_city, drop_off_date, drop_off_time,
+            username, car
 
         response data:
             detail
@@ -548,14 +517,15 @@ class ReviewCreateAPIView(CreateAPIView):
     """
         An endpoint for creation review for car.
 
+        method:
+            POST
+
         kwargs:
             pk
 
         request data:
-            username
-            review_text
-            review_score
-            car
+            username, review_text,
+            review_score, car
 
         response data:
             detail
@@ -590,20 +560,26 @@ class ReviewsListAPIView(ListAPIView):
     """
         An endpoint for car reviews list.
 
+        method:
+            GET
+
         kwargs:
             pk
 
         response data:
-            username
-            review_text
-            review_score
-            review_time
-            car
+            username, review_text,
+            review_score, review_time, car
 
     """
 
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
+
+    def score_avg(self, queryset):
+        sum = 0
+        for item in queryset:
+            sum += item.review_score
+        return round((sum / len(queryset)), 0)
 
     def get(self, request, *args, **kwargs):
         reviewed_car = self.kwargs.get("pk")
@@ -634,9 +610,46 @@ class ReviewsListAPIView(ListAPIView):
                     return Response(message, status=status.HTTP_400_BAD_REQUEST)
                 serializer_class = ReviewSerializer(queryset, many=True)
                 cache.set(cache_key, serializer_class.data, timeout=30)
+
             except:
                 message = {
                     'detail': 'Serialization error'
                 }
                 return Response(message, status=status.HTTP_400_BAD_REQUEST)
-            return Response(serializer_class.data, status=status.HTTP_200_OK)
+            message = {
+                'data_set': serializer_class.data,
+                'score_svg': self.score_avg(queryset)
+            }
+            return Response(message, status=status.HTTP_200_OK)
+
+
+class ReviewDestroyAPIView(DestroyAPIView):
+    """
+        An endpoint for delete user review.
+
+        method:
+            DELETE
+
+        kwargs:
+            pk
+
+        response data:
+            detail
+    """
+
+    serializer_class = ReviewSerializer
+    queryset = Review.objects.all()
+
+
+class CityListAPIView(ListAPIView):
+    """
+        An endpoint for delete user review.
+
+        method:
+            GET
+
+        response data:
+            name
+    """
+    serializer_class = CitySerializer
+    queryset = City.objects.all()

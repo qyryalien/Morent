@@ -68,6 +68,18 @@ class Capacity(models.Model):
         return reverse('capacity', kwargs={'capacity_slug': self.slug})
 
 
+class City(models.Model):
+    name = models.CharField(max_length=50, verbose_name="Name")
+    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):
+        """Method for returning the absolute path by slug"""
+        return reverse('name', kwargs={'name': self.name})
+
+
 class Order(models.Model):
     """Model for user orders"""
     COMPLETE = "Complete"
@@ -83,29 +95,16 @@ class Order(models.Model):
         (CHECK, "Checking your order")
     ]
 
-    LVIV = "Lviv"
-    KIEV = "Kiev"
-    ODESA = "Odesa"
-    DNIPRO = "Dnipro"
-    CITY_CHOICES = [
-        (LVIV, "Lviv"),
-        (KIEV, "Kiev"),
-        (ODESA, "Odesa"),
-        (DNIPRO, "Dnipro"),
-    ]
-
     username = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="User name")
     name = models.CharField(max_length=50, verbose_name="Name")
     adress = models.CharField(max_length=100, verbose_name="Adress")
     phone_number = models.CharField(max_length=15, verbose_name="Phone number")
     city = models.CharField(max_length=50, verbose_name="City")
-    pick_up_location = models.CharField(max_length=50, choices=CITY_CHOICES, default=KIEV,
-                                        verbose_name="Pick-up location")
+    pick_up_city = models.CharField(max_length=20, verbose_name="Pick-up location")
     pick_up_date = models.DateField(max_length=50, verbose_name="Pick-up date")
     pick_up_time = models.TimeField(max_length=50, verbose_name="Pick-up time")
     car = models.ForeignKey('Car', on_delete=models.PROTECT, verbose_name="Car")
-    drop_off_location = models.CharField(max_length=50, choices=CITY_CHOICES, default=KIEV,
-                                         verbose_name="Drop-off location")
+    drop_off_city = models.CharField(max_length=20, verbose_name="Drop-off location")
     drop_off_date = models.DateField(max_length=50, verbose_name="Drop-off date")
     drop_off_time = models.TimeField(max_length=50, verbose_name="Drop-off time")
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default=CHECK)
