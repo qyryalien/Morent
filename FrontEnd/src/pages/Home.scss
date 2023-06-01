@@ -22,8 +22,9 @@
 
 
 .main-content {
-    margin-top: 25px;
-    margin-right: 40px;
+    margin: 25px 40px 25px 0px;
+    // margin-top: 25px;
+    // margin-right: 40px;
 
     &__container {
         padding-left: 0px;
@@ -35,8 +36,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: space-between;
         row-gap: 20px;
         margin-right: -40px;
+
     }
 }
 

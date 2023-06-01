@@ -1,6 +1,9 @@
 .login {
+    display: flex;
 
-    &__container {}
+    &__container {
+        width: 415px;
+    }
 
     &__body {
         background-color: white;
@@ -16,7 +19,12 @@
 
     &__sign-up {}
 
-    &__buttons {}
+    &__buttons {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
 }
 
 .title-block {
@@ -42,7 +50,9 @@
 form {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     row-gap: 20px;
+    column-gap: 32px;
 
 
     label {
