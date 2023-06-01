@@ -6,7 +6,7 @@ import axios from "axios";
 
 import "./Login.scss"
 import { Form } from "../../components/Form/Form";
-import { fetchAuth, selectIsAuth } from "../../redux/slices/auth";
+import { fetchAuth, selectIsAuth, login } from "../../redux/slices/auth";
 
 export const Login = () => {
     const isAuth = useSelector(selectIsAuth);
@@ -25,13 +25,19 @@ export const Login = () => {
     });
 
     const onSubmit = async (data) => {
+        // login(data);
         const {payload} = await dispatch(fetchAuth(data));
+        // const res = await dispatch(fetchAuth(data));
+
+        // const res = fetchAuth(data)
+        // console.log("res ", res)s
+        // console.log("payload", payload)
         if (!payload){
             return alert("Не удалось войти")
         }  
-        if ('token' in payload.data){
-            window.localStorage.setItem("token", payload.data.token)
-        }
+        // if ('token' in payload.data){
+        //     window.localStorage.setItem("token", payload.data.token)
+        // }
 
         reset()
     }
@@ -65,7 +71,7 @@ export const Login = () => {
                             </label>                                            
                             <div className="login__sign-up sign-up">
                                 <div className="sign-up__text">Don`t have an account?</div>
-                                <Link to="/Registration" className="sign-up__link">Sign up</Link>
+                                <Link to="/registration" className="sign-up__link">Sign up</Link>
                             </div>
                             <div className="login__buttons">
                                 <Link to="/" className="btn btn_white">Back to main</Link>

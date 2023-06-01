@@ -40,7 +40,7 @@ export const Car = () => {
                                 </div>
                                 <div className="car-description__buttons-block">
                                     <Link to="/" className="btn btn_white">Back to main</Link>
-                                    <a href="" className="btn ">Rent Now</a>
+                                    <Link to="/rent" className="btn ">Rent Now</Link>
                                     <a href="" className="btn btn_white">View review</a>
                                     <a href="" className="btn ">Leave a review</a>
                                 </div>

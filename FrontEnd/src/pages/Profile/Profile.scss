@@ -1,0 +1,140 @@
+.profile {
+
+    &__container {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        padding: 30px 27.5px;
+        margin: 20px auto;
+        border-radius: 10px;
+    }
+
+    &__info-block {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__buttons {
+        display: flex;
+        align-items: center;
+        column-gap: 20px;
+        padding: 20px 0px;
+    }
+
+    &__orders {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+    }
+}
+
+.info-block {
+
+    &__title {
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 125%;
+
+        color: #1A202C;
+        margin-bottom: 20px;
+    }
+
+    &__list {
+        display: flex;
+        column-gap: 20px;
+    }
+}
+
+.info-list {
+
+    &__subtitles {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__subtitle {
+        min-height: 15px;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 18px;
+
+        color: #1A202C;
+    }
+
+    &__texts {}
+
+    &__text {
+        min-height: 15px;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        color: #90A3BF;
+    }
+}
+
+.btn {
+
+    &_white {}
+}
+
+.profile-orders-block {
+
+    &__title {
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 125%;
+
+        color: #1A202C;
+        margin-bottom: 20px;
+    }
+
+    &__list {}
+}
+
+.orders-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    row-gap: 10px;
+
+    &__subtitles {
+        display: flex;
+        column-gap: 20px;
+    }
+
+    &__subtitle {
+        width: 150px;
+        min-height: 15px;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 18px;
+
+        color: #1A202C;
+    }
+
+    &__items {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+    }
+
+    &__item {
+        display: flex;
+        column-gap: 20px;
+    }
+
+    &__value {
+        width: 150px;
+        min-height: 15px;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 18px;
+        color: #90A3BF;
+    }
+}

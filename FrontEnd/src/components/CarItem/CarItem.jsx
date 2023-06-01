@@ -25,7 +25,7 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                 </div>
                 <div className="item-body__btns">
                     <div className="about btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}}  to="/car" className="about__link">About</Link></div>
-                    <div className="rent-now btn"><a className="rent-now__link">Rent Now</a></div>
+                    <div className="rent-now btn"><Link to="/rent" className="rent-now__link">Rent Now</Link></div>
                 </div>
             </div>
         </>
