@@ -99,7 +99,7 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
 
         method:
             GET
-            POST
+            PUT, PATCH
 
         headers:
             token
