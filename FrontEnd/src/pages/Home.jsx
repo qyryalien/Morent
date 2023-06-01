@@ -2,20 +2,26 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux"
 import { fetchAllCars } from '../redux/slices/carList';
+import { fetchProfileData } from '../redux/slices/personalFullInfo';
 
 import "./Home.scss"
 // import "../style.scss"
 
 import { AdsCard, Footer, Header, FiltersGroup, CarItem, Pagination } from '../components'; 
+import { fetchAuth, userIsAuth } from '../redux/slices/auth';
 
 
 
 export const Home = () => {
+    
     const {renderList, listOfCars, status} = useSelector(state => state.carssList);
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchAllCars())
+        dispatch(fetchProfileData());
+        // userIsAuth()
+        // dispatch(fetchAuth(window.localStorage.getItem("token")));
     }, [])
 
     

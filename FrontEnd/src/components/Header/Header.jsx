@@ -1,16 +1,37 @@
 import React from "react";
 import {Routes, Route, Link} from "react-router-dom"
-// import styles from "./Header.module.scss";
+import { selectIsAuth } from "../../redux/slices/auth";
+import { userIsAuth } from "../../redux/slices/auth";
+
+import { useSelector } from "react-redux";
 import "./Header.scss"
 
+
+
 export const Header = () => {
+    // let isAuth = userIsAuth();
+    let isAuth = window.localStorage.getItem("token");
+    console.log(isAuth)
+
+    
+
+    React.useEffect(() => {
+        userIsAuth()
+        console.log("HEARED did MOUNT")
+        
+        return ()=>{
+            console.log("HEARED will UN--MOUNT")
+        }
+    },)
+
     return(
         <>
             <header className="header">
                 <div className="header__container">
+                    {/* <div className="btn" onClick={isAuth = userIsAuth}>Update</div> */}
                     <div className="logo">
                         <div className="logo__text">
-                            <h1>MORENT</h1>
+                            <Link to="/">MORENT</Link>
                         </div>
                     </div>
                     <div className="header__menu menu">
@@ -20,7 +41,14 @@ export const Header = () => {
                             <div className="menu__item"><Link to="/socials" className="menu__item-link">Socials</Link></div>
                         </div>
                     </div>
-                    <div className="login btn"><Link to="/login" className="login__link">Login</Link></div>
+                    <div className="login btn">
+                        {isAuth 
+                            ? <Link to="/profile" className="login__link">Profile</Link>
+                            : <Link to="/login" className="login__link">Login</Link> 
+                        }
+                        
+                        
+                    </div>
                 </div>
             </header>
         </>
