@@ -44,10 +44,11 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'core',
     'rest_framework',
-    'knox',
     'django_rest_passwordreset',
     'django_filters',
     'corsheaders',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -109,11 +110,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'sqlite3.db',
-        # 'USER': 'postgres',
-        # 'PASSWORD': 'qyry1308',
-        # 'PORT': 5432,
     }
 }
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -175,20 +174,25 @@ INTERNAL_IPS = [
 ]
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'knox.auth.TokenAuthentication',
-    ]
+    'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',)
 }
 
-REST_KNOX = {
-    'SECURE_HASH_ALGORITHM':'cryptography.hazmat.primitives.hashes.SHA512',
-    'AUTH_TOKEN_CHARACTER_LENGTH': 64, # By default, it is set to 64 characters (this shouldn't need changing).
-    'TOKEN_TTL': timedelta(minutes=10), # The default is 10 hours i.e., timedelta(hours=10)).
-    'USER_SERIALIZER': 'knox.serializers.UserSerializer',
-    'TOKEN_LIMIT_PER_USER': None, # By default, this option is disabled and set to None -- thus no limit.
-    'AUTO_REFRESH': False, # This defines if the token expiry time is extended by TOKEN_TTL each time the token is used.
-    'EXPIRY_DATETIME_FORMAT': api_settings.DATETIME_FORMAT,
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=45),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=14),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
 }
+#
+# REST_KNOX = {
+#     'SECURE_HASH_ALGORITHM':'cryptography.hazmat.primitives.hashes.SHA512',
+#     'AUTH_TOKEN_CHARACTER_LENGTH': 64, # By default, it is set to 64 characters (this shouldn't need changing).
+#     'TOKEN_TTL': timedelta(minutes=3), # The default is 10 hours i.e., timedelta(hours=10)).
+#     'USER_SERIALIZER': 'knox.serializers.UserSerializer',
+#     'TOKEN_LIMIT_PER_USER': None, # By default, this option is disabled and set to None -- thus no limit.
+#     'AUTO_REFRESH': False, # This defines if the token expiry time is extended by TOKEN_TTL each time the token is used.
+#     'EXPIRY_DATETIME_FORMAT': api_settings.DATETIME_FORMAT,
+# }
 
 
 CORS_ORIGIN_ALLOW_ALL = True

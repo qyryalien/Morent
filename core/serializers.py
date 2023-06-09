@@ -39,6 +39,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
+    """serializer for the user authentication object"""
     username = serializers.CharField()
     password = serializers.CharField()
 
