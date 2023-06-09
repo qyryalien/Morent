@@ -1,29 +1,30 @@
 import React from "react";
-import {Routes, Route, Link} from "react-router-dom"
-import { selectIsAuth } from "../../redux/slices/auth";
+import {Routes, Route, Link, Navigate} from "react-router-dom"
+import { selectIsAuth, tryLogin } from "../../redux/slices/auth";
 import { userIsAuth } from "../../redux/slices/auth";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./Header.scss"
 
 
 
 export const Header = () => {
+    const dispatch = useDispatch()
     // let isAuth = userIsAuth();
-    let isAuth = window.localStorage.getItem("token");
-    console.log(isAuth)
-
-    
+    // let isAuth = window.localStorage.getItem("token");
+    let isAuth = useSelector(state => state.auth.curentAuthSession)
+    console.log(isAuth)    
 
     React.useEffect(() => {
-        userIsAuth()
+        
+        dispatch(userIsAuth())
         console.log("HEARED did MOUNT")
         
         return ()=>{
             console.log("HEARED will UN--MOUNT")
         }
-    },)
-
+    }, [])
+    
     return(
         <>
             <header className="header">
@@ -46,11 +47,15 @@ export const Header = () => {
                             ? <Link to="/profile" className="login__link">Profile</Link>
                             : <Link to="/login" className="login__link">Login</Link> 
                         }
-                        
+                                    
                         
                     </div>
                 </div>
+                
             </header>
+            {/* {
+                isAuth === false ? <Navigate to="/login" /> : 0
+            } */}
         </>
     )
 }

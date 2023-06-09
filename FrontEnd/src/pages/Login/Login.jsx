@@ -2,15 +2,17 @@ import React from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux"
-import axios from "axios";
+import axios from "../../axiosConfigs/axiosAuthSettings";
+import { setCurentAuthSession } from "../../redux/slices/auth";
 
 import "./Login.scss"
 import { Form } from "../../components/Form/Form";
-import { fetchAuth, selectIsAuth, login } from "../../redux/slices/auth";
+// import { fetchAuth, selectIsAuth, login } from "../../redux/slices/auth";
 
 export const Login = () => {
-    const isAuth = useSelector(selectIsAuth);
+    const isAuth = useSelector(state => state.auth.curentAuthSession);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const {
         register,
         formState:{errors},
@@ -24,17 +26,52 @@ export const Login = () => {
         }
     });
 
+    const [error, setError] = React.useState(null);
+    const [isLoaded, setIsLoaded] = React.useState(false);
+    const [info, setInfo] = React.useState();
+    
+    async function fetchAuth(params) {
+        try {
+            const response = await axios.post("/api/login/", params);
+            // if (response.status === 401) {
+            //     dispatch(setCurentAuthSession(false));
+            // }
+            if (response.status === 200) {
+                dispatch(setCurentAuthSession(true));
+                setIsLoaded(true);
+                setInfo(response.data);
+                navigate("/");
+            }
+        } catch (error) {
+            const response = await axios.post("/api/login/", params);
+            // if (error.response.status === 401) {
+                //     dispatch(setCurentAuthSession(false));
+                //     navigate("/login");
+                // }
+            if (response.status === 200) {
+                dispatch(setCurentAuthSession(true));
+                setIsLoaded(true);
+                setInfo(response.data);
+                navigate("/");
+            }
+        }
+    }     
+    // React.useEffect(() => {
+    //     fetchAuth(data)
+    // },[])
+
     const onSubmit = async (data) => {
         // login(data);
-        const {payload} = await dispatch(fetchAuth(data));
+        // const {payload} = 
+        fetchAuth(data);
         // const res = await dispatch(fetchAuth(data));
 
         // const res = fetchAuth(data)
         // console.log("res ", res)s
         // console.log("payload", payload)
-        if (!payload){
-            return alert("Не удалось войти")
-        }  
+        // if (!payload){
+        //     return alert("Не удалось войти")
+        // }  
         // if ('token' in payload.data){
         //     window.localStorage.setItem("token", payload.data.token)
         // }

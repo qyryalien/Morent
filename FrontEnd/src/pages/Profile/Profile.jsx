@@ -1,32 +1,84 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProfileData, userGetOrders } from "../../redux/slices/personalFullInfo";
 import { Pagination } from "../../components";
+import { setCurentAuthSession } from "../../redux/slices/auth";
+
+import axios from "../../axiosConfigs/axiosBaseSettings";
 
 import "./Profile.scss"
 
 export const Profile = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     // const info = useSelector(state => state.userInfo.userInfo);
-    let info = useSelector(state => state.userInfo.userInfo);
-    let orders = useSelector(state => state.userInfo.userOrderList);
+    // let info = useSelector(state => state.userInfo.userInfo);
+    // let orders = useSelector(state => state.userInfo.userOrderList);
     
-    // React.useEffect(() => {
-    //     async function Fn() {
-    //         let info2 = await dispatch(fetchProfileData());
-            
-    //         console.log("123", info2)
-    //         // return info2
-    //         console.log("456", info)
-    //     }
-    //     Fn()
-    // }, [])
+    const [infoError, setInfoError] = React.useState(null);
+    const [infoIsLoaded, setInfoIsLoaded] = React.useState(false);
+    const [info, setInfo] = React.useState();
 
+    async function fetchProfileData() {
+        try {
+            const response = await axios.get("/api/profile/");
+            if (response.status === 401) {
+                dispatch(setCurentAuthSession(false));
+            }
+            if (response.status === 200) {
+                dispatch(setCurentAuthSession(true));
+                setInfoIsLoaded(true);
+                setInfo(response.data);
+                // navigate("/");
+            }
+        } catch (error) {
+            if (error.response.status === 401) {
+                    dispatch(setCurentAuthSession(false));
+                    navigate("/login");
+                }
+            // if (response.status === 200) {
+            //     dispatch(setCurentAuthSession(true));
+            //     setIsLoaded(true);
+            //     setInfo(response.data);
+            //     // navigate("/");
+            // }
+        }
+    }  
+
+    const [ordersError, setOrdersError] = React.useState(null);
+    const [ordersIsLoaded, setOrdersIsLoaded] = React.useState(false);
+    const [orders, setOrders] = React.useState();
+
+    async function userGetOrders() {
+        try {
+            const response = await axios.get("/api/profile/orders");
+            if (response.status === 401) {
+                dispatch(setCurentAuthSession(false));
+            }
+            if (response.status === 200) {
+                dispatch(setCurentAuthSession(true));
+                setOrdersIsLoaded(true);
+                setOrders(response.data);
+                // navigate("/");
+            }
+        } catch (error) {
+            if (error.response.status === 401) {
+                    dispatch(setCurentAuthSession(false));
+                    navigate("/login");
+                }
+            // if (response.status === 200) {
+            //     dispatch(setCurentAuthSession(true));
+            //     setIsLoaded(true);
+            //     setInfo(response.data);
+            //     // navigate("/");
+            // }
+        }
+    } 
 
     React.useEffect(() => {
-        
-        dispatch(userGetOrders());
+        fetchProfileData()
+        userGetOrders()
         // info = useSelector(state => state.userInfo.userInfo);
     }, [])
     return(
@@ -71,7 +123,7 @@ export const Profile = () => {
                             
                         </div>
                     </div>
-                    <Pagination reqLen={orders.length}></Pagination>
+                    <Pagination reqLen={orders ? orders.length : 0}></Pagination>
                 </div>
                 
             </div>

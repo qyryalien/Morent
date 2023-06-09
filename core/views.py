@@ -308,7 +308,7 @@ class CarListAPIView(ListAPIView):
             queryset = Car.objects.filter(is_published=True).prefetch_related('cat', 'engine', 'capacity')
             serializer_class = CarListSerializer(queryset, many=True)
 
-            cache.set(cache_key, serializer_class.data, timeout=300)
+            cache.set(cache_key, serializer_class.data, timeout=30)
             return Response(serializer_class.data, status=status.HTTP_200_OK)
 
 

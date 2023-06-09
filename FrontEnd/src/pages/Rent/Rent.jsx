@@ -3,17 +3,57 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import {useForm} from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux"
 import { fetchRegistration } from "../../redux/slices/register";
-import axios from "axios";
+import axios from "../../axiosConfigs/axiosBaseSettings";
 import { selectIsRegister } from "../../redux/slices/register";
+import { setCurentAuthSession } from "../../redux/slices/auth";
 
 import "./Rent.scss"
 
 export const Rent = () => {
     // const RequestStatus = useSelector(state => state.register.data.status);
     const isAuth = useSelector(selectIsRegister);
-    const username = useSelector(state => state.userInfo.userInfo.id);
+    // const username = useSelector(state => state.userInfo.userInfo.id);
     const navigate = useNavigate()
     const dispatch = useDispatch();
+
+    const [infoError, setInfoError] = React.useState(null);
+    const [infoIsLoaded, setInfoIsLoaded] = React.useState(false);
+    const [info, setInfo] = React.useState();
+
+    async function fetchProfileData() {
+        try {
+            const response = await axios.get("/api/profile/");
+            if (response.status === 401) {
+                dispatch(setCurentAuthSession(false));
+            }
+            if (response.status === 200) {
+                dispatch(setCurentAuthSession(true));
+                setInfoIsLoaded(true);
+                setInfo(response.data);
+                // navigate("/");
+            }
+        } catch (error) {
+            if (error.response.status === 401) {
+                    dispatch(setCurentAuthSession(false));
+                    navigate("/login");
+                }
+            // if (response.status === 200) {
+            //     dispatch(setCurentAuthSession(true));
+            //     setIsLoaded(true);
+            //     setInfo(response.data);
+            //     // navigate("/");
+            // }
+        }
+    }  
+
+    console.log("RENT obj info in fn fetchProfileData", info);
+
+    React.useEffect(() => {
+        fetchProfileData()
+        // userGetOrders()
+        // info = useSelector(state => state.userInfo.userInfo);
+    }, [])
+
     const {
         register,
         formState:{errors},
@@ -30,7 +70,9 @@ export const Rent = () => {
 
     const onSubmit = async (data) => {
         // const info = await dispatch(fetchRegistration(data))
-
+        
+        console.log("obj info in fn fetchProfileData", info);
+        let username = info.id;
         const response = await axios.post("http://127.0.0.1:8000/api/payment/", {... data, username});
         console.log(response);
         

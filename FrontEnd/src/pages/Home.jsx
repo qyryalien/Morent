@@ -16,10 +16,13 @@ export const Home = () => {
     
     const {renderList, listOfCars, status} = useSelector(state => state.carssList);
     const dispatch = useDispatch();
+    // const [error, setError] = React.useState(null);
+    // const [isLoaded, setIsLoaded] = React.useState(false);
+    // const [inf, setInfo] = React.useState();
 
     useEffect(() => {
         dispatch(fetchAllCars())
-        dispatch(fetchProfileData());
+        // dispatch(fetchProfileData());
         // userIsAuth()
         // dispatch(fetchAuth(window.localStorage.getItem("token")));
     }, [])
