@@ -18,14 +18,14 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                     <img src={imgUrl} alt=""/>
                 </div>
                 <div className="item-body__specs">
-                    {specs ? specs.map(characteristic => <p className='text' key={characteristic}>{characteristic}</p>) : <p>None</p>}
+                    {specs ? specs.map(characteristic => <p className='text'>{characteristic}</p>) : <p>None</p>}
                 </div>
                 <div className="item-body__price">
                     <p className='text'><span>{price}/</span>day</p>
                 </div>
                 <div className="item-body__btns">
                     <div className="about btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}}  to="/car" className="about__link">About</Link></div>
-                    <div className="rent-now btn"><Link to="/rent" className="rent-now__link">Rent Now</Link></div>
+                    <div className="rent-now btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}} to="/rent" className="rent-now__link">Rent Now</Link></div>
                 </div>
             </div>
         </>

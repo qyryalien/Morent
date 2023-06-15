@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProfileData, userGetOrders } from "../../redux/slices/personalFullInfo";
 import { Pagination } from "../../components";
 import { setCurentAuthSession } from "../../redux/slices/auth";
+import { setRenderOrderList } from "../../redux/slices/personalFullInfo";
 
 import axios from "../../axiosConfigs/axiosBaseSettings";
 
@@ -14,7 +15,7 @@ export const Profile = () => {
     const navigate = useNavigate()
     // const info = useSelector(state => state.userInfo.userInfo);
     // let info = useSelector(state => state.userInfo.userInfo);
-    // let orders = useSelector(state => state.userInfo.userOrderList);
+    let {renderOrderList} = useSelector(state => state.userInfo);
     
     const [infoError, setInfoError] = React.useState(null);
     const [infoIsLoaded, setInfoIsLoaded] = React.useState(false);
@@ -25,6 +26,7 @@ export const Profile = () => {
             const response = await axios.get("/api/profile/");
             if (response.status === 401) {
                 dispatch(setCurentAuthSession(false));
+                
             }
             if (response.status === 200) {
                 dispatch(setCurentAuthSession(true));
@@ -34,9 +36,9 @@ export const Profile = () => {
             }
         } catch (error) {
             if (error.response.status === 401) {
-                    dispatch(setCurentAuthSession(false));
-                    navigate("/login");
-                }
+                dispatch(setCurentAuthSession(false));
+                navigate("/login");
+            }
             // if (response.status === 200) {
             //     dispatch(setCurentAuthSession(true));
             //     setIsLoaded(true);
@@ -111,7 +113,7 @@ export const Profile = () => {
                                 <div className="orders-list__subtitle">Status</div>
                             </div>
                             <div className="orders-list__items">
-                                {(orders ? Object.values(orders) : Array(5)).map((order, id) => 
+                                {(renderOrderList ? Object.values(renderOrderList) : Array(5)).map((order, id) => 
                                     <div className="orders-list__item" key={id}>
                                         <div className="orders-list__value">{order.car_name}</div>
                                         <div className="orders-list__value">{order.pick_up_city}</div>
@@ -123,7 +125,10 @@ export const Profile = () => {
                             
                         </div>
                     </div>
-                    <Pagination reqLen={orders ? orders.length : 0}></Pagination>
+                    {orders ? 
+                        <Pagination reqLen={orders.length} itemList={orders} actionfn={setRenderOrderList}></Pagination>
+                    : <div></div>
+                    }
                 </div>
                 
             </div>

@@ -33,9 +33,10 @@ export const Login = () => {
     async function fetchAuth(params) {
         try {
             const response = await axios.post("/api/login/", params);
-            // if (response.status === 401) {
-            //     dispatch(setCurentAuthSession(false));
-            // }
+            if (response.status === 401) {
+                dispatch(setCurentAuthSession(false));
+                alert("Неверный логин или пароль, повторите попытку.")    
+            }
             if (response.status === 200) {
                 dispatch(setCurentAuthSession(true));
                 setIsLoaded(true);

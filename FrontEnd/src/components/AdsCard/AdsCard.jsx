@@ -1,8 +1,12 @@
 import React from 'react';
 import "./AdsCard.scss";
+import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setCurrentCarID } from '../../redux/slices/carList';
 // import Koenigsegg from "/Koenigsegg.png";
 
 export const AdsCard = ({title, text, imgUrl}) => {
+    const dispatch = useDispatch()
     return(
         <>
             <div className="card">
@@ -12,7 +16,7 @@ export const AdsCard = ({title, text, imgUrl}) => {
                     
                 </div>
                 <div className="card__img-body">
-                    <div className="card-btn btn">Rental Car</div>
+                    <Link to="/rent" onClick={() => {dispatch(setCurrentCarID(0))}} className="card-btn btn">Rental Car</Link>
                     <img src={imgUrl} alt=""/>
                 </div>
             </div>

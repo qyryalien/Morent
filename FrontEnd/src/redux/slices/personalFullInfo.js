@@ -93,12 +93,16 @@ const userProfileData = createSlice({
 	name: "userInfo",
 	initialState: {
 		userInfo: null,
+		renderOrderList: [],
 		userOrderList: [],
 		status: null,
 	},
 	reducers: {
 		setUserInfo(state, action) {
 			state.userInfo = action.payload;
+		},
+		setRenderOrderList(state, action) {
+			state.renderOrderList = action.payload;
 		},
 	},
 	extraReducers: {
@@ -128,5 +132,5 @@ const userProfileData = createSlice({
 	},
 });
 
-export const { setUserInfo } = userProfileData.actions;
+export const { setUserInfo, setRenderOrderList } = userProfileData.actions;
 export default userProfileData.reducer;

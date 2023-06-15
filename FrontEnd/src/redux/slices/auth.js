@@ -9,11 +9,10 @@ export const userIsAuth = createAsyncThunk("auth/userIsAuth", async () => {
 		const response = await axios.post(
 			"/api/login/",
 			{
-				username: window.localStorage.getItem("username") || "-",
-				password: window.localStorage.getItem("password") || "-",
+				access: window.localStorage.getItem("access"),
 			},
 			{
-				headers: { authorization: `token ${window.localStorage.getItem("token")}` },
+				headers: { authorization: `Bearer ${window.localStorage.getItem("access")}` },
 			}
 		);
 		return true;

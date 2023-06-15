@@ -6,6 +6,7 @@ import { fetchRegistration } from "../../redux/slices/register";
 import axios from "../../axiosConfigs/axiosBaseSettings";
 import { selectIsRegister } from "../../redux/slices/register";
 import { setCurentAuthSession } from "../../redux/slices/auth";
+import Select from "react-select";
 
 import "./Rent.scss"
 
@@ -46,11 +47,38 @@ export const Rent = () => {
         }
     }  
 
-    console.log("RENT obj info in fn fetchProfileData", info);
+    const [citys, setCitys] = React.useState();
+    async function fetchCitysList() {
+        try {
+            const response = await axios.get("/api/city");
+            if (response.status === 401) {
+                dispatch(setCurentAuthSession(false));
+            }
+            if (response.status === 200) {
+                // let data = response.data.map(obj =>  { 
+                //     return {"value": obj.name, "label": obj.name }
+                // })
+                // console.log("data cityes ", data)
+                setCitys(response.data);
+            }
+        } catch (error) {
+            if (error.response.status === 401) {
+                dispatch(setCurentAuthSession(false));
+                navigate("/login");
+            }
+        }
+    }  
+
+    let { listOfCars } = useSelector(state => state.carssList);
+    let { currentCarID } = useSelector(state => state.carssList);
+    let curentCar;
+    if (currentCarID !== 0){
+        curentCar = listOfCars.filter(car => car.id === currentCarID)[0];
+    }
 
     React.useEffect(() => {
+        fetchCitysList()
         fetchProfileData()
-        // userGetOrders()
         // info = useSelector(state => state.userInfo.userInfo);
     }, [])
 
@@ -71,21 +99,45 @@ export const Rent = () => {
     const onSubmit = async (data) => {
         // const info = await dispatch(fetchRegistration(data))
         
-        console.log("obj info in fn fetchProfileData", info);
+        console.log("full data on submit", data);
         let username = info.id;
-        const response = await axios.post("http://127.0.0.1:8000/api/payment/", {... data, username});
-        console.log(response);
+        try {
+            let response;
+            if (currentCarID !== 0) {
+                let car = curentCar.id;
+                response = await axios.post("http://127.0.0.1:8000/api/payment/", {... data, username, car});
+            } else {
+                response = await axios.post("http://127.0.0.1:8000/api/payment/", {... data, username});
+            } 
+            
+            if (response.status === 401) {
+                dispatch(setCurentAuthSession(false));
+                navigate("/login");
+            }
+            if (response.status === 200) {
+                dispatch(setCurentAuthSession(true));
+                // setInfoIsLoaded(true);
+                // setInfo(response.data);
+                navigate("/");
+            }
+        } catch (error) {
+            if (error.response.status === 401) {
+                    dispatch(setCurentAuthSession(false));
+                    navigate("/login");
+            }
+            // if (response.status === 200) {
+            //     dispatch(setCurentAuthSession(true));
+            //     setIsLoaded(true);
+            //     setInfo(response.data);
+            //     // navigate("/");
+            // }
+        }
+        // console.log(response);
         
-        console.log("isAuth", isAuth)
-        // if (isAuth){
-        //     console.log("workding")
-        //     let fn = () => {navigate("/login")}
-        //     fn()
-        // }
- 
-        
+        console.log("isAuth", isAuth) 
         // reset()
     }
+    
 
     return (
         <>
@@ -137,14 +189,23 @@ export const Rent = () => {
                         <form action="" onSubmit={handleSubmit(onSubmit)}>
                             <label>
                                 Locations
-                                <input placeholder="Select your city"  {...register("pick_up_city", {
-                                    required: true,
-                                })} />
+                                <select 
+                                    name="Age"
+                                    {...register("pick_up_city", {
+                                        required: true,
+                                    })}
+                                >
+                                    <option>{"Select your city"}</option>
+                                    {(citys ? citys : Array(3)).map(item => {
+                                        return <option value={item.name}>{item.name}</option>
+                                    })}
+                                </select>
                             </label>
                             <label>
                                 Date
                                 <input placeholder="Select your date"  {...register("pick_up_date", {
                                     required: true,
+                                    
                                 })} />
                             </label>
                             <label>
@@ -155,9 +216,23 @@ export const Rent = () => {
                             </label>
                             <label>
                                 Car
-                                <input placeholder="Your car"  {...register("car", {
-                                    required: true,
-                                })}/>
+                                {currentCarID !== 0 
+                                    ?   <input placeholder="Your car" readonly value={curentCar.title} {...register("car", {
+                                            required: true,
+                                        })}/>
+                                    :   <select 
+                                            // name="Age"
+                                            {...register("car", {
+                                                required: true,
+                                            })}
+                                        >
+                                            <option>{"Your car"}</option>
+                                            {(listOfCars ? listOfCars : Array(3)).map(car => {
+                                                return <option value={car.id}>{car.title}</option>
+                                            })}
+                                        </select>  
+                                }
+                                
                             </label>
                         </form>
 
@@ -165,9 +240,17 @@ export const Rent = () => {
                         <form action="" onSubmit={handleSubmit(onSubmit)}>
                             <label>
                                 Locations
-                                <input placeholder="Select your city"  {...register("drop_off_city", {
-                                    required: true,
-                                })} />
+                                <select 
+                                    name="Age"
+                                    {...register("drop_off_city", {
+                                        required: true,
+                                    })}
+                                >
+                                    <option>{"Select your city"}</option>
+                                    {(citys ? citys : Array(3)).map(item => {
+                                        return <option value={item.name}>{item.name}</option>
+                                    })}
+                                </select>
                             </label>
                             <label>
                                 Date
@@ -194,14 +277,16 @@ export const Rent = () => {
                             <div className="title-block__sub-title">We are getting to the end. Just few clicks and your rental is ready!</div>
                         </div>
                         <form action="" onSubmit={handleSubmit(onSubmit)}>
-                            <label>
-                                <input {...register("agree1", {
-                                    value: "I agree with sending an Marketing and newsletter emails. No spam, promissed!"
+                            <label className="checkbox-body">{"I agree with sending an Marketing and newsletter emails. No spam, promissed!"}
+                                <input type='checkbox' {...register("agree1", {
+                                    value: "I agree with sending an Marketing and newsletter emails. No spam, promissed!",
+                                    required: true,
                                 })} />
                             </label>
-                            <label>
-                                <input {...register("agree2", {
-                                    value: "I agree with our terms and conditions and privacy policy."
+                            <label className="checkbox-body">{"I agree with our terms and conditions and privacy policy."}
+                                <input type='checkbox' {...register("agree2", {
+                                    value: "I agree with our terms and conditions and privacy policy.",
+                                    required: true,
                                 })} />
                             </label>
                             <div className="form__buttons">

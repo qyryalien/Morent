@@ -5,14 +5,14 @@ const instance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
-	if (window.localStorage.getItem("token")) {
-		config.headers.Authorization = `token ${window.localStorage.getItem("token")}`;
+	if (window.localStorage.getItem("access")) {
+		config.headers.Authorization = `Bearer ${window.localStorage.getItem("access")}`;
 		// config.headers.Authorization = window.localStorage.getItem("token");
 	}
-	if (config.data.username != "-" && config.data.password != "-") {
-		window.localStorage.setItem("username", config.data.username);
-		window.localStorage.setItem("password", config.data.password);
-	}
+	// if (config.data.username != "-" && config.data.password != "-") {
+	// 	window.localStorage.setItem("username", config.data.username);
+	// 	window.localStorage.setItem("password", config.data.password);
+	// }
 	// config.headers.Authorization = window.localStorage.getItem("token");
 	return config;
 });
@@ -21,7 +21,8 @@ instance.interceptors.response.use(
 	(response) => {
 		// Any status code that lie within the range of 2xx cause this function to trigger
 		// Do something with response data
-		window.localStorage.setItem("token", response.data.token);
+		window.localStorage.setItem("refresh", response.data.refresh);
+		window.localStorage.setItem("access", response.data.access);
 		return response;
 	},
 	(error) => {

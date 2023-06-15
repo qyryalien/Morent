@@ -85,6 +85,7 @@
 
 .login {
 	margin-left: 20px;
+	min-width: 86px;
 
 	@media(max-width: $mobile) {
 		margin-left: 0px;
