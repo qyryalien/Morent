@@ -3,6 +3,7 @@ version: "3.9"
 services:
   db:
     image: postgres
+    restart: always
     volumes:
       - dbdata:/var/lib/postgresql/data/
     environment:
@@ -25,6 +26,12 @@ services:
       - db
   redis:
     image: redis:alpine
+  
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
     
 volumes:
   pgdbdata: null
