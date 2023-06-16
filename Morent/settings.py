@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-q763ns-3#x6yqekmg2qsvqrg1ma4ge)9tphbz+61^kbg7t-#t=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
 
 
 # Application definition
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
+    'django.contrib.postgres',
 ]
 
 MIDDLEWARE = [
