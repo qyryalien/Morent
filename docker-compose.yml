@@ -11,6 +11,8 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     container_name: db
+    networks:
+      - django-redis-postgres
   backend:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -24,8 +26,13 @@ services:
       - POSTGRES_PASSWORD=postgres
     depends_on:
       - db
+    networks:
+      - django-redis-postgres
   redis:
     image: redis:alpine
-    
+    networks:
+      - django-redis-postgres
+networks:
+  - django-redis-postgres    
 volumes:
   pgdbdata: null
