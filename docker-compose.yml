@@ -4,11 +4,12 @@ services:
   db:
     image: postgres
     volumes:
-      - ./data/db:/var/lib/postgresql/data
+      - dbdata:/var/lib/postgresql/data/
     environment:
-      - POSTGRES_DB=postgres
+      - POSTGRES_NAME=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+    container_name: db
   backend:
     build: .
     command: python manage.py runserver 0.0.0.0:8000
@@ -24,4 +25,6 @@ services:
       - db
   redis:
     image: redis:alpine
-
+    
+volumes:
+  pgdbdata: null
