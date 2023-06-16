@@ -20,6 +20,9 @@ const postsSlice = createSlice({
 		setRenderList: (state, action) => {
 			state.renderList = action.payload;
 		},
+		setListOfCars: (state, action) => {
+			state.listOfCars = action.payload;
+		},
 		setCurrentCarID: (state, action) => {
 			state.currentCarID = action.payload;
 		},
@@ -37,5 +40,5 @@ const postsSlice = createSlice({
 		},
 	},
 });
-export const { setRenderList, setCurrentCarID } = postsSlice.actions;
+export const { setRenderList, setListOfCars, setCurrentCarID } = postsSlice.actions;
 export default postsSlice.reducer;

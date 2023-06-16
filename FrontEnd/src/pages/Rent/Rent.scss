@@ -77,7 +77,43 @@ form {
 
         color: #90A3BF;
     }
+
+    input[type=checkbox] {
+        width: 20px;
+    }
+
+    .checkbox-body {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+        align-items: center;
+        flex: 1 1 100%;
+    }
+
+    select {
+        background: #F6F7F9;
+        border-radius: 10px;
+        padding: 16px 32px;
+        width: 386px;
+        min-height: 60px;
+
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 900%;
+
+
+        color: #90A3BF;
+    }
+
+    option {
+        font-style: normal;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 900%;
+    }
 }
+
 
 .sign-up {
     display: flex;

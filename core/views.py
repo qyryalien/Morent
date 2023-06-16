@@ -1,3 +1,4 @@
+from django.contrib.auth import login
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import INTERNAL_RESET_SESSION_TOKEN
 from django.core.cache import cache
@@ -7,15 +8,13 @@ from django.http import HttpResponseNotFound
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from knox.auth import TokenAuthentication
-from knox.models import AuthToken
-from knox.views import LoginView as KnoxLoginView
 # API IMPORT
 from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView, RetrieveAPIView, CreateAPIView, DestroyAPIView
 import django_filters.rest_framework
 from rest_framework import generics, permissions, status
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -40,19 +39,14 @@ class RegisterAPI(generics.GenericAPIView):
         POST
 
     request data:
-        username
-        password
-        email
+        username, password, email
 
     response data:
         user:
-            id
-            username
-            email
-            first_name
-            last_name
+            id, username, email, first_name, last_name
     """
     serializer_class = RegisterSerializer
+    permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -60,36 +54,6 @@ class RegisterAPI(generics.GenericAPIView):
         user = serializer.save()
         return Response({
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
-        })
-
-
-class LoginAPIView(generics.GenericAPIView):
-    """
-        An endpoint for loging.
-
-        method:
-            POST
-
-        request data:
-            username
-            password
-
-        response data:
-            expiry (data-time)
-            token
-            user:
-                username
-
-    """
-    serializer_class = LoginSerializer
-
-    def post(self, request):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data
-        return Response({
-            "user": UserSerializer(user, context=self.get_serializer_context()).data,
-            "token": AuthToken.objects.create(user)[1]
         })
 
 
@@ -308,7 +272,7 @@ class CarListAPIView(ListAPIView):
             queryset = Car.objects.filter(is_published=True).prefetch_related('cat', 'engine', 'capacity')
             serializer_class = CarListSerializer(queryset, many=True)
 
-            cache.set(cache_key, serializer_class.data, timeout=300)
+            cache.set(cache_key, serializer_class.data, timeout=30)
             return Response(serializer_class.data, status=status.HTTP_200_OK)
 
 
@@ -337,13 +301,13 @@ class CarRetrieveAPIView(RetrieveAPIView):
 
         if cache_key in cache:
             queryset = cache.get(cache_key)
-            return Response(queryset)
+            return Response(queryset, status=status.HTTP_200_OK)
         else:
             queryset = Car.objects.filter(is_published=True, pk=kwargs.get("pk")).prefetch_related('cat', 'engine',
                                                                                                    'capacity')
             serializer_class = CarSerializer(queryset, many=True)
             cache.set(cache_key, serializer_class.data, timeout=60)
-            return Response(serializer_class.data)
+            return Response(serializer_class.data, status=status.HTTP_200_OK)
 
 
 class CarFilterListAPIView(ListAPIView):

@@ -1,29 +1,40 @@
 import React from "react";
-import {Routes, Route, Link} from "react-router-dom"
-import { selectIsAuth } from "../../redux/slices/auth";
+import {Routes, Route, Link, Navigate} from "react-router-dom"
+import { selectIsAuth, setCurentAuthSession, tryLogin } from "../../redux/slices/auth";
 import { userIsAuth } from "../../redux/slices/auth";
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./Header.scss"
+import axios from "axios";
 
 
 
 export const Header = () => {
+    const dispatch = useDispatch()
     // let isAuth = userIsAuth();
-    let isAuth = window.localStorage.getItem("token");
-    console.log(isAuth)
+    // let isAuth = window.localStorage.getItem("token");
+    let isAuth = useSelector(state => state.auth.curentAuthSession)
+    console.log(isAuth)    
 
-    
+    async function logout() {
+        let refresh = window.localStorage.getItem("refresh")
+        // let data = JSON.stringify(refresh)
+        const response = await axios.post("http://127.0.0.1:8000/api/logout/", {refresh});
+        window.localStorage.removeItem("access");
+        window.localStorage.removeItem("refresh");
+        dispatch(setCurentAuthSession(false))
+    }
 
     React.useEffect(() => {
-        userIsAuth()
+        
+        // dispatch(userIsAuth())
         console.log("HEARED did MOUNT")
         
         return ()=>{
             console.log("HEARED will UN--MOUNT")
         }
-    },)
-
+    }, [])
+    
     return(
         <>
             <header className="header">
@@ -46,11 +57,19 @@ export const Header = () => {
                             ? <Link to="/profile" className="login__link">Profile</Link>
                             : <Link to="/login" className="login__link">Login</Link> 
                         }
-                        
-                        
                     </div>
+                    {isAuth 
+                        ? <button className="login btn btn_white" onClick={logout}>                        
+                            <div className="login__link">Exit</div>
+                          </button>
+                        : <div></div> 
+                    }
                 </div>
+                
             </header>
+            {/* {
+                isAuth === false ? <Navigate to="/login" /> : 0
+            } */}
         </>
     )
 }

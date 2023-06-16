@@ -34,6 +34,7 @@
 
     &__body {
         display: flex;
+        flex: 1 1 auto;
         flex-direction: column;
         align-items: center;
         justify-content: space-between;
@@ -54,7 +55,13 @@
 
 .car-list {
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
     align-items: flex-start;
     row-gap: 5px;
+
+    .empty-car-list {
+        font-size: 24px;
+        margin-top: 70px;
+    }
 }

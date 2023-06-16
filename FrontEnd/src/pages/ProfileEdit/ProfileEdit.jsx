@@ -1,18 +1,42 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "../../axiosConfigs/axiosBaseSettings";
-import { fetchProfileData, updateUserProfile } from "../../redux/slices/personalFullInfo";
+import { fetchProfileData, setUserInfo, updateUserProfile } from "../../redux/slices/personalFullInfo";
 import { useDispatch, useSelector } from "react-redux"
 
 import "./ProfileEdit.scss"
-import {Form} from "../../components/Form/Form";
+import { setCurentAuthSession } from "../../redux/slices/auth";
 
 export const ProfileEdit = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    let isAuth = useSelector(state => state.auth.curentAuthSession);
+    const [error, setError] = React.useState(null);
+    const [isLoaded, setIsLoaded] = React.useState(false);
+    const [info, setInfo] = React.useState();
     
-    const info = useSelector(state => state.userInfo.userInfo);
-    // const info = dispatch(fetchProfileData());
-    
+    async function fetchProfileData() {
+        try {
+            const response = await axios.get("/api/profile/");
+            if (response.status === 401) {
+                dispatch(setCurentAuthSession(false));
+            }
+            setIsLoaded(true);
+            setInfo(response.data);
+        } catch (error) {
+            if (error.response.status === 401) {
+                dispatch(setCurentAuthSession(false));
+                navigate("/login");
+            }
+            setIsLoaded(true);
+            setError(error);
+        }
+    }     
+    React.useEffect(() => {
+        fetchProfileData()
+    },[])
+
     const {
         register,
         formState:{errors},
@@ -29,17 +53,36 @@ export const ProfileEdit = () => {
         values: info
     });
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         // updateUserProfile(data)
-        axios.patch("http://127.0.0.1:8000/api/profile/", {...data})
+        await axios.patch("http://127.0.0.1:8000/api/profile/", {...data})
         .then(function (response) {
-            console.log(response);
+            console.log("STILL responce in block onSubmit", response);
+            if (response.status === 401) {
+                console.log("work setCurentAuthSession(false) in responce.status === 401");
+                dispatch(setCurentAuthSession(false));
+            }
+            if (response.status === 200) {
+                dispatch(setUserInfo(response.data));
+                navigate("/profile")
+                
+            }
           })
         .catch(function (error) {
-            console.log(error);
+            console.log("STILL error in catch block onSubmit", error);
+            if (error.response.status === 401) {
+                //
+                console.log("err catch if responce.status === 401");
+                dispatch(setCurentAuthSession(false));
+                navigate("/login")
+            }
         });
         
-        reset()
+        // reset()
+    }
+
+    if (!isAuth) {
+        return <Navigate to="/" />
     }
 
     return (

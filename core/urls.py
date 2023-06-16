@@ -1,13 +1,14 @@
 from django.urls import path, include
-from knox import views as knox_views
+from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView, TokenBlacklistView
+
 from core.views import *
 
 urlpatterns = [
     # API
     path('api/register/', RegisterAPI.as_view(), name='register'),
-    path('api/login/', LoginAPIView.as_view(), name='login'),
-    path('api/logout/', knox_views.LogoutView.as_view(), name='logout'),
-    path('api/logoutall/', knox_views.LogoutAllView.as_view(), name='logoutall'),
+    path('api/login/', TokenObtainPairView.as_view(), name='login'),
+    path('api/login/refresh', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/logout/', TokenBlacklistView.as_view(), name='token_blacklist'),
     path('api/password_reset/<pk>', ChangePasswordView.as_view(), name='password_reset'),
     path('api/send_password_reset_email/', SendChangePasswordEmailView,
          name='send_password_resel_email'),
