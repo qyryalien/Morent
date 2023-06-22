@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-	baseURL: "http://127.0.0.1:8000",
+	baseURL: "https://morent-kv7s.onrender.com:80",
 });
 
 instance.interceptors.request.use((config) => {
