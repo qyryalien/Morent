@@ -57,6 +57,7 @@ vine = "5.0.0"
 wcwidth = "0.2.6"
 whitenoise = "6.5.0"
 win32-setctime = "1.1.0"
+dj-database-url = "2.0.0"
 
 
 [build-system]
