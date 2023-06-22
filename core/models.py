@@ -9,9 +9,9 @@ class Car(models.Model):
     """Model for cars that we are going to rent out"""
     title = models.CharField(max_length=50, verbose_name="Название машины")
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL")
-    main_photo = models.ImageField(upload_to="opt/render/project/src/static/photos/%Y/%m/%d/", verbose_name="Фото cо стороны")
-    inside_photo_one = models.ImageField(upload_to="opt/render/project/src/static/photos/%Y/%m/%d/", verbose_name="Первое фото внутри")
-    inside_photo_two = models.ImageField(upload_to="opt/render/project/src/static/photos/%Y/%m/%d/", verbose_name="Второе фото внутри")
+    main_photo = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name="Фото cо стороны")
+    inside_photo_one = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name="Первое фото внутри")
+    inside_photo_two = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name="Второе фото внутри")
     is_published = models.BooleanField(default=True, verbose_name="Публикация")
     gasoline = models.IntegerField(verbose_name="Обьем топливного бака")
     rent_count = models.IntegerField(verbose_name="Количество аренд")
