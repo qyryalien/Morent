@@ -34,7 +34,7 @@ export const FiltersGroup = ({title, propertyList}) => {
         
         if (paramsString.length > 0){
             let params = `?${paramsString}`
-            let response = await axios.get(`http://127.0.0.1:8000/api/filter/${params}`)
+            let response = await axios.get(`https://morent-kv7s.onrender.com/api/filter/${params}`)
             // dispatch(setRenderList(response.data))
             dispatch(setListOfCars(response.data))
         } else {
