@@ -23,7 +23,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
-    re_path(r'', core.views.catchall)
+    re_path(r'', catchall)
 ]
 
 if settings.DEBUG:
