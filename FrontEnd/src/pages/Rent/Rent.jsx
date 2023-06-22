@@ -105,9 +105,9 @@ export const Rent = () => {
             let response;
             if (currentCarID !== 0) {
                 let car = curentCar.id;
-                response = await axios.post("http://127.0.0.1:8000/api/payment/", {... data, username, car});
+                response = await axios.post("https://morent-kv7s.onrender.com/api/payment/", {... data, username, car});
             } else {
-                response = await axios.post("http://127.0.0.1:8000/api/payment/", {... data, username});
+                response = await axios.post("https://morent-kv7s.onrender.com/api/payment/", {... data, username});
             } 
             
             if (response.status === 401) {
