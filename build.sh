@@ -2,6 +2,7 @@
 # exit on error
 set -o errexit
 
+pip install --upgrade poetry
 poetry add $( cat requirements.txt )
 poetry install
 
