@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from core.views import *
 from Morent import settings
 from django.contrib.auth import views as auth_views
@@ -23,6 +23,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
+    re_path(r'', views.catchall)
 ]
 
 if settings.DEBUG:
