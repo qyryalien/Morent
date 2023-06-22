@@ -22,9 +22,6 @@ from core.serializers import *
 from django.contrib.auth import login
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 
-redis_instance = redis.StrictRedis(host='127.0.0.1', port=6379, db=1)
-
-
 def pageNotFound(request, exception):
     """Viewer 404 page function"""
     return HttpResponseNotFound("Страница не найдена")
