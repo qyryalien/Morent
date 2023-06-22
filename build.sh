@@ -2,7 +2,7 @@
 # exit on error
 set -o errexit
 
-poetry lock
+poetry add $( cat requirements.txt )
 poetry install
 
 python manage.py collectstatic
