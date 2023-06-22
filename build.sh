@@ -2,8 +2,9 @@
 # exit on error
 set -o errexit
 
-poetry install
 poetry lock
+poetry install
+
 python manage.py collectstatic
 python manage.py makemigrations core
 python manage.py migrate
