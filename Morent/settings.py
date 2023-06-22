@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from datetime import timedelta
 from pathlib import Path
-
+import dj_database_url
 from rest_framework.settings import api_settings
 
 from core.keys import ACCESS_KEY_ID, SECRET_ACCESS_KEY
