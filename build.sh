@@ -8,7 +8,7 @@ for file in $(ls build | grep -E -v '^(index\.html|static|root)$'); do
     mv "build/$file" build/root;
 done
 
-cd .
+cd ..
 
 pip install --upgrade pip; pip install poetry; /opt/render/project/src/.venv/bin/poetry install
 python manage.py collectstatic --no-input
