@@ -26,15 +26,6 @@ from django.views.generic import TemplateView
 
 catchall = TemplateView.as_view(template_name='index.html')
 
-def iter_response(response, chunk_size=65536):
-    try:
-        while True:
-            data = response.read(chunk_size)
-            if not data:
-                break
-            yield data
-    finally:
-        response.close()
 
 def pageNotFound(request, exception):
     """Viewer 404 page function"""
