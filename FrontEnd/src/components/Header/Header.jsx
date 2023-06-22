@@ -19,7 +19,7 @@ export const Header = () => {
     async function logout() {
         let refresh = window.localStorage.getItem("refresh")
         // let data = JSON.stringify(refresh)
-        const response = await axios.post("http://127.0.0.1:8000/api/logout/", {refresh});
+        const response = await axios.post("https://morent-kv7s.onrender.com/api/logout/", {refresh});
         window.localStorage.removeItem("access");
         window.localStorage.removeItem("refresh");
         dispatch(setCurentAuthSession(false))
