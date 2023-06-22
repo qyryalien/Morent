@@ -22,6 +22,11 @@ from core.serializers import *
 from django.contrib.auth import login
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 
+from django.views.generic import TemplateView
+
+catchall = TemplateView.as_view(template_name='index.html')
+
+
 def pageNotFound(request, exception):
     """Viewer 404 page function"""
     return HttpResponseNotFound("Страница не найдена")
