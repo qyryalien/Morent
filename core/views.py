@@ -264,8 +264,11 @@ class CarListAPIView(ListAPIView):
 
         if cache_key in cache:
             queryset = cache.get(cache_key)
-            print("Cache is working")
-            return Response(queryset, status=status.HTTP_200_OK)
+            message = {
+                "data": queryset,
+                "cache status": "cache is working"
+            }
+            return Response(message, status=status.HTTP_200_OK)
         else:
             queryset = Car.objects.filter(is_published=True).prefetch_related('cat', 'engine', 'capacity')
             serializer_class = CarListSerializer(queryset, many=True)
