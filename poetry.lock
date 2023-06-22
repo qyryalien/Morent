@@ -629,6 +629,26 @@ files = [
 ]
 
 [[package]]
+name = "django-ses"
+version = "3.5.0"
+description = "A Django email backend for Amazon's Simple Email Service"
+optional = false
+python-versions = ">=3.7,<4.0"
+files = [
+    {file = "django_ses-3.5.0-py3-none-any.whl", hash = "sha256:3522fe531155eb06bb015b3b36324c059194450633b33f9bd5bc9d1328822fe2"},
+    {file = "django_ses-3.5.0.tar.gz", hash = "sha256:dc1644f50608fbf3a64f085a371c61d56d68eba3c5efa69651f13dc3ba05049d"},
+]
+
+[package.dependencies]
+boto3 = ">=1.0.0"
+django = ">=2.2"
+pytz = ">=2016.10"
+
+[package.extras]
+bounce = ["cryptography (>=36.0.2)", "requests (>=2.27.1)"]
+events = ["cryptography (>=36.0.2)", "requests (>=2.27.1)"]
+
+[[package]]
 name = "djangorestframework"
 version = "3.14.0"
 description = "Web APIs for Django, made easy."
