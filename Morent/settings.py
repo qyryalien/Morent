@@ -75,7 +75,7 @@ ROOT_URLCONF = 'Morent.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
+        'DIRS': [FRONTEND_DIR / 'build']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
