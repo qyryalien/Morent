@@ -19,7 +19,8 @@ from core.keys import ACCESS_KEY_ID, SECRET_ACCESS_KEY
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+BACKEND_DIR = BASE_DIR
+FRONTEND_DIR = BASE_DIR / 'FrontEnd'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
