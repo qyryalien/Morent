@@ -103,7 +103,7 @@ WSGI_APPLICATION = 'Morent.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Feel free to alter this value to suit your needs.
-        default='postgresql://postgres:postgres@localhost:5432/morent',
+        default='postgres://morent:0vD20p3Ecsyckjw8GMRQojSjp5Fp74VT@dpg-ci9v2d5gkuvusau5gvj0-a.frankfurt-postgres.render.com/morent',
         conn_max_age=600
     )
 }
@@ -167,6 +167,9 @@ if not DEBUG:
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
     }
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = 'media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
