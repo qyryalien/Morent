@@ -29,7 +29,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = []
+
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 # Application definition
 
@@ -95,7 +99,7 @@ WSGI_APPLICATION = 'Morent.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Feel free to alter this value to suit your needs.
-        default='postgres://morent:0vD20p3Ecsyckjw8GMRQojSjp5Fp74VT@dpg-ci9v2d5gkuvusau5gvj0-a.frankfurt-postgres.render.com/morent',
+        default='postgres://morent:0vD20p3Ecsyckjw8GMRQojSjp5Fp74VT@dpg-ci9v2d5gkuvusau5gvj0-a/morent',
         conn_max_age=600
     )
 }
@@ -142,11 +146,7 @@ USE_TZ = True
 # This setting tells Django at which URL static files are going to be served to the user.
 # Here, they well be accessible at your-domain.onrender.com/static/...
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = []
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'FrontEnd/public/media/')
-MEDIA_URL = 'media/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
