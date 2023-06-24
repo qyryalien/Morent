@@ -23,11 +23,6 @@ from django.contrib.auth import login
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 
 
-def pageNotFound(request, exception):
-    """Viewer 404 page function"""
-    return HttpResponseNotFound("Страница не найдена")
-
-
 # Register API
 class RegisterAPI(generics.GenericAPIView):
     """
