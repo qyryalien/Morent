@@ -364,9 +364,9 @@ class AllCategoryListAPIView(ListAPIView):
                 }
                 return Response(message, status=status.HTTP_400_BAD_REQUEST)
             message = {
-                'cat': cat_serializer.data,
-                'engine': engine_serializer.data,
-                'capacity': capacity_serializer.data,
+                'Category': cat_serializer.data,
+                'Engine': engine_serializer.data,
+                'Capacity': capacity_serializer.data,
             }
             cache.set(cache_key, message, timeout=300)
             return Response(message, status=status.HTTP_200_OK)
