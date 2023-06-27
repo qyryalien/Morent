@@ -323,7 +323,7 @@ class CarFilterListAPIView(ListAPIView):
     serializer_class = CarListSerializer
     queryset = Car.objects.all().select_related('cat', 'engine', 'capacity')
     filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
-    filterset_fields = ['cat', 'engine', 'capacity']
+    filterset_fields = ['Category', 'Engine', 'Capacity']
 
 
 class AllCategoryListAPIView(ListAPIView):
