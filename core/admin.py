@@ -20,7 +20,7 @@ class CarAdmin(admin.ModelAdmin):
     def get_html_photo(self, object):
         """Method for displaying photo in the admin panel"""
         if object.main_photo:
-            return mark_safe(f"<img src='{object.main_photo.url}'width=50>")
+            return mark_safe(f"<img src='https://morent-backend-xavm.onrender.com/static{object.main_photo.url}'width=50>")
 
     get_html_photo.short_description = "Фото"
 
