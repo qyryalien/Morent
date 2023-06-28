@@ -2,12 +2,10 @@ import React from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux"
-import axios from "../../axiosConfigs/axiosAuthSettings";
 import { setCurentAuthSession } from "../../redux/slices/auth";
+import axios from "../../axiosConfigs/axiosAuthSettings";
 
 import "./Login.scss"
-import { Form } from "../../components/Form/Form";
-// import { fetchAuth, selectIsAuth, login } from "../../redux/slices/auth";
 
 export const Login = () => {
     const isAuth = useSelector(state => state.auth.curentAuthSession);
@@ -20,10 +18,6 @@ export const Login = () => {
         reset
     } = useForm({
         mode: "onBlur",
-        defaultValues: {
-            username: "Daunich",
-            password: 123
-        }
     });
 
     const [error, setError] = React.useState(null);
@@ -44,22 +38,6 @@ export const Login = () => {
                 navigate("/");
             }
         } catch (error) {
-            // try {
-            //     const response2 = await axios.post("/api/login/", params);
-            //     if (response2.status === 200) {
-            //         dispatch(setCurentAuthSession(true));
-            //         setIsLoaded(true);
-            //         setInfo(response2.data);
-            //         navigate("/");
-            //     }
-            // } catch (error2) {
-            //     if (error2.response.status === 401) {
-            //         dispatch(setCurentAuthSession(false));
-            //         // navigate("/login");
-            //         alert("Неверный логин или пароль, повторите попытку.")
-            //         console.log("Неверный логин или пароль, повторите попытку.")
-            //     }                
-            // }
             if (error.response.status === 401) {
                     dispatch(setCurentAuthSession(false));
                     // navigate("/login");
@@ -78,22 +56,8 @@ export const Login = () => {
     //     fetchAuth(data)
     // },[])
 
-    const onSubmit = async (data) => {
-        // login(data);
-        // const {payload} = 
+    const onSubmit = async (data) => { 
         fetchAuth(data);
-        // const res = await dispatch(fetchAuth(data));
-
-        // const res = fetchAuth(data)
-        // console.log("res ", res)s
-        // console.log("payload", payload)
-        // if (!payload){
-        //     return alert("Не удалось войти")
-        // }  
-        // if ('token' in payload.data){
-        //     window.localStorage.setItem("token", payload.data.token)
-        // }
-
         reset()
     }
 
@@ -132,7 +96,6 @@ export const Login = () => {
                                 <Link to="/" className="btn btn_white">Back to main</Link>
                                 <button type="submit" className="btn">
                                     Login
-                                    {/* <Link to="/registration" className="btn">Login</Link> */}
                                 </button>
                             </div>
                         </form>
