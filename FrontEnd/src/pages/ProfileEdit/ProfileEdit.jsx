@@ -1,16 +1,17 @@
 import React from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "../../axiosConfigs/axiosBaseSettings";
-import { fetchProfileData, setUserInfo, updateUserProfile } from "../../redux/slices/personalFullInfo";
+import { setUserInfo } from "../../redux/slices/personalFullInfo";
 import { useDispatch, useSelector } from "react-redux"
+import { setCurentAuthSession } from "../../redux/slices/auth";
+import axios from "../../axiosConfigs/axiosBaseSettings";
 
 import "./ProfileEdit.scss"
-import { setCurentAuthSession } from "../../redux/slices/auth";
 
 export const ProfileEdit = () => {
-    const navigate = useNavigate()
-    const dispatch = useDispatch()
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
     let isAuth = useSelector(state => state.auth.curentAuthSession);
     const [error, setError] = React.useState(null);
     const [isLoaded, setIsLoaded] = React.useState(false);
@@ -34,7 +35,7 @@ export const ProfileEdit = () => {
         }
     }     
     React.useEffect(() => {
-        fetchProfileData()
+        fetchProfileData();
     },[])
 
     const {
@@ -54,31 +55,24 @@ export const ProfileEdit = () => {
     });
 
     const onSubmit = async (data) => {
-        // updateUserProfile(data)
         await axios.patch("https://morent-backend-xavm.onrender.com/api/profile/", {...data})
         .then(function (response) {
-            console.log("STILL responce in block onSubmit", response);
+            
             if (response.status === 401) {
-                console.log("work setCurentAuthSession(false) in responce.status === 401");
                 dispatch(setCurentAuthSession(false));
             }
             if (response.status === 200) {
                 dispatch(setUserInfo(response.data));
-                navigate("/profile")
+                navigate("/profile");
                 
             }
           })
         .catch(function (error) {
-            console.log("STILL error in catch block onSubmit", error);
             if (error.response.status === 401) {
-                //
-                console.log("err catch if responce.status === 401");
                 dispatch(setCurentAuthSession(false));
-                navigate("/login")
+                navigate("/login");
             }
         });
-        
-        // reset()
     }
 
     if (!isAuth) {
@@ -117,7 +111,6 @@ export const ProfileEdit = () => {
                                 <Link to="/" className="btn btn_white">Back to main</Link>
                                 <button type="submit" className="btn">
                                     Confirm
-                                    {/* <Link to="/registration" className="btn">Login</Link> */}
                                 </button>
                             </div>
                         </form>
