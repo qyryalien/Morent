@@ -9,6 +9,7 @@ export const Pagination = ({reqLen, itemList, actionfn}) => {
     const ChankSize = 5;
     const max = Math.ceil(reqLen/ChankSize);
     let [currentPage, setCurrentPage] = React.useState(1);
+    // let [localState, forseUpdate] = React.useState(true);
     let endPoiner = currentPage * ChankSize;
     let startPoiner = endPoiner - ChankSize;
     
@@ -17,9 +18,17 @@ export const Pagination = ({reqLen, itemList, actionfn}) => {
 
     React.useEffect(() => {
         dispatch(actionfn(renderPages));
-    }, [currentPage, itemList])
+    }, [currentPage])
+
+    React.useEffect(() => {
+        paginate(1)
+        dispatch(actionfn(renderPages));
+    }, [itemList])
 
     const paginate = (currentPage) => {
+        if (currentPage > max) {
+            setCurrentPage(max)
+        }
         if (currentPage < 1 || currentPage > max) return;
         setCurrentPage(currentPage)
     }
@@ -27,7 +36,7 @@ export const Pagination = ({reqLen, itemList, actionfn}) => {
     return (
         <div className='pagination'>
             <div className="pagination__body">
-                <div className="pagination__btn_left btn" onClick={() => paginate(currentPage - 1)}>
+                <div className="pagination__btn_left btn" onClick={() => paginate(currentPage - 1, max, setCurrentPage)}>
                     <img src="/ArrowLeft.png" alt=""/>
                 </div>
                 <div className="pagination__text-body">
@@ -35,7 +44,7 @@ export const Pagination = ({reqLen, itemList, actionfn}) => {
                     <p>{currentPage} of {max}</p>
                 </div>
                     
-                <div className="pagination__btn_right btn" onClick={() => paginate(currentPage + 1)}>
+                <div className="pagination__btn_right btn" onClick={() => paginate(currentPage + 1, max, setCurrentPage)}>
                     <img src="/ArrowRight.png" alt=""/>
                 </div>
             </div>

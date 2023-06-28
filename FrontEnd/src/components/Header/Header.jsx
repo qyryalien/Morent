@@ -1,5 +1,5 @@
 import React from "react";
-import {Routes, Route, Link, Navigate} from "react-router-dom"
+import {Routes, Route, Link, Navigate, useNavigate} from "react-router-dom"
 import { selectIsAuth, setCurentAuthSession, tryLogin } from "../../redux/slices/auth";
 import { userIsAuth } from "../../redux/slices/auth";
 
@@ -11,6 +11,7 @@ import axios from "axios";
 
 export const Header = () => {
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     // let isAuth = userIsAuth();
     // let isAuth = window.localStorage.getItem("token");
     let isAuth = useSelector(state => state.auth.curentAuthSession)
@@ -19,10 +20,11 @@ export const Header = () => {
     async function logout() {
         let refresh = window.localStorage.getItem("refresh")
         // let data = JSON.stringify(refresh)
-        const response = await axios.post("https://morent-kv7s.onrender.com/api/logout/", {refresh});
+        const response = await axios.post("https://morent-backend-xavm.onrender.com/api/logout/", {refresh});
         window.localStorage.removeItem("access");
         window.localStorage.removeItem("refresh");
         dispatch(setCurentAuthSession(false))
+        navigate("/")
     }
 
     React.useEffect(() => {

@@ -41,15 +41,15 @@ export const Car = () => {
                                 <div className="car-description__buttons-block">
                                     <Link to="/" className="btn btn_white">Back to main</Link>
                                     <Link to="/rent" className="btn ">Rent Now</Link>
-                                    <a href="" className="btn btn_white">View review</a>
-                                    <a href="" className="btn ">Leave a review</a>
+                                    <div className="btn btn_white">View review</div>
+                                    <div className="btn ">Leave a review</div>
                                 </div>
                                 
                             </div>
                             <div className="car-body__galery">
-                                <img src={fullInfo.main_photo} alt=""/>
-                                <img src={fullInfo.inside_photo_one} alt=""/>
-                                <img src={fullInfo.inside_photo_two} alt=""/>
+                                <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.main_photo}`} alt=""/>
+                                <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.inside_photo_one}`} alt=""/>
+                                <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.inside_photo_two}`} alt=""/>
                             </div>
                         </div>
                         

@@ -10,16 +10,21 @@ export const FiltersGroup = ({title, propertyList}) => {
 
     const dispatch = useDispatch()
 
+    let valueTranslator = {
+        "Category": "cat",
+        "Engine": "engine",
+        "Capacity": "capacity"
+    }
+
     async function filterCarList() {
         let inputsObj = Array.from(document.querySelectorAll("input"))
             .filter(item => item.checked === true )
             .reduce((rezOb, item) => {
                 if (!rezOb.hasOwnProperty(item.attributes.group.nodeValue)){
-                    rezOb[item.attributes.group.nodeValue] = item.defaultValue
+                    rezOb[valueTranslator[item.attributes.group.nodeValue]] = item.defaultValue
                 } 
                 return rezOb
             }, {})
-        
         let allKeys = Array.from(document.querySelectorAll(".Filters-Group-title")).map(item => item.innerText);
         allKeys.forEach(key => {
             let arr = Array.from(document.querySelectorAll("input")).filter(item => item.attributes.group.nodeValue === key)
@@ -34,7 +39,7 @@ export const FiltersGroup = ({title, propertyList}) => {
         
         if (paramsString.length > 0){
             let params = `?${paramsString}`
-            let response = await axios.get(`https://morent-kv7s.onrender.com/api/filter/${params}`)
+            let response = await axios.get(`https://morent-backend-xavm.onrender.com/api/filter/${params}`)
             // dispatch(setRenderList(response.data))
             dispatch(setListOfCars(response.data))
         } else {

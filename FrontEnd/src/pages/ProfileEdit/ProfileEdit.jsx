@@ -55,7 +55,7 @@ export const ProfileEdit = () => {
 
     const onSubmit = async (data) => {
         // updateUserProfile(data)
-        await axios.patch("https://morent-kv7s.onrender.com/api/profile/", {...data})
+        await axios.patch("https://morent-backend-xavm.onrender.com/api/profile/", {...data})
         .then(function (response) {
             console.log("STILL responce in block onSubmit", response);
             if (response.status === 401) {

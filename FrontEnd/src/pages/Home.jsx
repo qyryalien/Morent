@@ -25,7 +25,7 @@ export const Home = () => {
         // вызывается post запрос на /api/login/ для проверки на 401 ошибку. Если 401 верн false (типо не авторизован)
         // ошибок нет, в трай вернуть true
         try {
-            const response = await axios.get("https://morent-kv7s.onrender.com/api/profile/", {
+            const response = await axios.get("https://morent-backend-xavm.onrender.com/api/profile/", {
 				headers: { authorization: `Bearer ${window.localStorage.getItem("access")}` },
 			});
             if (response.status === 401) {
@@ -45,7 +45,7 @@ export const Home = () => {
                 if(error.response.data.messages[0].message === "Token is invalid or expired") {
                     try {
                         let refresh = window.localStorage.getItem("refresh");
-                        let responce = await axios.post("https://morent-kv7s.onrender.com/api/login/refresh", {refresh})
+                        let responce = await axios.post("https://morent-backend-xavm.onrender.com/api/login/refresh", {refresh})
                         if (responce.status === 200) {
                             window.localStorage.setItem("access", responce.data.access);
                             console.log("access updated")
@@ -78,7 +78,7 @@ export const Home = () => {
 
     async function fetchFiltersList () {
         try {
-            let response = await axios.get("https://morent-kv7s.onrender.com/api/all_category/")
+            let response = await axios.get("https://morent-backend-xavm.onrender.com/api/all_category/")
             setFiltersList(Object.entries(response.data))
         } catch (error) {
             setFiltersError(error)

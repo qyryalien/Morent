@@ -44,15 +44,32 @@ export const Login = () => {
                 navigate("/");
             }
         } catch (error) {
-            const response = await axios.post("/api/login/", params);
-            // if (error.response.status === 401) {
-                //     dispatch(setCurentAuthSession(false));
-                //     navigate("/login");
-                // }
-            if (response.status === 200) {
+            // try {
+            //     const response2 = await axios.post("/api/login/", params);
+            //     if (response2.status === 200) {
+            //         dispatch(setCurentAuthSession(true));
+            //         setIsLoaded(true);
+            //         setInfo(response2.data);
+            //         navigate("/");
+            //     }
+            // } catch (error2) {
+            //     if (error2.response.status === 401) {
+            //         dispatch(setCurentAuthSession(false));
+            //         // navigate("/login");
+            //         alert("Неверный логин или пароль, повторите попытку.")
+            //         console.log("Неверный логин или пароль, повторите попытку.")
+            //     }                
+            // }
+            if (error.response.status === 401) {
+                    dispatch(setCurentAuthSession(false));
+                    // navigate("/login");
+                    alert("Неверный логин или пароль, повторите попытку.")
+                    console.log("Неверный логин или пароль, повторите попытку.")
+                }
+            if (error.response.status === 200) {
                 dispatch(setCurentAuthSession(true));
                 setIsLoaded(true);
-                setInfo(response.data);
+                setInfo(error.response.data);
                 navigate("/");
             }
         }
