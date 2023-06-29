@@ -58,7 +58,7 @@ export const Login = () => {
 
     const onSubmit = async (data) => { 
         fetchAuth(data);
-        reset()
+        // reset()
     }
 
     if (isAuth) {
