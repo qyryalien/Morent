@@ -1,10 +1,9 @@
 import React from 'react';
-import "./FiltersGroup.scss"
-// import axios from '../../axiosConfigs/axiosBaseSettings';
-import axios from 'axios';
-import { setListOfCars, setRenderList } from '../../redux/slices/carList';
 import { useDispatch } from 'react-redux';
-import { fetchAllCars } from '../../redux/slices/carList';
+import { setListOfCars, fetchAllCars } from '../../redux/slices/carList';
+import axios from 'axios';
+
+import "./FiltersGroup.scss";
 
 export const FiltersGroup = ({title, propertyList}) => {
 
@@ -40,10 +39,8 @@ export const FiltersGroup = ({title, propertyList}) => {
         if (paramsString.length > 0){
             let params = `?${paramsString}`
             let response = await axios.get(`https://morent-backend-xavm.onrender.com/api/filter/${params}`)
-            // dispatch(setRenderList(response.data))
             dispatch(setListOfCars(response.data))
         } else {
-            // let response = await axios.get(`http://127.0.0.1:8000/api/filter/`)
             dispatch(fetchAllCars())
         }
     }
@@ -52,7 +49,7 @@ export const FiltersGroup = ({title, propertyList}) => {
         <>
             <div className="Filters-Group-title">{title}</div>
             <div className='parametrs-body'>
-                {propertyList ? propertyList.map(item => <label key={item.name}><input onClick={filterCarList} className='parametrs' group={title} type='checkbox' value={item.id} />{item.name}</label>) : <div>NONE textwqeqw</div>}
+                {propertyList ? propertyList.map(item => <label key={item.name}><input onClick={filterCarList} className='parametrs' group={title} type='checkbox' value={item.id} />{item.name}</label>) : <div>None</div>}
             </div>
         </>
     )
