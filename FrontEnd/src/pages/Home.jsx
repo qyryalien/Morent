@@ -1,20 +1,15 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
 import { fetchAllCars } from '../redux/slices/carList';
-import { fetchProfileData } from '../redux/slices/personalFullInfo';
 import { setCurentAuthSession } from '../redux/slices/auth';
 import { setRenderList } from '../redux/slices/carList';
-
-// import axios from '../axiosConfigs/axiosBaseSettings';
+import { AdsCard, FiltersGroup, CarItem, Pagination } from '../components'; 
 import axios from 'axios';
 
-import "./Home.scss"
-// import "../style.scss"
+import "./Home.scss";
 
-import { AdsCard, Footer, Header, FiltersGroup, CarItem, Pagination } from '../components'; 
-import { fetchAuth } from '../redux/slices/auth';
-import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -22,8 +17,6 @@ export const Home = () => {
     const navigate = useNavigate();
 
     async function userIsAuth () {
-        // вызывается post запрос на /api/login/ для проверки на 401 ошибку. Если 401 верн false (типо не авторизован)
-        // ошибок нет, в трай вернуть true
         try {
             const response = await axios.get("https://morent-backend-xavm.onrender.com/api/profile/", {
 				headers: { authorization: `Bearer ${window.localStorage.getItem("access")}` },
@@ -48,7 +41,7 @@ export const Home = () => {
                         let responce = await axios.post("https://morent-backend-xavm.onrender.com/api/login/refresh", {refresh})
                         if (responce.status === 200) {
                             window.localStorage.setItem("access", responce.data.access);
-                            console.log("access updated")
+                            
                             dispatch(setCurentAuthSession(true));
                             return 0;
                         }
@@ -59,7 +52,6 @@ export const Home = () => {
                             window.localStorage.removeItem("access")
                             window.localStorage.removeItem("refresh")
                             navigate("/login")
-                            console.log('msg after navigate in block refresh not valid', error.response.data.code)
                             return 0;
                         }
                     }
@@ -85,7 +77,7 @@ export const Home = () => {
         }
     }
 
-    useEffect(() => {
+    React.useEffect(() => {
         userIsAuth()
         dispatch(fetchAllCars())
         fetchFiltersList()
@@ -108,8 +100,7 @@ export const Home = () => {
                         <div className="filters-block">
                             {(filtersList ? filtersList : Array(3)).map(settingsFilterGroup => {
                                 return <FiltersGroup key={settingsFilterGroup[0]} title={settingsFilterGroup[0]} propertyList={settingsFilterGroup[1]}></FiltersGroup>
-                            })}                               
-                            {/* <FiltersGroup title="BLOCK1" propertyList={["asd", "qwe", "zxc"]}></FiltersGroup> */}
+                            })}
                         </div>
                         <div className="main-content__body">
                             <div className="car-list">
