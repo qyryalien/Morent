@@ -1,20 +1,16 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProfileData, userGetOrders } from "../../redux/slices/personalFullInfo";
 import { Pagination } from "../../components";
 import { setCurentAuthSession } from "../../redux/slices/auth";
 import { setRenderOrderList } from "../../redux/slices/personalFullInfo";
-
 import axios from "../../axiosConfigs/axiosBaseSettings";
 
 import "./Profile.scss"
 
 export const Profile = () => {
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-    // const info = useSelector(state => state.userInfo.userInfo);
-    // let info = useSelector(state => state.userInfo.userInfo);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     let {renderOrderList} = useSelector(state => state.userInfo);
     
     const [infoError, setInfoError] = React.useState(null);
@@ -26,25 +22,18 @@ export const Profile = () => {
             const response = await axios.get("/api/profile/");
             if (response.status === 401) {
                 dispatch(setCurentAuthSession(false));
-                
+                navigate("/login");
             }
             if (response.status === 200) {
                 dispatch(setCurentAuthSession(true));
                 setInfoIsLoaded(true);
                 setInfo(response.data);
-                // navigate("/");
             }
         } catch (error) {
             if (error.response.status === 401) {
                 dispatch(setCurentAuthSession(false));
                 navigate("/login");
             }
-            // if (response.status === 200) {
-            //     dispatch(setCurentAuthSession(true));
-            //     setIsLoaded(true);
-            //     setInfo(response.data);
-            //     // navigate("/");
-            // }
         }
     }  
 
@@ -62,26 +51,18 @@ export const Profile = () => {
                 dispatch(setCurentAuthSession(true));
                 setOrdersIsLoaded(true);
                 setOrders(response.data);
-                // navigate("/");
             }
         } catch (error) {
             if (error.response.status === 401) {
                     dispatch(setCurentAuthSession(false));
                     navigate("/login");
-                }
-            // if (response.status === 200) {
-            //     dispatch(setCurentAuthSession(true));
-            //     setIsLoaded(true);
-            //     setInfo(response.data);
-            //     // navigate("/");
-            // }
+            }
         }
     } 
 
     React.useEffect(() => {
-        fetchProfileData()
-        userGetOrders()
-        // info = useSelector(state => state.userInfo.userInfo);
+        fetchProfileData();
+        userGetOrders();
     }, [])
     return(
         <div className="profile">

@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 
 export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
     const dispatch = useDispatch()
+    imgUrl = imgUrl.match(/\/\d+\.(png|jpg|jpeg)/gm)
     return (
         <>
             <div className='item-body'>
@@ -15,7 +16,7 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                     <div className="item-body__carClass">{carClass}</div>
                 </div>
                 <div className="item-body__img">
-                    <img src={imgUrl} alt=""/>
+                    <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl[0]}`} alt=""/>
                 </div>
                 <div className="item-body__specs">
                     {specs ? specs.map(characteristic => <p className='text'>{characteristic}</p>) : <p>None</p>}

@@ -1,19 +1,13 @@
 import React from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import {useForm} from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux"
-import { fetchRegistration } from "../../redux/slices/register";
-import axios from "axios";
-import { selectIsRegister } from "../../redux/slices/register";
+import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import axios from "../../axiosConfigs/axiosAuthSettings";
 
 import "./Registration.scss"
-import {Form} from "../../components/Form/Form";
 
 export const Registration = () => {
-    // const RequestStatus = useSelector(state => state.register.data.status);
-    const isAuth = useSelector(selectIsRegister);
-    const navigate = useNavigate()
-    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    
     const {
         register,
         formState:{errors},
@@ -21,29 +15,20 @@ export const Registration = () => {
         reset
     } = useForm({
         mode: "onBlur",
-    defaultValues: {
-        username: "AAA",
-        email: "AAA@gmail.com",
-        password: 123
-    }});
+    });
 
     const onSubmit = async (data) => {
-        const info = await dispatch(fetchRegistration(data))
-        console.log(info);
-        if (!info) {
-            return "Не удалось зарегистрироваться"
+        try {
+            const response = await axios.post("/api/register/", data);
+            if (response.status === 200) {
+                navigate("/login")
+            }
+            
+        } catch (error) {
+            // нужно проверять что пришло в ответе? Например, что уже есть аткой пользователь или просто показывать alert 
+            alert("Не удалось зарегистрироваться")
         }
-        
-
-        console.log("isAuth", isAuth)
-        if (isAuth){
-            console.log("workding")
-            let fn = () => {navigate("/login")}
-            fn()
-        }
- 
-        
-        reset()
+        // reset()
     }
 
     return (
@@ -76,7 +61,11 @@ export const Registration = () => {
                             </label>
                             <label>
                                 Confirm password
-                                <input placeholder="Confirm your password"  />
+                                <input placeholder="Confirm your password"  
+                                {...register("confirm", {
+                                    required: true,
+                                })}
+                                />
                             </label>
                             <div className="registration__buttons">
                                 <Link to="/" className="btn btn_white">Back to main</Link>

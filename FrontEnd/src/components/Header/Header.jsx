@@ -1,45 +1,30 @@
 import React from "react";
-import {Routes, Route, Link, Navigate} from "react-router-dom"
-import { selectIsAuth, setCurentAuthSession, tryLogin } from "../../redux/slices/auth";
-import { userIsAuth } from "../../redux/slices/auth";
-
+import { Link, useNavigate} from "react-router-dom"
+import { setCurentAuthSession } from "../../redux/slices/auth";
 import { useDispatch, useSelector } from "react-redux";
-import "./Header.scss"
 import axios from "axios";
 
-
+import "./Header.scss";
 
 export const Header = () => {
-    const dispatch = useDispatch()
-    // let isAuth = userIsAuth();
-    // let isAuth = window.localStorage.getItem("token");
-    let isAuth = useSelector(state => state.auth.curentAuthSession)
-    console.log(isAuth)    
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    let isAuth = useSelector(state => state.auth.curentAuthSession);
+   
 
     async function logout() {
         let refresh = window.localStorage.getItem("refresh")
-        // let data = JSON.stringify(refresh)
-        const response = await axios.post("https://morent-kv7s.onrender.com/api/logout/", {refresh});
+        const response = await axios.post("https://morent-backend-xavm.onrender.com/api/logout/", {refresh});
         window.localStorage.removeItem("access");
         window.localStorage.removeItem("refresh");
-        dispatch(setCurentAuthSession(false))
+        dispatch(setCurentAuthSession(false));
+        navigate("/");
     }
-
-    React.useEffect(() => {
-        
-        // dispatch(userIsAuth())
-        console.log("HEARED did MOUNT")
-        
-        return ()=>{
-            console.log("HEARED will UN--MOUNT")
-        }
-    }, [])
     
     return(
         <>
             <header className="header">
                 <div className="header__container">
-                    {/* <div className="btn" onClick={isAuth = userIsAuth}>Update</div> */}
                     <div className="logo">
                         <div className="logo__text">
                             <Link to="/">MORENT</Link>
@@ -67,9 +52,6 @@ export const Header = () => {
                 </div>
                 
             </header>
-            {/* {
-                isAuth === false ? <Navigate to="/login" /> : 0
-            } */}
         </>
     )
 }

@@ -58,7 +58,7 @@ export const fetchProfileData = createAsyncThunk("userInfo/fetchProfileData", as
 
 export const updateUserProfile = createAsyncThunk("userInfo/updateUserProfile", async (info) => {
 	axios
-		.patch("https://morent-kv7s.onrender.com/api/profile/", { ...info })
+		.patch("https://morent-backend-xavm.onrender.com/api/profile/", { ...info })
 		.then(function (response) {
 			console.log(response);
 		})
