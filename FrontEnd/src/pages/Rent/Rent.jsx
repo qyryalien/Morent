@@ -1,19 +1,14 @@
 import React from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {useForm} from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux"
-import { fetchRegistration } from "../../redux/slices/register";
-import axios from "../../axiosConfigs/axiosBaseSettings";
-import { selectIsRegister } from "../../redux/slices/register";
 import { setCurentAuthSession } from "../../redux/slices/auth";
-import Select from "react-select";
+import axios from "../../axiosConfigs/axiosBaseSettings";
+
 
 import "./Rent.scss"
 
 export const Rent = () => {
-    // const RequestStatus = useSelector(state => state.register.data.status);
-    const isAuth = useSelector(selectIsRegister);
-    // const username = useSelector(state => state.userInfo.userInfo.id);
     const navigate = useNavigate()
     const dispatch = useDispatch();
 
@@ -31,19 +26,12 @@ export const Rent = () => {
                 dispatch(setCurentAuthSession(true));
                 setInfoIsLoaded(true);
                 setInfo(response.data);
-                // navigate("/");
             }
         } catch (error) {
             if (error.response.status === 401) {
-                    dispatch(setCurentAuthSession(false));
-                    navigate("/login");
-                }
-            // if (response.status === 200) {
-            //     dispatch(setCurentAuthSession(true));
-            //     setIsLoaded(true);
-            //     setInfo(response.data);
-            //     // navigate("/");
-            // }
+                dispatch(setCurentAuthSession(false));
+                navigate("/login");
+            }
         }
     }  
 
@@ -55,10 +43,6 @@ export const Rent = () => {
                 dispatch(setCurentAuthSession(false));
             }
             if (response.status === 200) {
-                // let data = response.data.map(obj =>  { 
-                //     return {"value": obj.name, "label": obj.name }
-                // })
-                // console.log("data cityes ", data)
                 setCitys(response.data);
             }
         } catch (error) {
@@ -79,7 +63,6 @@ export const Rent = () => {
     React.useEffect(() => {
         fetchCitysList()
         fetchProfileData()
-        // info = useSelector(state => state.userInfo.userInfo);
     }, [])
 
     const {
@@ -89,17 +72,10 @@ export const Rent = () => {
         reset
     } = useForm({
         mode: "onBlur",
-        // defaultValues: {
-        //     username: "AAA",
-        //     email: "AAA@gmail.com",
-        //     password: 123
-        // }
     });
 
     const onSubmit = async (data) => {
-        // const info = await dispatch(fetchRegistration(data))
         
-        console.log("full data on submit", data);
         let username = info.id;
         try {
             let response;
@@ -116,26 +92,14 @@ export const Rent = () => {
             }
             if (response.status === 200) {
                 dispatch(setCurentAuthSession(true));
-                // setInfoIsLoaded(true);
-                // setInfo(response.data);
                 navigate("/");
             }
         } catch (error) {
             if (error.response.status === 401) {
-                    dispatch(setCurentAuthSession(false));
-                    navigate("/login");
+                dispatch(setCurentAuthSession(false));
+                navigate("/login");
             }
-            // if (response.status === 200) {
-            //     dispatch(setCurentAuthSession(true));
-            //     setIsLoaded(true);
-            //     setInfo(response.data);
-            //     // navigate("/");
-            // }
         }
-        // console.log(response);
-        
-        console.log("isAuth", isAuth) 
-        // reset()
     }
     
 
@@ -221,7 +185,6 @@ export const Rent = () => {
                                             required: true,
                                         })}/>
                                     :   <select 
-                                            // name="Age"
                                             {...register("car", {
                                                 required: true,
                                             })}
