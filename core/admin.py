@@ -10,7 +10,7 @@ class CarAdmin(admin.ModelAdmin):
     """Class for displaying the Car model in the admin panel."""
     list_display = ('id', 'title', 'price', 'get_html_photo', 'is_published')
     list_display_links = ('id', 'title', 'price', 'get_html_photo', 'is_published')
-    fields = ('title', 'slug', 'gasoline', 'rent_count', 'cat', 'engine', 'capacity', 'price', 'main_photo',
+    fields = ('title', 'slug', 'gasoline', 'rent_count', 'cat', 'engine', 'capacity', 'price', 'text', 'main_photo',
               'inside_photo_one', 'inside_photo_two', 'get_html_photo', 'is_published')
     search_fields = ('title',)
     prepopulated_fields = {"slug": ("title",)}
