@@ -16,7 +16,8 @@ class Car(models.Model):
     gasoline = models.IntegerField(verbose_name="Обьем топливного бака")
     rent_count = models.IntegerField(verbose_name="Количество аренд")
     price = models.CharField(max_length=50, verbose_name="Цена")
-
+    text = models.CharField(max_length=300, null=True, verbose_name="Описание")
+    
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name="Категория")
     engine = models.ForeignKey('Steering', on_delete=models.PROTECT, verbose_name="Двигатель")
     capacity = models.ForeignKey('Capacity', on_delete=models.PROTECT, verbose_name="Вместимость")
