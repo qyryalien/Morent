@@ -46,10 +46,17 @@ export const Car = () => {
                                 </div>
                                 
                             </div>
-                            <div className="car-body__galery">
-                                <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.main_photo}`} alt=""/>
-                                <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.inside_photo_one}`} alt=""/>
-                                <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.inside_photo_two}`} alt=""/>
+                            <div className="car-body__galery galery">
+                                <div className="galery__img-container">
+                                    <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.main_photo}`} alt=""/>
+                                </div>
+                                
+                                <div className="galery__img-container">
+                                    <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.inside_photo_one}`} alt=""/>
+                                </div>
+                                <div className="galery__img-container">
+                                    <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.inside_photo_two}`} alt=""/>
+                                </div>
                             </div>
                         </div>
                         
