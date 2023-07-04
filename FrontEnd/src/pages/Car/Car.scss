@@ -1,6 +1,12 @@
+@import "../../style.scss";
+
 .car {
 
-    &__container {}
+    &__container {
+        @media(max-width: $mobile) {
+            padding: 0px 0px;
+        }
+    }
 }
 
 .car-promo-card {
@@ -11,12 +17,28 @@
         margin: 30px auto;
         padding: 27px 30px;
         border-radius: 20px;
+
+        @media(max-width: $mobile) {
+            margin: 24px auto;
+            padding: 22px 20px;
+
+        }
+
+        @media(max-width: $mobileSmall) {
+            margin: 0;
+            padding: 20px;
+            width: 100%;
+            border-radius: 0px;
+        }
+
     }
 }
 
 .car-body {
     display: flex;
-    column-gap: 65px;
+    column-gap: 55px;
+
+
 
     &__description {
         display: flex;
@@ -29,11 +51,35 @@
         justify-content: space-around;
         row-gap: 12px;
     }
+
+    @media(max-width: $tablet) {
+        column-gap: 25px;
+    }
+
+    @media(max-width: $mobile) {
+        flex-direction: column-reverse;
+
+        &__galery {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            row-gap: 20px;
+        }
+    }
 }
 
 .galery {
     &__img-container {
         width: 330px;
+
+        @media(max-width: $tablet) {
+            width: 240px;
+        }
+
+        @media(max-width: $mobile) {
+            width: 100%;
+        }
     }
 
     img {
@@ -41,23 +87,50 @@
         max-height: 150px;
         object-fit: cover;
         object-position: top;
+
+        @media(max-width: $tablet) {
+            max-height: 100px;
+        }
+
+        @media(max-width: $mobile) {
+            max-height: 200px;
+        }
     }
+
+
 }
 
 .car-description {
 
-    &__top-block {}
+    &__top-block {
+        @media(max-width: $mobile) {
+            margin-top: 25px;
+        }
+    }
 
     &__text-block {
         margin-top: 50px;
         width: 485px;
         display: flex;
+
+        @media(max-width: $tablet) {
+            margin-top: 15px;
+        }
     }
 
     &__buttons-block {
         display: flex;
         justify-content: space-between;
         margin-top: 45px;
+
+        @media(max-width: $tablet) {
+            display: grid;
+            // justify-content: space-between;
+            margin-top: 0px;
+            grid-template-columns: 1fr 1fr;
+            grid-column-gap: 30px;
+            grid-row-gap: 15px;
+        }
 
     }
 }
@@ -88,6 +161,14 @@
 }
 
 .text-block {
+    @media(max-width: $tablet) {
+        flex-direction: column;
+        max-width: 400px;
+    }
+
+    @media(max-width: $mobileSmall) {
+        max-width: 100%;
+    }
 
     &__main-text {
         max-width: 250px;
@@ -95,10 +176,15 @@
         font-size: 15px;
         line-height: 200%;
         color: #3D5278;
+
+        @media(max-width: $tablet) {
+            margin-left: 0;
+            max-width: 100%;
+        }
     }
 
     &__specs-block {
-        margin-left: 85px;
+        margin-left: 50px;
 
         div:not(:last-child) {
             margin-bottom: 20px;
@@ -114,18 +200,32 @@
             color: #3D5278;
             margin-left: 15px;
         }
+
+        @media(max-width: $tablet) {
+            display: grid;
+            margin-left: 0;
+            grid-template-columns: 1fr 1fr;
+            grid-column-gap: 30px;
+            margin-top: 10px;
+        }
+
+
+
     }
 }
 
 .specs-block {
 
-    &__gasoline {}
+    &__item {
+        @media(max-width: $mobileSmall) {
+            display: flex;
+            flex-direction: column;
 
-    &__capacity {}
-
-    &__typecar {}
-
-    &__steering {}
+            span {
+                margin-left: 0px;
+            }
+        }
+    }
 }
 
 .btn {}
