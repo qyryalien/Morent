@@ -32,10 +32,10 @@ export const Car = () => {
                                 <div className="car-description__text-block text-block">
                                     <div className="text-block__main-text">NISMO has become the embodiment of Nissan's outstanding performance, inspired by the most unforgiving proving ground, the "race track".</div>
                                     <div className="text-block__specs-block specs-block">
-                                        <div className="specs-block__gasoline">Gasoline <span>{fullInfo.gasoline}</span></div>
-                                        <div className="specs-block__capacity">Capacity <span>{fullInfo.capacity_name}</span></div>
-                                        <div className="specs-block__typecar">Type Car <span>{fullInfo.cat_name}</span></div>
-                                        <div className="specs-block__steering">Steering <span>{fullInfo.engine_name}</span></div>
+                                        <div className="specs-block__item">Gasoline <span>{fullInfo.gasoline}</span></div>
+                                        <div className="specs-block__item">Capacity <span>{fullInfo.capacity_name}</span></div>
+                                        <div className="specs-block__item">Type Car <span>{fullInfo.cat_name}</span></div>
+                                        <div className="specs-block__item">Steering <span>{fullInfo.engine_name}</span></div>
                                     </div>
                                 </div>
                                 <div className="car-description__buttons-block">
@@ -46,10 +46,17 @@ export const Car = () => {
                                 </div>
                                 
                             </div>
-                            <div className="car-body__galery">
-                                <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.main_photo}`} alt=""/>
-                                <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.inside_photo_one}`} alt=""/>
-                                <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.inside_photo_two}`} alt=""/>
+                            <div className="car-body__galery galery">
+                                <div className="galery__img-container">
+                                    <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.main_photo}`} alt=""/>
+                                </div>
+                                
+                                <div className="galery__img-container">
+                                    <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.inside_photo_one}`} alt=""/>
+                                </div>
+                                <div className="galery__img-container">
+                                    <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.inside_photo_two}`} alt=""/>
+                                </div>
                             </div>
                         </div>
                         
