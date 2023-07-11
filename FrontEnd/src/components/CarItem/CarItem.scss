@@ -1,3 +1,5 @@
+@import "../../style.scss";
+
 .item-body {
     padding: 10px 106px;
     border-radius: 4px;
@@ -46,6 +48,7 @@
         justify-content: space-around;
         column-gap: 11px;
         min-width: 255px;
+        color: #90A3BF;
     }
 
     &__price {
@@ -95,4 +98,126 @@
     padding: 10px 7px;
 
     &__link {}
+}
+
+@media(max-width: $pc) {
+    .item-body {
+        padding: 25px;
+        width: 315px;
+        height: 350px;
+        border-radius: 10px;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .item-body__carName {
+        font-weight: 700;
+        font-size: 21px;
+        line-height: 28px;
+    }
+
+    .item-body__carClass {
+        font-size: 18px;
+        line-height: 20px;
+    }
+
+
+    .item-body__img {
+        width: 100%;
+        height: 110px;
+    }
+
+    .item-body__specs {
+        justify-content: space-between;
+        font-size: 18px;
+        line-height: 20px;
+    }
+}
+
+@media(max-width: $mobile) {
+    .item-body {
+        width: 100%;
+        height: 100%;
+        @include adaptiveValue("min-height", 330, 280, 767, 479);
+
+        &__center-block {
+            display: flex;
+            flex: 0 1 auto;
+            align-items: center;
+            width: 100%;
+        }
+
+        &__img {
+            width: 100%;
+            height: 100%;
+            max-height: 180px;
+        }
+
+        &__specs {
+            display: flex;
+            flex: 1 1 30%;
+            @include adaptiveValue("row-gap", 20, 5, 767, 479);
+            min-width: unset;
+            flex-direction: column;
+            align-items: flex-start;
+            padding-left: 30px;
+            white-space: nowrap;
+        }
+
+        &__footer-block {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &__price {
+            span {
+                font-size: 21px;
+                line-height: 19px;
+            }
+
+            p {
+                font-size: 18px;
+                line-height: 15px;
+            }
+        }
+
+        &__btns {
+            column-gap: 15px;
+        }
+    }
+}
+
+@media(max-width: $mobileSmall) {
+    .item-body {
+        border-radius: 0px;
+        row-gap: 10px;
+        padding: 15px 10px;
+
+        &__carName {
+            font-size: 16px;
+            line-height: 0%;
+        }
+
+        &__carClass {
+            font-size: 12px;
+            line-height: 250%;
+        }
+
+        &__specs {
+            font-size: 16px;
+        }
+
+        &__price {
+            span {
+                font-size: 16px;
+            }
+
+            p {
+                font-size: 13px;
+            }
+        }
+    }
 }

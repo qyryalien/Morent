@@ -4,6 +4,8 @@ import { setListOfCars, fetchAllCars } from '../../redux/slices/carList';
 import axios from 'axios';
 
 import "./FiltersGroup.scss";
+// import {ReactComponent as ReactLogo} from '../../../public/iconsfont/arrow-bottom';
+// import {ReactComponent as ReactLogo} from 'ArrowLeft';
 
 export const FiltersGroup = ({title, propertyList}) => {
 
@@ -24,7 +26,7 @@ export const FiltersGroup = ({title, propertyList}) => {
                 } 
                 return rezOb
             }, {})
-        let allKeys = Array.from(document.querySelectorAll(".Filters-Group-title")).map(item => item.innerText);
+        let allKeys = Array.from(document.querySelectorAll(".filters-block__title")).map(item => item.innerText);
         allKeys.forEach(key => {
             let arr = Array.from(document.querySelectorAll("input")).filter(item => item.attributes.group.nodeValue === key)
             if (arr.some(item => item.checked === true)){
@@ -45,12 +47,105 @@ export const FiltersGroup = ({title, propertyList}) => {
         }
     }
 
-    return (
+
+
+
+    const [size, setSize] = React.useState({});
+    const ref = React.useRef(window);
+    const baseSizeList = [1280, 1440];
+
+    const resizeHandler = () => {
+        let { innerHeight, innerWidth } = ref.current || {};
+        for (let baseSize of baseSizeList) {
+            if (baseSize >= innerWidth) {
+                innerWidth = baseSize
+                break;
+            }
+        }
+        if (innerWidth > baseSizeList[baseSizeList.length - 1]) {
+            innerWidth = baseSizeList[baseSizeList.length - 1];
+        }
+        setSize({ innerHeight, innerWidth });
+    };
+
+    // const swiperElRef = React.useRef(null);
+    React.useEffect(() => {
+        window.addEventListener("resize", resizeHandler);
+        resizeHandler();
+
+        // swiperElRef.current.addEventListener('progress', (e) => {
+        //     const [swiper, progress] = e.detail;
+        //     console.log(progress);
+        // });
+        
+        //     swiperElRef.current.addEventListener('slidechange', (e) => {
+        //     console.log('slide changed');
+        // });
+
+
+        return () => {
+            window.removeEventListener("resize", resizeHandler);
+        };
+    }, []);
+  
+  
+
+    let HTMLsizeChoiser = new Map();
+    HTMLsizeChoiser.set(1440,         
         <>
-            <div className="Filters-Group-title">{title}</div>
-            <div className='parametrs-body'>
-                {propertyList ? propertyList.map(item => <label key={item.name}><input onClick={filterCarList} className='parametrs' group={title} type='checkbox' value={item.id} />{item.name}</label>) : <div>None</div>}
+            <div className='filters-block'>
+                <div className="filters-block__title">{title}</div>
+                <div className='filters-block__parametrs-body'>
+                    {propertyList 
+                        ? propertyList.map(
+                            item => 
+                                <label key={item.name}>
+                                    <input onClick={filterCarList} className='parametrs' group={title} type='checkbox' value={item.id} />{item.name}
+                                </label>
+                            ) 
+                        : <div>None</div>
+                    }
+                            
+                </div>
             </div>
         </>
+    )
+
+    function toggleSpoilerState(e){
+        // console.log(e.currentTarget)
+        e.currentTarget.classList.add("current");
+        let elemet = document.querySelector(".current+.filters-block__parametrs-body .spoiler-body");
+        elemet.classList.toggle("open");
+        e.currentTarget.classList.remove("current");
+    }
+    HTMLsizeChoiser.set(1280,         
+        <>
+            <div className='filters-block'>
+                <div className="spoiler-control-block" onClick={toggleSpoilerState}>
+                    <div className="filters-block__title " >{title}</div>
+                    <div className="spoiler-control-block__icon"  >
+                        {/* <ReactLogo/> */}
+                        <img src={"./iconsfont/arrow-bottom.svg"} alt=""/>
+                    </div>
+                </div>
+                <div className='filters-block__parametrs-body'>
+                    <div className="spoiler-body">
+                        {propertyList 
+                            ? propertyList.map(
+                                item => 
+                                    <label key={item.name}>
+                                        <input onClick={filterCarList} className='parametrs' group={title} type='checkbox' value={item.id} />{item.name}
+                                    </label>
+                                ) 
+                            : <div>None</div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+
+    return (
+        HTMLsizeChoiser.get(size.innerWidth)
     )
 }
