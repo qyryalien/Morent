@@ -61,7 +61,7 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
             </div>
         </div>
     </>
-)
+    )
     HTMLsizeChoiser.set(1280, 
     <>
         <div className='item-body'>
@@ -114,7 +114,7 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                 </div>    
             </div>
         </>
-        )
+    )
 
     
 

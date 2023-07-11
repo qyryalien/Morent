@@ -1,20 +1,32 @@
-.Filters-Group-title {
+@import "../../style.scss";
 
-    color: #94A7CB;
-    font-weight: 600;
-    font-size: 15px;
-    line-height: 150%;
-    margin-bottom: 15px;
+.filters-block {
+    // display: inline-block;
 
     &:not(:first-child) {
         margin-top: 35px;
     }
+
+    &__title {
+        color: #94A7CB;
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 150%;
+        margin-bottom: 15px;
+    }
+
+    &__parametrs-body {
+        display: flex;
+        flex-direction: column;
+        row-gap: 30px;
+    }
 }
 
-.parametrs-body {
+.spoiler-control-block {
     display: flex;
-    flex-direction: column;
-    row-gap: 30px;
+    justify-content: space-between;
+    align-items: end;
+    width: 100%;
 }
 
 label {
@@ -28,4 +40,78 @@ label {
     font-size: 12px;
     line-height: 150%;
     color: #3D5278;
+}
+
+.spoilerdesc {
+    padding: 0 5px;
+    border: 1px solid #ccc;
+    margin-top: 22px;
+}
+
+.spoilerclose {
+    display: none;
+    background: #f26200;
+    width: 100%;
+    height: 22px;
+    text-indent: 10px;
+    cursor: default;
+    position: absolute;
+    top: 0px;
+    left: 0;
+}
+
+.spoilerclose:hover {
+    background: #80ff80;
+    height: auto;
+}
+
+.spoiler-body:hover:before {
+    background: #F29933;
+}
+
+.spoiler-body {
+    max-height: 0px;
+    // width: 100%;
+    // outline: none;
+    // float: left;
+    // position: relative;
+    overflow: hidden;
+    -webkit-transition: max-height 0.5s ease-in-out;
+    -moz-transition: max-height 0.5s ease-in-out;
+    -ms-transition: max-height 0.5s ease-in-out;
+    -o-transition: max-height 0.5s ease-in-out;
+    transition: max-height 0.5s ease-in-out;
+}
+
+.open {
+    max-height: 250px;
+}
+
+.spoiler-body:focus {
+    height: auto;
+}
+
+.spoiler-body:focus .spoilerclose {
+    display: block;
+}
+
+.spoiler-body:focus:before {
+    display: none;
+}
+
+@media(max-width: $pc) {
+    .filters-block {
+        display: inline-block;
+        border: 1px solid #3D5278;
+        border-radius: 30px;
+        padding: 12px 20px;
+
+        &:not(:first-child) {
+            margin-top: 0px;
+        }
+
+        &__title {
+            margin-bottom: 0px;
+        }
+    }
 }

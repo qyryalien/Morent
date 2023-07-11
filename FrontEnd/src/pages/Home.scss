@@ -47,7 +47,7 @@
     }
 }
 
-.filters-block {
+.filters-body {
     background-color: #fff;
     padding: 20px 32px;
     border-radius: 0px 15px 15px 0px;
@@ -83,8 +83,65 @@
         }
     }
 
-    .filters-block {
-        display: none;
+    .filters-component-body {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+    }
+
+    .filters-body {
+        // display: none;
+        display: flex;
+        // flex-wrap: wrap;
+        overflow-x: scroll;
+        column-gap: 30px;
+        row-gap: 10px;
+        margin-left: 320px;
+        transition: margin-left 0.5s ease-in-out;
+    }
+
+    .open {
+        max-height: 250px;
+        margin-left: 0px;
+        padding-right: 80px;
+    }
+
+    .filters-plus-icon {
+        position: absolute;
+        background-color: white;
+        width: 80px;
+        height: 80px;
+        border-radius: 40px 0px 0px 40px;
+        padding: 15px 15px 15px 15px;
+        right: 0;
+
+        img {
+            background-color: white;
+            padding: 0px;
+            border-radius: 50%;
+            width: 100%
+        }
+    }
+
+    .filters-body::after {
+        // content: "";
+        // position: absolute;
+        // width: 100px;
+        // height: 100px;
+        // background-image: url("./plus.svg");
+        // background-size: cover;
+
+        // content: "";
+        // position: absolute;
+        // background-color: white;
+        // padding: 10px;
+        // right: 40px;
+        // top: 0%;
+        // width: 70px;
+        // height: 70px;
+        // background-image: url(http://localhost:3000/static/media/plus.2344864….svg);
+        // background-size: cover;
     }
 
     .car-list {

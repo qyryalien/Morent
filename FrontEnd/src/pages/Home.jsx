@@ -6,9 +6,12 @@ import { setCurentAuthSession } from '../redux/slices/auth';
 import { setRenderList } from '../redux/slices/carList';
 import { AdsCard, FiltersGroup, CarItem, Pagination } from '../components'; 
 import axios from 'axios';
+// import { register } from 'swiper/element/bundle';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import "swiper/scss";
 
 import "./Home.scss";
-
+// register();
 
 
 
@@ -83,7 +86,14 @@ export const Home = () => {
         fetchFiltersList()
     }, [])
 
-    
+    function toggleFiltersBodyState(e){
+        // console.log(e.currentTarget)
+        // e.currentTarget.classList.add("current");
+        let elemet = document.querySelector(".filters-body");
+        elemet.classList.toggle("open");
+        // e.currentTarget.classList.remove("current");
+    }
+
     return(
         <>
             <main className="page">
@@ -97,10 +107,21 @@ export const Home = () => {
                 </section>
                 <section className='main-content'>
                     <div className="main-content__container">
-                        <div className="filters-block">
-                            {(filtersList ? filtersList : Array(3)).map(settingsFilterGroup => {
-                                return <FiltersGroup key={settingsFilterGroup[0]} title={settingsFilterGroup[0]} propertyList={settingsFilterGroup[1]}></FiltersGroup>
-                            })}
+                        <div className='filters-component-body'>
+                            <div className="filters-body">
+                                {/* <Swiper  slides-per-view="2"> */}
+                                    {(filtersList ? filtersList : Array(3)).map(settingsFilterGroup => {
+                                        return(
+                                            // <SwiperSlide>
+                                                <FiltersGroup key={settingsFilterGroup[0]} title={settingsFilterGroup[0]} propertyList={settingsFilterGroup[1]}></FiltersGroup>
+                                            // </SwiperSlide>
+                                        )
+                                        })}
+                                {/* </Swiper> */}
+                            </div>
+                            <div className='filters-plus-icon' onClick={toggleFiltersBodyState}>
+                                <img src={"/plus.svg"} alt=""/>
+                            </div>
                         </div>
                         <div className="main-content__body">
                             <div className="car-list">
