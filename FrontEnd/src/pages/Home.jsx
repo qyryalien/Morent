@@ -87,11 +87,10 @@ export const Home = () => {
     }, [])
 
     function toggleFiltersBodyState(e){
-        // console.log(e.currentTarget)
-        // e.currentTarget.classList.add("current");
         let elemet = document.querySelector(".filters-body");
         elemet.classList.toggle("open");
-        // e.currentTarget.classList.remove("current");
+        // console.log(e.currentTarget)
+        e.currentTarget.classList.toggle("clicked");
     }
 
     return(
@@ -108,16 +107,19 @@ export const Home = () => {
                 <section className='main-content'>
                     <div className="main-content__container">
                         <div className='filters-component-body'>
-                            <div className="filters-body">
-                                {/* <Swiper  slides-per-view="2"> */}
-                                    {(filtersList ? filtersList : Array(3)).map(settingsFilterGroup => {
-                                        return(
-                                            // <SwiperSlide>
-                                                <FiltersGroup key={settingsFilterGroup[0]} title={settingsFilterGroup[0]} propertyList={settingsFilterGroup[1]}></FiltersGroup>
-                                            // </SwiperSlide>
-                                        )
+                            <div className='filters-body-wrapper'>
+                                <div className="filters-body">
+                                    {/* <Swiper  slides-per-view="2"> */}
+                                        {(filtersList ? filtersList : Array(3)).map(settingsFilterGroup => {
+                                            return(
+                                                // <SwiperSlide>
+                                                    <FiltersGroup key={settingsFilterGroup[0]} title={settingsFilterGroup[0]} propertyList={settingsFilterGroup[1]}></FiltersGroup>
+                                                // </SwiperSlide>
+                                            )
                                         })}
-                                {/* </Swiper> */}
+                                            
+                                    {/* </Swiper> */}
+                                </div>
                             </div>
                             <div className='filters-plus-icon' onClick={toggleFiltersBodyState}>
                                 <img src={"/plus.svg"} alt=""/>

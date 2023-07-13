@@ -102,6 +102,7 @@ label {
 @media(max-width: $pc) {
     .filters-block {
         display: inline-block;
+        position: relative;
         border: 1px solid #3D5278;
         border-radius: 30px;
         padding: 12px 20px;
@@ -112,6 +113,12 @@ label {
 
         &__title {
             margin-bottom: 0px;
+        }
+
+        &__parametrs-body {
+            position: relative;
+            // top: 50px;
+            // left: 10px;
         }
     }
 }
