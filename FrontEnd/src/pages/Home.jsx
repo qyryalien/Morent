@@ -4,14 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllCars } from '../redux/slices/carList';
 import { setCurentAuthSession } from '../redux/slices/auth';
 import { setRenderList } from '../redux/slices/carList';
-import { AdsCard, FiltersGroup, CarItem, Pagination } from '../components'; 
+import { AdsCard, CarItem, Pagination } from '../components'; 
+import { Filter } from '../components/Filter/Filter';
 import axios from 'axios';
-// import { register } from 'swiper/element/bundle';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import "swiper/scss";
 
 import "./Home.scss";
-// register();
 
 
 
@@ -66,32 +63,12 @@ export const Home = () => {
     
     const {renderList, listOfCars, status} = useSelector(state => state.carssList);
     const dispatch = useDispatch();
-    
-    const [filtersError, setFiltersError] = React.useState(null);
-    const [filtersIsLoaded, setfiltersIsLoaded] = React.useState(false);
-    const [filtersList, setFiltersList] = React.useState();
-
-    async function fetchFiltersList () {
-        try {
-            let response = await axios.get("https://morent-backend-xavm.onrender.com/api/all_category/")
-            setFiltersList(Object.entries(response.data))
-        } catch (error) {
-            setFiltersError(error)
-        }
-    }
 
     React.useEffect(() => {
         userIsAuth()
         dispatch(fetchAllCars())
-        fetchFiltersList()
     }, [])
 
-    function toggleFiltersBodyState(e){
-        let elemet = document.querySelector(".filters-body");
-        elemet.classList.toggle("open");
-        // console.log(e.currentTarget)
-        e.currentTarget.classList.toggle("clicked");
-    }
 
     return(
         <>
@@ -106,25 +83,7 @@ export const Home = () => {
                 </section>
                 <section className='main-content'>
                     <div className="main-content__container">
-                        <div className='filters-component-body'>
-                            <div className='filters-body-wrapper'>
-                                <div className="filters-body">
-                                    {/* <Swiper  slides-per-view="2"> */}
-                                        {(filtersList ? filtersList : Array(3)).map(settingsFilterGroup => {
-                                            return(
-                                                // <SwiperSlide>
-                                                    <FiltersGroup key={settingsFilterGroup[0]} title={settingsFilterGroup[0]} propertyList={settingsFilterGroup[1]}></FiltersGroup>
-                                                // </SwiperSlide>
-                                            )
-                                        })}
-                                            
-                                    {/* </Swiper> */}
-                                </div>
-                            </div>
-                            <div className='filters-plus-icon' onClick={toggleFiltersBodyState}>
-                                <img src={"/plus.svg"} alt=""/>
-                            </div>
-                        </div>
+                        <Filter></Filter>
                         <div className="main-content__body">
                             <div className="car-list">
                                 {status === "Loading" 
