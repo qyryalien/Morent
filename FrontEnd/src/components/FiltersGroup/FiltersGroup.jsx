@@ -100,7 +100,7 @@ export const FiltersGroup = ({title, propertyList}) => {
                         ? propertyList.map(
                             item => 
                                 <label key={item.name}>
-                                    <input onClick={filterCarList} className='parametrs' group={title} type='checkbox' value={item.id} />{item.name}
+                                    <input onClick={filterCarList} className='parametr' group={title} type='checkbox' value={item.id} />{item.name}
                                 </label>
                             ) 
                         : <div>None</div>
@@ -114,7 +114,7 @@ export const FiltersGroup = ({title, propertyList}) => {
     function toggleSpoilerState(e){
         // console.log(e.currentTarget)
         e.currentTarget.classList.add("current");
-        let elemet = document.querySelector(".current+.filter-item__parametrs-body .spoiler-body");
+        let elemet = document.querySelector(".current+.filter-item__body-wrapper .filter-item__spoiler-body");
         elemet.classList.toggle("open");
         e.currentTarget.classList.remove("current");
     }

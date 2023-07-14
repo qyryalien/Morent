@@ -1,0 +1,106 @@
+@import "../../style.scss";
+
+.filter-component {
+    background-color: #fff;
+    padding: 20px 32px;
+    border-radius: 0px 15px 15px 0px;
+    min-width: 218px;
+    max-height: 100%;
+
+    &__wrapper {}
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        row-gap: 20px;
+
+    }
+}
+
+@media(max-width: $pc) {
+    .filter-component {
+        position: absolute;
+        left: -100%;
+        top: 0px;
+        transition: left 0.5s ease-in-out;
+
+        &__plus-icon {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 50px;
+            height: 50px;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+
+            &::before {
+                content: "Filters";
+                position: absolute;
+                left: -60px;
+                top: 15px;
+                color: black;
+                font-size: 20px;
+                font-weight: 500;
+                opacity: 1;
+                transition: opacity 0.5s ease-in-out;
+            }
+
+            &.clicked::before {
+                opacity: 0;
+            }
+        }
+    }
+
+    .open {
+        left: 0%;
+    }
+}
+
+@media(max-width: $tablet) {
+    .filter-component {
+        z-index: 2;
+        position: fixed;
+        top: 100px;
+    }
+
+    .main-content__container {
+        max-width: 640px;
+    }
+}
+
+@media(max-width: $mobile) {
+    .filter-component {
+        z-index: 2;
+        position: fixed;
+        top: 70px;
+    }
+
+    .filter-component-wp {
+        position: relative;
+        width: 100%;
+        height: 40px;
+        max-width: 640px;
+    }
+}
+
+@media(max-width: $mobileSmall) {
+    .filter-component {
+        z-index: 2;
+        position: fixed;
+        top: 10px;
+    }
+
+    .filter-component-wp {
+        position: sticky;
+        top: 365px;
+        width: 100%;
+        height: 40px;
+    }
+
+    .wrapper {
+        overflow: visible !important;
+    }
+}

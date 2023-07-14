@@ -1,11 +1,11 @@
 @import "../../style.scss";
 
-.filters-block {
+.filter-item {
     // display: inline-block;
 
-    &:not(:first-child) {
-        margin-top: 35px;
-    }
+    // &:not(:first-child) {
+    //     margin-top: 35px;
+    // }
 
     &__title {
         color: #94A7CB;
@@ -22,12 +22,12 @@
     }
 }
 
-.spoiler-block {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    width: 100%;
-}
+// .spoiler-block {
+//     display: flex;
+//     justify-content: space-between;
+//     align-items: end;
+//     width: 100%;
+// }
 
 label {
     display: flex;
@@ -35,14 +35,14 @@ label {
     gap: 10px;
 }
 
-.parametr {
-    font-weight: 600;
-    font-size: 12px;
-    line-height: 150%;
-    color: #3D5278;
-}
+// .parametr {
+//     font-weight: 600;
+//     font-size: 12px;
+//     line-height: 150%;
+//     color: #3D5278;
+// }
 
-.spoiler-body {
+.filter-item__spoiler-body {
     max-height: 0px;
     // width: 100%;
     // outline: none;
@@ -62,7 +62,7 @@ label {
 
 
 @media(max-width: $pc) {
-    .filters-block {
+    .filter-block {
         // display: inline-block;
         // position: relative;
         // border: 1px solid #3D5278;
@@ -92,18 +92,37 @@ label {
 
     .filter-item {
 
-        &__spoiler-block {}
+        &__spoiler-block {
+            margin-bottom: 15px;
+        }
 
-        &__title {}
+        &__title {
+            margin-bottom: 0px;
+        }
 
         &__body-wrapper {}
 
-        &__spoiler-body {}
+        &__spoiler-body {
+            display: flex;
+            flex-direction: column;
+            row-gap: 10px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 12px;
+            line-height: 150%;
+            color: #3D5278;
+        }
 
         &__parametr {}
     }
 
     .spoiler-block {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        width: 100%;
 
         &__icon {}
     }
