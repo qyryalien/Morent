@@ -26,7 +26,7 @@ export const FiltersGroup = ({title, propertyList}) => {
                 } 
                 return rezOb
             }, {})
-        let allKeys = Array.from(document.querySelectorAll(".filters-block__title")).map(item => item.innerText);
+        let allKeys = Array.from(document.querySelectorAll(".filter-item__title")).map(item => item.innerText);
         allKeys.forEach(key => {
             let arr = Array.from(document.querySelectorAll("input")).filter(item => item.attributes.group.nodeValue === key)
             if (arr.some(item => item.checked === true)){
@@ -93,9 +93,9 @@ export const FiltersGroup = ({title, propertyList}) => {
     let HTMLsizeChoiser = new Map();
     HTMLsizeChoiser.set(1440,         
         <>
-            <div className='filters-block'>
-                <div className="filters-block__title">{title}</div>
-                <div className='filters-block__parametrs-body'>
+            <div className='filter-item'>
+                <div className="filter-item__title">{title}</div>
+                <div className='filter-item__parametrs-body'>
                     {propertyList 
                         ? propertyList.map(
                             item => 
@@ -114,27 +114,26 @@ export const FiltersGroup = ({title, propertyList}) => {
     function toggleSpoilerState(e){
         // console.log(e.currentTarget)
         e.currentTarget.classList.add("current");
-        let elemet = document.querySelector(".current+.filters-block__parametrs-body .spoiler-body");
+        let elemet = document.querySelector(".current+.filter-item__parametrs-body .spoiler-body");
         elemet.classList.toggle("open");
         e.currentTarget.classList.remove("current");
     }
     HTMLsizeChoiser.set(1280,         
         <>
-            <div className='filters-block'>
-                <div className="spoiler-control-block" onClick={toggleSpoilerState}>
-                    <div className="filters-block__title " >{title}</div>
-                    <div className="spoiler-control-block__icon"  >
-                        {/* <ReactLogo/> */}
+            <div className='filter-component__item filter-item'>
+                <div className="filter-item__spoiler-block spoiler-block" onClick={toggleSpoilerState}>
+                    <div className="filter-item__title" >{title}</div>
+                    <div className="spoiler-block__icon">
                         <img src={"./iconsfont/arrow-bottom.svg"} alt=""/>
                     </div>
                 </div>
-                <div className='filters-block__parametrs-body'>
-                    <div className="spoiler-body">
+                <div className='filter-item__body-wrapper'>
+                    <div className="filter-item__spoiler-body">
                         {propertyList 
                             ? propertyList.map(
                                 item => 
                                     <label key={item.name}>
-                                        <input onClick={filterCarList} className='parametrs' group={title} type='checkbox' value={item.id} />{item.name}
+                                        <input onClick={filterCarList} className='filter-item__parametr' group={title} type='checkbox' value={item.id} />{item.name}
                                     </label>
                                 ) 
                             : <div>None</div>
