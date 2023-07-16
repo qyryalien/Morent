@@ -90,14 +90,47 @@
     .filter-component {
         z-index: 2;
         position: fixed;
-        top: 10px;
+        width: 100%;
+        height: 100%;
+        top: 0px;
+        border-radius: 0px;
+
+        &__wrapper {
+            margin-top: 30px;
+        }
+
+        &__plus_icon {
+            position: absolute;
+        }
+
+        &__body {
+            display: inline-flex;
+        }
     }
 
     .filter-component-wp {
-        position: sticky;
-        top: 365px;
+        position: relative;
+        top: 0px;
         width: 100%;
         height: 40px;
+    }
+
+    .filter-component-wp:has(> .clicked) {
+        position: fixed;
+        z-index: 3;
+        right: 10px;
+        top: 10px;
+
+        .filter-component__plus-icon {
+            // transition: top 0.5s ease-in-out;
+            transition: transform 0.3s ease-in-out;
+            transform: rotate(-45deg);
+
+
+            &::before {
+                transition: opacity 0s ease-in-out;
+            }
+        }
     }
 
     .wrapper {

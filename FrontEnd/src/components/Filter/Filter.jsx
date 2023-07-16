@@ -71,12 +71,13 @@ export const Filter = () => {
             </div>
         </>
     )
-
+    
     function toggleFiltersBodyState(e){
         let elemet = document.querySelector(".filter-component");
         elemet.classList.toggle("open");
-        // console.log(e.currentTarget)
         e.currentTarget.classList.toggle("clicked");
+        
+        document.querySelectorAll(".filter-item__spoiler-body").forEach(el => el.classList.add("open"))
     }
 
     HTMLsizeChoiser.set(1280,         
