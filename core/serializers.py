@@ -10,7 +10,8 @@ class UserSerializer(serializers.ModelSerializer):
     """
         Serializer for user
     """
-
+    date_joined = serializers.DateTimeField(format='%Y-%m-%d')
+    
     class Meta:
         model = User
         fields = ('id', 'username', 'email', 'first_name', 'last_name', 'date_joined')
