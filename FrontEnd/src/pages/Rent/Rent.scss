@@ -1,3 +1,5 @@
+@import "../../style.scss";
+
 .form {
 
     &__container {
@@ -24,6 +26,74 @@
         align-items: center;
         gap: 20px;
     }
+
+    form {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        row-gap: 20px;
+        column-gap: 32px;
+
+
+        label {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 120%;
+        }
+
+        input {
+            background: #F6F7F9;
+            border-radius: 10px;
+            padding: 16px 32px;
+            width: 386px;
+
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 200%;
+
+
+            color: #90A3BF;
+        }
+
+        input[type=checkbox] {
+            width: 20px;
+        }
+
+        .checkbox-body {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            align-items: center;
+            flex: 1 1 100%;
+        }
+
+        select {
+            background: #F6F7F9;
+            border-radius: 10px;
+            padding: 16px 32px;
+            width: 386px;
+            min-height: 60px;
+
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 900%;
+
+
+            color: #90A3BF;
+        }
+
+        option {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 900%;
+        }
+    }
 }
 
 .title-block {
@@ -46,73 +116,7 @@
 }
 
 
-form {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    row-gap: 20px;
-    column-gap: 32px;
 
-
-    label {
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        font-weight: 700;
-        font-size: 16px;
-        line-height: 120%;
-    }
-
-    input {
-        background: #F6F7F9;
-        border-radius: 10px;
-        padding: 16px 32px;
-        width: 386px;
-
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 200%;
-
-
-        color: #90A3BF;
-    }
-
-    input[type=checkbox] {
-        width: 20px;
-    }
-
-    .checkbox-body {
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: flex-end;
-        align-items: center;
-        flex: 1 1 100%;
-    }
-
-    select {
-        background: #F6F7F9;
-        border-radius: 10px;
-        padding: 16px 32px;
-        width: 386px;
-        min-height: 60px;
-
-        font-style: normal;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 900%;
-
-
-        color: #90A3BF;
-    }
-
-    option {
-        font-style: normal;
-        font-weight: 400;
-        font-size: 20px;
-        line-height: 900%;
-    }
-}
 
 
 .sign-up {
@@ -137,4 +141,50 @@ form {
     align-items: flex-start;
     row-gap: 12px;
     margin: -25px 0px 0px;
+}
+
+@media(max-width: $tablet) {
+    .form {
+        &__container {
+            // width: 830px;
+            width: 450px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            row-gap: 20px;
+
+            label {
+                max-width: 100%;
+            }
+
+            input {
+                width: 100%;
+            }
+
+            select {
+                width: 100%;
+            }
+        }
+    }
+
+}
+
+@media(max-width: $mobileSmall) {
+    .form {
+        &__container {
+            padding: 0 0;
+            margin: 20px 0;
+            width: 100%;
+        }
+
+        &__body {
+            // padding: 0 0;
+            max-width: 100%;
+            border-radius: 0px;
+        }
+
+
+    }
 }

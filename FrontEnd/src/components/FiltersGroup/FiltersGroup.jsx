@@ -111,14 +111,6 @@ export const FiltersGroup = ({title, propertyList}) => {
         </>
     )
 
-    function preOpen() {
-        let once = true
-        if (once) {
-            document.querySelectorAll(".filter-item__spoiler-body").forEach(el => el.classList.add("open"))
-        }
-        once = false;
-    }
-
     function toggleSpoilerState(e){
         // console.log(e.currentTarget)
         e.currentTarget.classList.add("current");
