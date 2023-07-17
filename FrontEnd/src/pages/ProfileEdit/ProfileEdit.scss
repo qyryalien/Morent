@@ -1,7 +1,9 @@
+@import "../../style.scss";
+
 .profile-edit {
 
     &__container {
-        width: 830px;
+        max-width: 830px !important;
     }
 
     &__body {
@@ -126,7 +128,7 @@
 @media(max-width: $mobileSmall) {
     .profile-edit {
         &__container {
-            padding: 0 0;
+            padding: 0 0 !important;
         }
 
         &__body {
