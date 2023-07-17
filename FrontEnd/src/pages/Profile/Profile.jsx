@@ -60,11 +60,41 @@ export const Profile = () => {
         }
     } 
 
+    const [size, setSize] = React.useState({});
+    const ref = React.useRef(window);
+    const baseSizeList = [767, 1440];
+
+    const resizeHandler = () => {
+        let { innerHeight, innerWidth } = ref.current || {};
+        for (let baseSize of baseSizeList) {
+            if (baseSize >= innerWidth) {
+                innerWidth = baseSize
+                break;
+            }
+        }
+        if (innerWidth > baseSizeList[baseSizeList.length - 1]) {
+            innerWidth = baseSizeList[baseSizeList.length - 1];
+        }
+        setSize({ innerHeight, innerWidth });
+    };
+
     React.useEffect(() => {
         fetchProfileData();
         userGetOrders();
+        window.addEventListener("resize", resizeHandler);
+        resizeHandler();
+        return () => {
+            window.removeEventListener("resize", resizeHandler);
+        };
     }, [])
-    return(
+
+    function capitalize (word) {
+        let phrase = word.charAt(0).toUpperCase()+ word.slice(1)
+        return phrase.split("_").join(" ")
+    }
+
+    let HTMLsizeChoiser = new Map();
+    HTMLsizeChoiser.set(1440,         
         <div className="profile">
             <div className="profile__container">
                 <div className="profile__body">
@@ -72,10 +102,10 @@ export const Profile = () => {
                         <div className="info-block__title">Your profile</div>
                         <div className="info-block__list info-list">
                             <div className="info-list__subtitles">
-                                {(info ? Object.keys(info) : Array(5)).map(subtitle => <div className="info-list__subtitle">{subtitle}</div>)}
+                                {(info ? Object.keys(info).slice(1).map(item => capitalize(item)) : Array(5)).map(subtitle => <div className="info-list__subtitle">{subtitle}</div>)}
                             </div>
                             <div className="info-list__texts">
-                                {(info ? Object.values(info) : Array(5)).map(text => <div className="info-list__text">{text}</div>)}
+                                {(info ? Object.values(info).slice(1) : Array(5)).map(text => <div className="info-list__text">{text}</div>)}
                             </div>
                         </div>
                     </div>
@@ -111,9 +141,79 @@ export const Profile = () => {
                     : <div></div>
                     }
                 </div>
-                
             </div>
-
         </div>
+    )
+
+    function toggleSpoilerState(e){
+        // console.log(e.currentTarget)
+        e.currentTarget.classList.add("current");
+        let elemet = document.querySelector(".current+.spoiler-body");
+        elemet.classList.toggle("open");
+        e.currentTarget.classList.remove("current");
+    }
+
+    HTMLsizeChoiser.set(767,         
+        <div className="profile">
+            <div className="profile__container">
+                <div className="profile__body">
+                    <div className="profile__info-block info-block">
+                        <div className="info-block__title">Your profile</div>
+                        <div className="info-block__list info-list">
+                            <div className="info-list__subtitles">
+                                {(info ? Object.keys(info).slice(1).map(item => capitalize(item)) : Array(5)).map(subtitle => <div className="info-list__subtitle">{subtitle}</div>)}
+                            </div>
+                            <div className="info-list__texts">
+                                {(info ? Object.values(info).slice(1) : Array(5)).map(text => <div className="info-list__text">{text}</div>)}
+                            </div>
+                        </div>
+                    </div>
+                    <div className="profile__buttons">
+                        <Link to="/" className="btn btn_white">Back to main</Link>
+                        <Link to="/profile/edit" className="btn">Change info</Link>
+                        <Link  className="btn">Change password</Link>
+                    </div>
+                    <div className="profile__orders profile-orders-block">
+                        <div className="profile-orders-block__title">Your orders</div>
+                        <div className="profile-orders-block__list orders-list">
+                            <div className="orders-list__subtitles">
+                                <div className="orders-list__subtitle">Car name</div>
+                                
+                            </div>
+                            <div className="orders-list__items">
+                                {(renderOrderList ? Object.values(renderOrderList) : Array(5)).map((order, id) => 
+                                    <div className="orders-list__item " key={id}>
+                                        <div className="spoiler-block" onClick={toggleSpoilerState}>
+                                            <div className="orders-list__value">{order.car_name}</div>
+                                            <div className="spoiler-block__icon">
+                                                <img src={"./iconsfont/arrow-bottom.svg"} alt=""/>
+                                            </div>
+                                        </div>
+                                        
+                                        <div className="spoiler-body">
+                                            <div className="orders-list__subtitle">Pick-up city</div>
+                                            <div className="orders-list__value">{order.pick_up_city}</div>
+                                            <div className="orders-list__subtitle">Drop-off city</div>
+                                            <div className="orders-list__value">{order.drop_off_city}</div>
+                                            <div className="orders-list__subtitle">Status</div>
+                                            <div className="orders-list__value">{order.status}</div>
+                                        </div>
+                                    </div>                                    
+                                )}
+                            </div>
+                            
+                        </div>
+                    </div>
+                    {orders ? 
+                        <Pagination reqLen={orders.length} itemList={orders} actionfn={setRenderOrderList}></Pagination>
+                    : <div></div>
+                    }
+                </div>
+            </div>
+        </div>
+    )
+
+    return (
+        HTMLsizeChoiser.get(size.innerWidth)
     )
 }
