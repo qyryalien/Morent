@@ -58,6 +58,8 @@
 
 @media(max-width: $pc) {
     .main-content {
+        display: flex;
+        align-items: center;
         margin: 25px 10px;
 
         &__container {
