@@ -37,18 +37,20 @@ export const Header = () => {
                             <div className="menu__item"><Link to="/socials" className="menu__item-link">Socials</Link></div>
                         </div>
                     </div>
-                    <div className="login btn">
+                    <div className="header__btns-block">
+                        <div className="login btn">
+                            {isAuth 
+                                ? <Link to="/profile" className="login__link">Profile</Link>
+                                : <Link to="/login" className="login__link">Login</Link> 
+                            }
+                        </div>
                         {isAuth 
-                            ? <Link to="/profile" className="login__link">Profile</Link>
-                            : <Link to="/login" className="login__link">Login</Link> 
+                            ? <button className="login btn btn_white" onClick={logout}>                        
+                                <div className="login__link">Exit</div>
+                            </button>
+                            : <div></div> 
                         }
                     </div>
-                    {isAuth 
-                        ? <button className="login btn btn_white" onClick={logout}>                        
-                            <div className="login__link">Exit</div>
-                          </button>
-                        : <div></div> 
-                    }
                 </div>
                 
             </header>

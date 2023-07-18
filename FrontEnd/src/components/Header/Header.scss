@@ -3,8 +3,8 @@
 
 .header {
 	background: #fff;
-	@include adaptiveValue("padding-top", 25, 10);
-	@include adaptiveValue("padding-bottom", 25, 10);
+	@include adaptiveValue("padding-top", 25, 15);
+	@include adaptiveValue("padding-bottom", 25, 15);
 
 	&__container {
 		min-height: 70px;
@@ -21,6 +21,14 @@
 
 	&__menu {
 		flex: 1 1 auto;
+	}
+
+	&__btns-block {
+		display: flex;
+		flex: 1 1 auto;
+		column-gap: 10px;
+		justify-content: space-evenly;
+		align-items: center;
 	}
 }
 
@@ -99,4 +107,15 @@
 		line-height: 150%;
 
 	}
+}
+
+@media(max-width: $mobile) {
+	.header {
+
+		&__btns-block {
+			width: 40%;
+			column-gap: 30px;
+		}
+	}
+
 }
