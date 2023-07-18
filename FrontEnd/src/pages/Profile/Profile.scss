@@ -155,12 +155,13 @@
     .spoiler-body {
         max-height: 0px;
         overflow: hidden;
-        -webkit-transition: max-height 0.5s ease-in-out;
-        -moz-transition: max-height 0.5s ease-in-out;
-        -ms-transition: max-height 0.5s ease-in-out;
-        -o-transition: max-height 0.5s ease-in-out;
-        transition: max-height 0.5s ease-in-out;
-        margin-bottom: 20px;
+        -webkit-transition: max-height 0.8s ease-in-out;
+        -moz-transition: max-height 0.8s ease-in-out;
+        -ms-transition: max-height 0.8s ease-in-out;
+        -o-transition: max-height 0.8s ease-in-out;
+        transition: max-height 0.8s ease-in-out;
+        margin-bottom: 10px;
+        margin-top: 10px;
     }
 
     .open {
