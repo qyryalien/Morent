@@ -74,7 +74,7 @@ export const Filter = () => {
     
     function toggleFiltersBodyState(e){
         let elemet = document.querySelector(".filter-component");
-        elemet.classList.toggle("open");
+        elemet.classList.toggle("open-block");
         e.currentTarget.classList.toggle("clicked");
         
         document.querySelectorAll(".filter-item__spoiler-body").forEach(el => el.classList.add("open"))

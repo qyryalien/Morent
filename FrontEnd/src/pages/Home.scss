@@ -58,6 +58,8 @@
 
 @media(max-width: $pc) {
     .main-content {
+        display: flex;
+        align-items: center;
         margin: 25px 10px;
 
         &__container {
@@ -87,7 +89,7 @@
 
 @media(max-width: $mobile) {
     .main-content {
-        margin: 0 auto;
+        margin: 20px auto;
 
         &__body {
             width: 100%;

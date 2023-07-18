@@ -3,7 +3,7 @@
 .form {
 
     &__container {
-        width: 830px;
+        max-width: 830px !important;
     }
 
     &__body {
@@ -99,12 +99,43 @@
 .title-block {
 
     &__title {
+        position: relative;
         font-weight: 700;
         font-size: 20px;
         line-height: 125%;
 
         color: #1A202C;
     }
+
+    span+&__title {
+        padding-left: 30px;
+        padding-bottom: 5px;
+    }
+
+    span+&__title::after {
+        content: "";
+        position: absolute;
+        left: 3px;
+        top: 6px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        // background-color: #5CAFFC;
+        background-color: #3563E9;
+    }
+
+    span+&__title::before {
+        content: "";
+        position: absolute;
+        left: -1px;
+        top: 2px;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        opacity: 0.5;
+        background-color: #3563E9;
+    }
+
 
     &__sub-title {
         font-weight: 500;
@@ -114,10 +145,6 @@
         color: #90A3BF;
     }
 }
-
-
-
-
 
 .sign-up {
     display: flex;
@@ -146,8 +173,7 @@
 @media(max-width: $tablet) {
     .form {
         &__container {
-            // width: 830px;
-            width: 450px;
+            max-width: 480px !important;
         }
 
         form {
@@ -174,8 +200,8 @@
 @media(max-width: $mobileSmall) {
     .form {
         &__container {
-            padding: 0 0;
-            margin: 20px 0;
+            padding: 0 !important;
+            margin: 20px 0 !important;
             width: 100%;
         }
 
