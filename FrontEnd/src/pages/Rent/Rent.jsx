@@ -149,7 +149,7 @@ export const Rent = () => {
                             <div className="title-block__title ">Rental Info</div>
                             <div className="title-block__sub-title">Please select your rental date</div>
                         </div>
-                        <div className="title-block__title ">Pick - Up</div>
+                        <span></span><div className="title-block__title ">Pick - Up</div>
                         <form action="" onSubmit={handleSubmit(onSubmit)}>
                             <label>
                                 Locations
@@ -199,7 +199,7 @@ export const Rent = () => {
                             </label>
                         </form>
 
-                        <div className="title-block__title ">Drop - Off</div>
+                        <span></span><div className="title-block__title ">Drop - Off</div>
                         <form action="" onSubmit={handleSubmit(onSubmit)}>
                             <label>
                                 Locations
