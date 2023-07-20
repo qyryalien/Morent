@@ -32,9 +32,9 @@ export const Header = () => {
                     </div>
                     <div className="header__menu menu">
                         <div className="menu__items">
-                            <div className="menu__item"><Link to="/About" className="menu__item-link">About</Link></div>
-                            <div className="menu__item"><Link to="/Community" className="menu__item-link">Community</Link></div>
-                            <div className="menu__item"><Link to="/socials" className="menu__item-link">Socials</Link></div>
+                            <div className="menu__item"><div to="/About" className="menu__item-link">About</div></div>
+                            <div className="menu__item"><div to="/Community" className="menu__item-link">Community</div></div>
+                            <div className="menu__item"><div to="/socials" className="menu__item-link">Socials</div></div>
                         </div>
                     </div>
                     <div className="header__btns-block">
