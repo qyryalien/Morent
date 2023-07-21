@@ -1,13 +1,12 @@
 @import "../../style.scss";
 
 .item-body {
-    padding: 10px 106px;
+    padding: 10px 102px;
     border-radius: 4px;
     background: #fff;
     display: flex;
+    flex: 1 1 auto;
     align-items: center;
-    column-gap: 7px;
-
     column-gap: 7px;
 
     &__title {
@@ -71,6 +70,7 @@
 
     &__btns {
         display: flex;
+        flex: 1 0 auto;
         align-items: center;
         column-gap: 7px;
         font-weight: 600;
