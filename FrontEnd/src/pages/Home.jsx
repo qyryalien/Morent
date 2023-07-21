@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllCars } from '../redux/slices/carList';
 import { setCurentAuthSession } from '../redux/slices/auth';
 import { setRenderList } from '../redux/slices/carList';
-import { AdsCard, CarItem, Pagination } from '../components'; 
+import { AdsCard, CarItem, Pagination, Preloader } from '../components'; 
 import { Filter } from '../components/Filter/Filter';
 import axios from 'axios';
 
@@ -69,35 +69,40 @@ export const Home = () => {
         dispatch(fetchAllCars())
     }, [])
 
+    if (status === "Loading") {
+		return <Preloader></Preloader>;
+	}
+	if (status === "Loaded") {
 
-    return(
-        <>
-            <main className="page">
-                <section className='adt'>
-                    <div className="adt__container">
-                        <div className="ads__body">
-                            <AdsCard imgUrl="/Koenigsegg.png"></AdsCard>
-                            <AdsCard imgUrl="/NissanR35.png"></AdsCard>
-                        </div>
-                    </div>
-                </section>
-                <section className='main-content'>
-                    <div className="main-content__container">
-                        <Filter></Filter>
-                        <div className="main-content__body">
-                            <div className="car-list">
-                                {status === "Loading" 
-                                    ? <div className='item-body empty-car-list'>Loading...</div> 
-                                    : renderList.length === 0 
-                                        ? <div className='item-body empty-car-list'>Product list is empty</div> 
-                                        : renderList.map(data => <CarItem key={data.title} id={data.id} carName={data.title} carClass={data.cat_name} imgUrl={data.main_photo} specs={[data.gasoline, data.engine_name, data.capacity_name]} price={`$${data.price}.00`}></CarItem>)
-                                }
+        return(
+            <>
+                <main className="page">
+                    <section className='adt'>
+                        <div className="adt__container">
+                            <div className="ads__body">
+                                <AdsCard imgUrl="/Koenigsegg.png"></AdsCard>
+                                <AdsCard imgUrl="/NissanR35.png"></AdsCard>
                             </div>
-                            <Pagination reqLen={listOfCars.length} itemList={listOfCars} actionfn={setRenderList}></Pagination>
                         </div>
-                    </div>
-                </section>            
-            </main>
-        </>
-    )
+                    </section>
+                    <section className='main-content'>
+                        <div className="main-content__container">
+                            <Filter></Filter>
+                            <div className="main-content__body">
+                                <div className="car-list">
+                                    {status === "Loading" 
+                                        ? <div className='item-body empty-car-list'>Loading...</div> 
+                                        : renderList.length === 0 
+                                            ? <div className='item-body empty-car-list'>Product list is empty</div> 
+                                            : renderList.map(data => <CarItem key={data.title} id={data.id} carName={data.title} carClass={data.cat_name} imgUrl={data.main_photo} specs={[data.gasoline, data.engine_name, data.capacity_name]} price={`$${data.price}.00`}></CarItem>)
+                                    }
+                                </div>
+                                <Pagination reqLen={listOfCars.length} itemList={listOfCars} actionfn={setRenderList}></Pagination>
+                            </div>
+                        </div>
+                    </section>            
+                </main>
+            </>
+        )
+    }
 }
