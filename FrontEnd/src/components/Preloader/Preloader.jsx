@@ -4,7 +4,7 @@ import "./Preloader.scss";
 
 
 export const Preloader = () => {
-    let [approximateTime, setApproximateTime] = React.useState(50);
+    let [approximateTime, setApproximateTime] = React.useState(70);
 
     React.useEffect(() => {
         let timer = setInterval(() => {
