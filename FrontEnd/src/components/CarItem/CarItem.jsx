@@ -56,8 +56,8 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
             </div>
             
             <div className="item-body__btns">
-                <div className="about btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}}  to="/car" className="about__link">About</Link></div>
-                <div className="rent-now btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}} to="/rent" className="rent-now__link">Rent Now</Link></div>
+                <div className="about-btn btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}}  to="/car" className="about-btn__link">About</Link></div>
+                <div className="rent-now-btn btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}} to="/rent" className="rent-now__link">Rent Now</Link></div>
             </div>
         </div>
     </>
@@ -81,7 +81,7 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                 <div className="item-body__price">
                     <p className='text'><span>{price}/</span>day</p>
                 </div>
-                <div className="about btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}}  to="/car" className="about__link">About</Link></div>
+                <div className="about-btn btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}}  to="/car" className="about-btn__link">About</Link></div>
                 <div className="rent-now btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}} to="/rent" className="rent-now__link">Rent Now</Link></div>
             </div>
         </div>
@@ -108,8 +108,8 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                         <p className='text'><span>{price}/</span>day</p>
                     </div>
                     <div className="item-body__btns">
-                        <div className="about btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}}  to="/car" className="about__link">About</Link></div>
-                        <div className="rent-now btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}} to="/rent" className="rent-now__link">Rent Now</Link></div>
+                        <div className="about-btn btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}}  to="/car" className="about-btn__link">About</Link></div>
+                        <div className="rent-now-btn btn"><Link onClick={() => {dispatch(setCurrentCarID(id))}} to="/rent" className="rent-now-btn__link">Rent Now</Link></div>
                     </div>
                 </div>    
             </div>
