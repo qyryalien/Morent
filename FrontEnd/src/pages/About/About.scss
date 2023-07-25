@@ -10,6 +10,10 @@
         border-radius: 15px;
         padding: 20px;
     }
+
+    p+p {
+        margin-top: 1em;
+    }
 }
 
 .text-body {
@@ -46,9 +50,7 @@
     }
 }
 
-p+p {
-    margin-top: 1em;
-}
+
 
 @media(max-width: $mobileSmall) {
     .about {
