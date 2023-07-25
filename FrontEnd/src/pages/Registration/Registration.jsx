@@ -68,8 +68,8 @@ export const Registration = () => {
                                 />
                             </label>
                             <div className="registration__buttons">
-                                <Link to="/" className="btn btn_white">Back to main</Link>
-                                <button type="submit" className="btn">
+                                <Link to="/" className="btn btn_white link">Back to main</Link>
+                                <button type="submit" className="btn link">
                                     Register
                                 </button>
                             </div>

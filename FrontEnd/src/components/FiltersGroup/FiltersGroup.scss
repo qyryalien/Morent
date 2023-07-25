@@ -22,12 +22,9 @@
     }
 }
 
-// .spoiler-block {
-//     display: flex;
-//     justify-content: space-between;
-//     align-items: end;
-//     width: 100%;
-// }
+.spoiler-block {
+    cursor: pointer;
+}
 
 label {
     display: flex;

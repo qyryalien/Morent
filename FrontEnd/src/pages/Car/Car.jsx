@@ -72,10 +72,10 @@ export const Car = () => {
                                     </div>
                                 </div>
                                 <div className="car-description__buttons-block">
-                                    <Link to="/" className="btn btn_white">Back to main</Link>
-                                    <Link to="/rent" className="btn ">Rent Now</Link>
-                                    <div className="btn btn_white">View review</div>
-                                    <div className="btn ">Leave a review</div>
+                                    <Link to="/" className="btn btn_white link">Back to main</Link>
+                                    <Link to="/rent" className="btn link">Rent Now</Link>
+                                    <div className="btn link btn_disabled">View review</div>
+                                    <div className="btn link btn_disabled">Leave a review</div>
                                 </div>
                                 
                             </div>
@@ -122,8 +122,8 @@ export const Car = () => {
                                 <div className="car-description__buttons-block">
                                     <Link to="/" className="btn btn_white">Back to main</Link>
                                     <Link to="/rent" className="btn ">Rent Now</Link>
-                                    <div className="btn btn_white">View review</div>
-                                    <div className="btn ">Leave a review</div>
+                                    <div className="btn btn_disabled">View review</div>
+                                    <div className="btn btn_disabled">Leave a review</div>
                                 </div>
                                 
                             </div>

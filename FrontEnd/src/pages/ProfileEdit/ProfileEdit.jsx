@@ -108,8 +108,8 @@ export const ProfileEdit = () => {
                                 <input {...register("last_name")} />
                             </label>
                             <div className="profile-edit__buttons">
-                                <Link to="/" className="btn btn_white">Back to main</Link>
-                                <button type="submit" className="btn">
+                                <Link to="/" className="btn btn_white link">Back to main</Link>
+                                <button type="submit" className="btn link">
                                     Confirm
                                 </button>
                             </div>

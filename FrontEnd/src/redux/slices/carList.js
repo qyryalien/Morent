@@ -33,7 +33,7 @@ const postsSlice = createSlice({
 		},
 		[fetchAllCars.fulfilled]: (state, action) => {
 			state.listOfCars = action.payload;
-			state.status = "OK";
+			state.status = "Loaded";
 		},
 		[fetchAllCars.rejected]: (state, action) => {
 			state.status = action.error;

@@ -253,8 +253,8 @@ export const Rent = () => {
                                 })} />
                             </label>
                             <div className="form__buttons">
-                                <Link to="/" className="btn btn_white">Back to main</Link>
-                                <button type="submit" className="btn">
+                                <Link to="/" className="btn btn_white link">Back to main</Link>
+                                <button type="submit" className="btn link">
                                     Rent Now
                                 </button>
                             </div>

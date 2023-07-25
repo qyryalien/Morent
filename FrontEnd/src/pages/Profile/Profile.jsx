@@ -110,9 +110,9 @@ export const Profile = () => {
                         </div>
                     </div>
                     <div className="profile__buttons">
-                        <Link to="/" className="btn btn_white">Back to main</Link>
-                        <Link to="/profile/edit" className="btn">Change info</Link>
-                        <Link  className="btn">Change password</Link>
+                        <Link to="/" className="btn btn_white link">Back to main</Link>
+                        <Link to="/profile/edit" className="btn link">Change info</Link>
+                        <Link  className="btn btn_disabled link">Change password</Link>
                     </div>
                     <div className="profile__orders profile-orders-block">
                         <div className="profile-orders-block__title">Your orders</div>
@@ -169,9 +169,9 @@ export const Profile = () => {
                         </div>
                     </div>
                     <div className="profile__buttons">
-                        <Link to="/" className="btn btn_white">Back to main</Link>
-                        <Link to="/profile/edit" className="btn">Change info</Link>
-                        <Link  className="btn">Change password</Link>
+                        <Link to="/" className="btn btn_white link">Back to main</Link>
+                        <Link to="/profile/edit" className="btn link">Change info</Link>
+                        <Link  className="btn link btn_disabled">Change password</Link>
                     </div>
                     <div className="profile__orders profile-orders-block">
                         <div className="profile-orders-block__title">Your orders</div>

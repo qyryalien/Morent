@@ -28,6 +28,11 @@
         gap: 20px;
     }
 
+    &__btn {
+        min-width: 90px;
+        padding: 10px 7px;
+    }
+
     form {
         display: flex;
         flex-direction: column;

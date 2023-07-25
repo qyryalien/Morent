@@ -72,24 +72,7 @@
 	}
 }
 
-.btn {
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
 
-	background: #3563E9;
-	border-radius: 5px;
-	padding: 10px 7px;
-	text-align: center;
-	color: white;
-	min-height: 39px;
-}
-
-.btn_white {
-	border: 1px solid #3563E9;
-	background: white;
-	color: #3563E9;
-}
 
 .login {
 	margin-left: 20px;
@@ -105,7 +88,7 @@
 		font-weight: 600;
 		font-size: 15px;
 		line-height: 150%;
-
+		padding: 10px 7px;
 	}
 }
 

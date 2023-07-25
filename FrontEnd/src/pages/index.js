@@ -7,3 +7,4 @@ export { Login } from "./Login/Login";
 export { Registration } from "./Registration/Registration";
 export { ProfileEdit } from "./ProfileEdit/ProfileEdit";
 export { Rent } from "./Rent/Rent";
+export { Profile } from "./Profile/Profile";

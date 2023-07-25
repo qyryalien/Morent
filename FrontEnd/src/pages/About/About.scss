@@ -1,56 +1,93 @@
-// .About {
-//     font-size: 40px;
-//     color: green;
-// }
+@import "../../style.scss";
 
-// .main-content__body {
-//     p:first-child {
-//         height: 500px;
-//     }
+.about {
 
-//     p:last-child {
+    &__container {}
 
-//         height: 200px;
-//     }
-// }
+    &__text-body {
+        background-color: white;
+        margin: 20px auto;
+        border-radius: 15px;
+        padding: 20px;
+    }
 
-// body {
-//     color: #fff;
-//     font-family: arial;
-//     font-weight: bold;
-//     font-size: 40px;
-// }
+    p+p {
+        margin-top: 1em;
+    }
+}
 
-// .main-container {
-//     max-width: 600px;
-//     margin: 0 auto;
-//     border: solid 10px green;
-//     padding: 10px;
-//     margin-top: 40px;
-// }
+.text-body {
 
-// .main-container * {
-//     padding: 10px;
-//     background: #aaa;
-//     border: dashed 5px #000;
-// }
+    &__paragraph {
+        font-size: 20px;
+        line-height: 150%;
+        font-weight: 500;
+        text-indent: 35px;
+        text-align: justify;
+    }
 
-// .main-container *+* {
-//     margin-top: 20px;
-// }
+    &__title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #3563E9;
+        margin-top: 1.5em;
+    }
 
-// .main-header {
-//     height: 50px;
-//     background: #aaa;
-//     border-color: red;
-// }
+    &__list {}
+}
 
-// .main-content {
-//     min-height: 1000px;
-// }
+.list {
 
-// .main-header {
-//     position: -webkit-sticky;
-//     position: sticky;
-//     top: 0;
-// }
+    &__item {
+        font-size: 18px;
+        line-height: 170%;
+        font-weight: 500;
+        text-align: justify;
+
+        list-style-type: disclosure-closed;
+        list-style-position: inside;
+        padding: 15px 0px 0px 30px;
+    }
+}
+
+
+
+@media(max-width: $mobileSmall) {
+    .about {
+
+        &__container {
+            padding: 0px !important;
+        }
+
+        &__text-body {
+            border-radius: 0px;
+        }
+    }
+
+    .text-body {
+
+
+        &__paragraph {
+            font-size: 16px;
+            line-height: 150%;
+            font-weight: 500;
+            text-indent: 35px;
+            text-align: justify;
+        }
+
+        &__title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #3563E9;
+            margin-top: 1.5em;
+        }
+    }
+
+    .list {
+
+        &__item {
+            font-size: 14px;
+            padding: 15px 0px 0px 30px;
+        }
+    }
+}
