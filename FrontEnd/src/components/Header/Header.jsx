@@ -33,20 +33,20 @@ export const Header = () => {
                     <div className="header__menu menu">
                         <div className="menu__items">
                             <div className="menu__item"><div to="/About" className="menu__item-link">About</div></div>
-                            <div className="menu__item"><div to="/Community" className="menu__item-link">Community</div></div>
+                            {/* <div className="menu__item"><div to="/Community" className="menu__item-link">Community</div></div> */}
                             <div className="menu__item"><div to="/socials" className="menu__item-link">Socials</div></div>
                         </div>
                     </div>
                     <div className="header__btns-block">
                         <div className="login btn">
                             {isAuth 
-                                ? <Link to="/profile" className="login__link">Profile</Link>
-                                : <Link to="/login" className="login__link">Login</Link> 
+                                ? <Link to="/profile" className="login__link link">Profile</Link>
+                                : <Link to="/login" className="login__link link">Login</Link> 
                             }
                         </div>
                         {isAuth 
                             ? <button className="login btn btn_white" onClick={logout}>                        
-                                <div className="login__link">Exit</div>
+                                <div className="login__link link">Logout</div>
                             </button>
                             : <div></div> 
                         }

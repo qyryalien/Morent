@@ -82,23 +82,21 @@
 .text {}
 
 .about-btn {
-    background-color: #fff;
-    border: 1px solid #3563E9;
-    padding: 10px 15px;
+    // background-color: #fff;
+    // border: 1px solid #3563E9;
 
     &__link {
+        padding: 10px 15px;
         color: #3563E9;
 
     }
 }
 
-
-.btn {}
-
 .rent-now-btn {
-    padding: 10px 7px;
 
-    &__link {}
+    &__link {
+        padding: 10px 7px;
+    }
 }
 
 @media(max-width: $pc) {

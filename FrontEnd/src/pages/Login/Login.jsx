@@ -93,8 +93,8 @@ export const Login = () => {
                                 <Link to="/registration" className="sign-up__link">Sign up</Link>
                             </div>
                             <div className="login__buttons">
-                                <Link to="/" className="btn btn_white">Back to main</Link>
-                                <button type="submit" className="btn">
+                                <Link to="/" className="login__btn btn btn_white">Back to main</Link>
+                                <button type="submit" className="login__btn btn">
                                     Login
                                 </button>
                             </div>
