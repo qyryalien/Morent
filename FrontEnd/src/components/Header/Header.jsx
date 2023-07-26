@@ -63,9 +63,9 @@ export const Header = () => {
                     </div>
                     <div className="header__menu menu">
                         <div className="menu__items">
-                            <Link className="menu__item"><div to="/About" className="menu__item-link">About</div></Link>
+                            <Link className="menu__item" to="/About"><div  className="menu__item-link">About</div></Link>
                             {/* <div className="menu__item"><div to="/Community" className="menu__item-link">Community</div></div> */}
-                            <Link className="menu__item"><div to="/socials" className="menu__item-link">Socials</div></Link>
+                            <Link className="menu__item" to="/socials"><div  className="menu__item-link">Socials</div></Link>
                         </div>
                     </div>
                     <div className="header__btns-block">
