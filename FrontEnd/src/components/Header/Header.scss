@@ -25,8 +25,8 @@
 
 	&__btns-block {
 		display: flex;
-		flex: 1 1 auto;
-		column-gap: 10px;
+		// flex: 1 1 auto;
+		// column-gap: 10px;
 		justify-content: center;
 		align-items: center;
 	}
@@ -64,7 +64,7 @@
 	}
 
 	&__item-link {
-		text-decoration: underline;
+		// text-decoration: underline;
 		font-size: 20px;
 		@include adaptiveValue("font-size", 20, 16);
 		font-weight: 600;
@@ -93,11 +93,108 @@
 }
 
 @media(max-width: $mobile) {
+	body:has(*> .open) {
+		overflow: hidden;
+	}
+
 	.header {
+		z-index: 5;
+
+		&__container {
+			flex-direction: row;
+			justify-content: space-between;
+
+		}
 
 		&__btns-block {
-			width: 40%;
-			column-gap: 30px;
+			flex: 0 0 50px;
+			// width: 40%;
+			// align-self: start;
+			// column-gap: 30px;
+		}
+	}
+
+	.menu {
+		&__items {
+			display: none;
+			// display: flex;
+			// flex-direction: column;
+			// row-gap: 20px;
+		}
+
+		&__item-link {
+			font-size: 30px;
+			line-height: 150%;
+			font-weight: 700;
+		}
+	}
+
+	.open.menu {
+		display: block;
+		position: fixed;
+		inset: 0;
+		max-height: 100%;
+		max-width: 100%;
+		z-index: 3;
+		background-color: white;
+
+		& &__items {
+			display: flex;
+			flex-direction: column;
+			// align-items: center;
+			row-gap: 20px;
+			position: fixed;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+
+		}
+
+	}
+
+	.icon-menu {
+		display: block;
+		position: relative;
+		flex: 0 0 30px; //Использовать если кнопка бургера флексэлемент
+		// width: 30px; //Использовать если кнопка бургера не флексэлемент
+		height: 18px;
+		cursor: pointer;
+		z-index: 5;
+
+		span {
+			content: "";
+			transition: all 0.3s ease 0s;
+			top: calc(50% - 1px);
+			left: 0px;
+			position: absolute;
+			width: 100%;
+			height: 2px;
+			background-color: #000;
+
+			&:first-child {
+				top: 0px;
+			}
+
+			&:last-child {
+				top: auto;
+				bottom: 0px;
+			}
+		}
+
+		&._active {
+			span {
+				transform: scale(0);
+
+				&:first-child {
+					transform: rotate(-45deg);
+					top: calc(50% - 1px);
+				}
+
+				&:last-child {
+					transform: rotate(45deg);
+					bottom: calc(50% - 1px);
+				}
+			}
 		}
 	}
 
