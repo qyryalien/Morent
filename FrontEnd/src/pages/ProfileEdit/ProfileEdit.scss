@@ -55,8 +55,15 @@
             font-size: 14px;
             line-height: 200%;
 
-
             color: #90A3BF;
+
+        }
+
+        .field-error {
+            margin-top: -10px;
+            font-size: 13px;
+            font-weight: 400;
+            color: red;
         }
     }
 }

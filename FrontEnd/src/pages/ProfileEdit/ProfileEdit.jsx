@@ -40,11 +40,11 @@ export const ProfileEdit = () => {
 
     const {
         register,
-        formState:{errors},
+        formState:{errors, isValid},
         handleSubmit,
         reset
     } = useForm({
-        mode: "onBlur",
+        mode: "onChange",
         defaultValues: {
             username: "",
             email: "",
@@ -91,25 +91,63 @@ export const ProfileEdit = () => {
                         <form action="" onSubmit={handleSubmit(onSubmit)}>
                             <label>
                                 Login
-                                <input   {...register("username")} />
+                                <input placeholder="Your login"  {...register("username", {
+                                    required: "field is required",
+                                    minLength: {
+                                        value: 3,
+                                        message: 'minimum length 3 characters'
+                                    },
+                                    pattern: {
+                                        value: /^[a-zA-Z0-9]+$/,
+                                        message: 'login is not valid'
+                                    }
+                                })} />
+                                <div className="field-error">
+                                    {errors?.username?.message}
+                                </div>
                             </label>
                             <label>
                                 Email
-                                <input   {...register("email", {
-                                    
+                                <input placeholder="Your email"  {...register("email", {
+                                    required: "field is required",
+                                    pattern: {
+                                        value: /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
+                                        message: 'email is not valid'
+                                    }
                                 })} />
+                                <div className="field-error">
+                                    {errors?.email?.message}
+                                </div>
                             </label>
                             <label>
                                 First name
-                                <input {...register("first_name")} />
+                                <input {...register("first_name", {
+                                    required: "field is required",
+                                    pattern: {
+                                        value: /^[^0-9!@#$%^&?*()_+='`\/;~{}:"\-\[\]\.,\\<>\|]+$/,
+                                        message: 'last name is not valid'
+                                    }
+                                })} />
+                                <div className="field-error">
+                                    {errors?.first_name?.message}
+                                </div>
                             </label>
                             <label>
                                 Last name
-                                <input {...register("last_name")} />
+                                <input {...register("last_name", {
+                                    required: "field is required",
+                                    pattern: {
+                                        value: /^[^0-9!@#$%^&?*()_+='`\/;~{}:"\-\[\]\.,\\<>\|]+$/,
+                                        message: 'last name is not valid'
+                                    }
+                                })} />
+                                <div className="field-error">
+                                    {errors?.last_name?.message}
+                                </div>
                             </label>
                             <div className="profile-edit__buttons">
                                 <Link to="/" className="btn btn_white link">Back to main</Link>
-                                <button type="submit" className="btn link">
+                                <button type="submit" className={`btn link ${!isValid ? "btn_disabled" : ''}`}>
                                     Confirm
                                 </button>
                             </div>
