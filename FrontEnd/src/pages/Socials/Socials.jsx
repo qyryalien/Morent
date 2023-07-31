@@ -14,11 +14,11 @@ export const Socials = () => {
                         <div className="personal-card__about-developer-body">                            
                             <div className="personal-card__name">Dmytro Hmelnitskiy</div>
                             <div className="personal-card__description">
-                                My contribution to the project included the creation of key featuresand pages.
-                                Using HTML and CSS, I made the following pages: a page with all availablecars,
-                                category pages, user registration and authorization forms, profile page and
-                                userorder viewer, as well as pages with detailed information about cars and
-                                order creationforms.
+                            I am a highly motivated individual seeking a career as a Python Developer. With a strong
+                            foundation in programming and experience in developing applications using Python I have a solid
+                            understanding of object-oriented programming concepts and experience with popular Python
+                            libraries and frameworks such as Django, Django Rest Framework, FastAPI, Celery, Redis and
+                            PyTest. Also have knowledge of MySQL, SQlite and Docker.
                             </div>
                             <div className="personal-card__media media">
                                 <div className="media__items">
