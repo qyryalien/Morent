@@ -44,10 +44,39 @@
             line-height: 120%;
         }
 
+        .field-error {
+            margin-top: -10px;
+            font-size: 13px;
+            font-weight: 400;
+            color: red;
+        }
+
         input {
             background: #F6F7F9;
             border-radius: 10px;
             padding: 16px 32px;
+            width: 386px;
+
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 200%;
+
+
+            // color: #90A3BF;
+            color: black;
+        }
+
+        input::placeholder {
+            font-size: 14px;
+            font-weight: 500;
+            color: black;
+        }
+
+        .Input {
+            background: #F6F7F9;
+            border-radius: 10px;
+            // padding: 16px 32px;
             width: 386px;
 
             font-style: normal;
@@ -84,13 +113,14 @@
             line-height: 900%;
 
 
-            color: #90A3BF;
+            // color: #90A3BF;
+            color: black;
         }
 
         option {
             font-style: normal;
             font-weight: 400;
-            font-size: 20px;
+            font-size: 16px;
             line-height: 900%;
         }
     }
@@ -186,6 +216,10 @@
             }
 
             input {
+                width: 100%;
+            }
+
+            .Input {
                 width: 100%;
             }
 
