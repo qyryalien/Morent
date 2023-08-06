@@ -9,12 +9,13 @@ export const Registration = () => {
     const navigate = useNavigate();
     
     const {
-        register,
-        formState:{errors},
+        register, 
+        getValues,
+        formState:{errors, isValid},
         handleSubmit,
         reset
     } = useForm({
-        mode: "onBlur",
+        mode: "onChange",
     });
 
     const onSubmit = async (data) => {
@@ -44,32 +45,65 @@ export const Registration = () => {
                             <label>
                                 Login
                                 <input placeholder="Your login"  {...register("username", {
-                                    required: true,
+                                    required: "field is required",
+                                    minLength: {
+                                        value: 3,
+                                        message: 'minimum length 3 characters'
+                                    },
+                                    pattern: {
+                                        value: /^[a-zA-Z0-9]+$/,
+                                        message: 'login is not valid'
+                                    }
                                 })} />
+                                <div className="field-error">
+                                    {errors?.username?.message}
+                                </div>
                             </label>
                             <label>
                                 Email
                                 <input placeholder="Your email"  {...register("email", {
-                                    required: true,
+                                    required: "field is required",
+                                    pattern: {
+                                        // value: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
+                                        value: /^[-\w.]+@([A-z0-9][-A-z0-9]+\.)+[A-z]{2,4}$/,
+                                        message: 'email is not valid'
+                                    }
+                                    
                                 })} />
+                                <div className="field-error">
+                                    {errors?.email?.message}
+                                </div>
                             </label>
                             <label>
                                 Password
-                                <input placeholder="Your password"  {...register("password", {
-                                    required: true,
+                                <input placeholder="Your password" type="password"
+                                {...register("password", {
+                                    required: "field is required",
+                                    minLength: {
+                                        value: 8,
+                                        message: 'minimum length 8 characters'
+                                    },
                                 })} />
+                                <div className="field-error">
+                                    {errors?.password?.message}
+                                </div>
                             </label>
                             <label>
                                 Confirm password
-                                <input placeholder="Confirm your password"  
+                                <input placeholder="Confirm your password" type="password" 
                                 {...register("confirm", {
-                                    required: true,
+                                    required: "field is required",
+                                    validate: value => value === getValues("password") || 'confirm and password not equal'
                                 })}
                                 />
+                                <div className="field-error">
+                                    {errors?.confirm?.message}
+                                </div>
                             </label>
                             <div className="registration__buttons">
                                 <Link to="/" className="btn btn_white link">Back to main</Link>
-                                <button type="submit" className="btn link">
+                                {/* <button type="submit" className="btn link {}" disabled={!isValid}> */}
+                                <button type="submit" className={`btn link ${!isValid ? "btn_disabled" : ''}`} >
                                     Register
                                 </button>
                             </div>

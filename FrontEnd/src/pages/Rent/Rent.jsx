@@ -1,10 +1,17 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import {useForm} from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux"
 import { setCurentAuthSession } from "../../redux/slices/auth";
-import axios from "../../axiosConfigs/axiosBaseSettings";
 
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from "dayjs";
+
+import axios from "../../axiosConfigs/axiosBaseSettings";
 
 import "./Rent.scss"
 
@@ -69,13 +76,13 @@ export const Rent = () => {
         register,
         formState:{errors},
         handleSubmit,
+        control,
         reset
     } = useForm({
-        mode: "onBlur",
+        mode: "onChange",
     });
 
     const onSubmit = async (data) => {
-        
         let username = info.id;
         try {
             let response;
@@ -112,32 +119,79 @@ export const Rent = () => {
                             <div className="title-block__title ">Billing Info</div>
                             <div className="title-block__sub-title">Please enter your billing info</div>
                         </div>
+
                         <form action="" onSubmit={handleSubmit(onSubmit)}>
+
                             <label>
                                 Name
                                 <input placeholder="Your name"  {...register("name", {
-                                    required: true,
+                                    required: "field is required",
+                                    pattern: {
+                                        value: /^[^0-9!@#$%^&?*()_+='`\/;~{}:"\-\[\]\.,\\<>\|]+$/,
+                                        message: 'name is not valid'
+                                    },
+                                    minLength: {
+                                        value: 3,
+                                        message: "name is not full"
+                                    }  
                                 })} />
+                                <div className="field-error">
+                                    {errors?.name?.message}
+                                </div>
                             </label>
+
                             <label>
                                 Phone Number
                                 <input placeholder="Phone number"  {...register("phone_number", {
-                                    required: true,
+                                    required: "field is required",
+                                    pattern: {
+                                        value: /^[^a-zA-Z!@#$%^&?*_'=`\/;~{}:"\-\[\]\.,\\<>\|]+$/,
+                                        message: 'phone number is not valid'
+                                    },
+                                    minLength: {
+                                        value: 11,
+                                        message: "phone number is not full"
+                                    },
+                                    maxLength: {
+                                        value: 13,
+                                        message: "phone number is too long"
+                                    }
                                 })} />
+                                <div className="field-error">
+                                    {errors?.phone_number?.message}
+                                </div>
                             </label>
+
                             <label>
                                 Adress
                                 <input placeholder="Your adress"  {...register("adress", {
-                                    required: true,
+                                    required: "field is required",
+                                    pattern: {
+                                        value: /^[^!@#$%^&?*()_+=`\/;~{}:"\-\[\]\.,\\<>\|]+$/,
+                                        message: 'adress is not valid'
+                                    }
                                 })} />
+                                <div className="field-error">
+                                    {errors?.adress?.message}
+                                </div>
                             </label>
+                            
                             <label>
                                 Town / City
                                 <input placeholder="Your town / city"  {...register("city", {
-                                    required: true,
+                                    required: "field is required",
+                                    pattern: {
+                                        value: /^[^0-9!@#$%^&?*()_+='`\/;~{}:"\-\[\]\.,\\<>\|]+$/,
+                                        message: 'city name is not valid'
+                                    }   
                                 })}/>
+                                <div className="field-error">
+                                    {errors?.city?.message}
+                                </div>
                             </label>
+
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -150,7 +204,9 @@ export const Rent = () => {
                             <div className="title-block__sub-title">Please select your rental date</div>
                         </div>
                         <span></span><div className="title-block__title ">Pick - Up</div>
+
                         <form action="" onSubmit={handleSubmit(onSubmit)}>
+
                             <label>
                                 Locations
                                 <select 
@@ -165,19 +221,76 @@ export const Rent = () => {
                                     })}
                                 </select>
                             </label>
+                            
                             <label>
                                 Date
-                                <input placeholder="Select your date"  {...register("pick_up_date", {
-                                    required: true,
-                                    
-                                })} />
+                                <Controller
+                                    control={control}
+                                    name="pick_up_date"
+                                    rules={{ 
+                                        required: "field is required"    
+                                    }}
+                                    render={({ field: { onChange, ref } }) => (
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                            <DemoContainer components={['TimePicker']} sx={{ width: '100%', paddingTop: "0px"}}>
+                                                <DatePicker
+                                                    className="Input"
+                                                    format="DD/MM/YYYY"
+                                                    onChange={(value) => {onChange(dayjs(value).format('YYYY-MM-DD'))}}
+                                                    inputRef={ref}
+                                                    slotProps={{ textField: { placeholder: "Select your date"} }} sx= {
+                                                        {   
+                                                            '& .MuiOutlinedInput-root': { borderRadius: "10px"},
+                                                            '& .MuiInputBase-input': {minHeight: "28px"},
+                                                            '& .MuiOutlinedInput-notchedOutline': { border: 0},
+                                                            '& .MuiInputBase-input::placeholder': { fontFamily: "Plus Jakarta Sans", opacity: 1, lineHeight: "200%"}
+                                                        }
+                                                    } 
+                                                   />
+                                            </DemoContainer>
+                                        </LocalizationProvider>
+                                    )}
+                                />
+                                <div className="field-error">
+                                    {errors?.pick_up_date?.message}
+                                </div>
                             </label>
+
                             <label>
                                 Time
-                                <input placeholder="Select your time"  {...register("pick_up_time", {
-                                    required: true,
-                                })} />
+                                <Controller
+                                    control={control}
+                                    name="pick_up_time"
+                                    rules={{ 
+                                        required: "field is required"    
+                                    }}
+                                    render={({ field: { onChange, ref } }) => (
+                                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                            <DemoContainer components={['TimePicker']} sx={{ width: '100%', paddingTop: "0px"}}>
+                                                <TimePicker
+                                                    className="Input" 
+                                                    format="HH:mm"
+                                                    views={["hours", "minutes"]}
+                                                    onChange={(value) => {onChange(dayjs(value).format('HH:mm'))}}
+                                                    inputRef={ref}
+                                                    slotProps={{ textField: { placeholder: "Select your time"} }} sx= {
+                                                        {   
+                                                            '& .MuiOutlinedInput-root': { borderRadius: "10px"},
+                                                            '& .MuiInputBase-input': {minHeight: "28px"},
+                                                            '& .MuiOutlinedInput-notchedOutline': { border: 0},
+                                                            '& .MuiInputBase-input::placeholder': { fontFamily: "Plus Jakarta Sans", opacity: 1, lineHeight: "200%"}
+                                                        }
+                                                    }
+                                                />
+                                            </DemoContainer>
+                                        </LocalizationProvider>
+                                    )}
+                                />
+                                <div className="field-error">
+                                    {errors?.pick_up_time?.message}
+                                </div>
                             </label>
+
                             <label>
                                 Car
                                 {currentCarID !== 0 
@@ -195,16 +308,15 @@ export const Rent = () => {
                                             })}
                                         </select>  
                                 }
-                                
                             </label>
                         </form>
 
                         <span></span><div className="title-block__title ">Drop - Off</div>
                         <form action="" onSubmit={handleSubmit(onSubmit)}>
+                            
                             <label>
                                 Locations
                                 <select 
-                                    name="Age"
                                     {...register("drop_off_city", {
                                         required: true,
                                     })}
@@ -215,18 +327,73 @@ export const Rent = () => {
                                     })}
                                 </select>
                             </label>
+
                             <label>
                                 Date
-                                <input placeholder="Select your date"  {...register("drop_off_date", {
-                                    required: true,
-                                })} />
+                                <Controller
+                                    control={control}
+                                    name="drop_off_date"
+                                    rules={{ 
+                                        required: "field is required"    
+                                    }}
+                                    render={({ field: { onChange, ref } }) => (
+                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                            <DemoContainer components={['TimePicker']} sx={{ width: '100%', paddingTop: "0px"}}>
+                                                <DatePicker 
+                                                    className="Input"
+                                                    format="DD/MM/YYYY"
+                                                    onChange={(value) => {onChange(dayjs(value).format('YYYY-MM-DD'))}}
+                                                    inputRef={ref}
+                                                    slotProps={{ textField: { placeholder: "Select your date"} }} sx= {
+                                                        {   
+                                                            '& .MuiOutlinedInput-root': { borderRadius: "10px"},
+                                                            '& .MuiInputBase-input': {minHeight: "28px"},
+                                                            '& .MuiOutlinedInput-notchedOutline': { border: 0},
+                                                            '& .MuiInputBase-input::placeholder': { fontFamily: "Plus Jakarta Sans", opacity: 1, lineHeight: "200%"}
+                                                        }
+                                                    } 
+                                                   />
+                                            </DemoContainer>
+                                        </LocalizationProvider>
+                                    )}
+                                />
+                                <div className="field-error">
+                                    {errors?.drop_off_date?.message}
+                                </div>
                             </label>
+
                             <label>
                                 Time
-                                <input placeholder="Select your time"  {...register("drop_off_time", {
-                                    required: true,
-                                })} />
+                                <Controller
+                                    control={control}
+                                    name="drop_off_time"
+                                    rules={{ 
+                                        required: "field is required"    
+                                    }}
+                                    render={({ field: { onChange, ref } }) => (
+                                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                            <DemoContainer components={['TimePicker']} sx={{ width: '100%', paddingTop: "0px"}}>
+                                                <TimePicker
+                                                    className="Input" 
+                                                    format="HH:mm"
+                                                    views={["hours", "minutes"]}
+                                                    onChange={(value) => {onChange(dayjs(value).format('HH:mm'))}}
+                                                    inputRef={ref}
+                                                    slotProps={{ textField: { placeholder: "Select your time"} }} sx= {
+                                                        {   
+                                                           '& .MuiOutlinedInput-root': { borderRadius: "10px"},
+                                                            '& .MuiInputBase-input': {minHeight: "28px"},
+                                                            '& .MuiOutlinedInput-notchedOutline': { border: 0},
+                                                            '& .MuiInputBase-input::placeholder': { fontFamily: "Plus Jakarta Sans", opacity: 1, lineHeight: "200%"}
+                                                        }
+                                                    }
+                                                />
+                                            </DemoContainer>
+                                        </LocalizationProvider>
+                                    )}
+                                />
                             </label>
+                            
                         </form>
                     </div>
                 </div>

@@ -7,12 +7,14 @@ import "./index.scss";
 import "./style.scss";
 // import "./index.scss";
 import App from "./App";
+import { ScrollToTop } from "./components";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
 	<>
 		<BrowserRouter>
 			<Provider store={store}>
+				<ScrollToTop/>
 				<App />
 			</Provider>
 		</BrowserRouter>
