@@ -1,6 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setListOfCars, fetchAllCars } from '../../redux/slices/carList';
+import { setListChanged } from '../../redux/slices/carList';
 import axios from 'axios';
 
 import "./FiltersGroup.scss";
@@ -8,7 +9,7 @@ import "./FiltersGroup.scss";
 // import {ReactComponent as ReactLogo} from 'ArrowLeft';
 
 export const FiltersGroup = ({title, propertyList}) => {
-
+    let ListChanged = useSelector(state => state.carssList.listChanged);
     const dispatch = useDispatch()
 
     let valueTranslator = {
@@ -42,8 +43,11 @@ export const FiltersGroup = ({title, propertyList}) => {
             let params = `?${paramsString}`
             let response = await axios.get(`https://morent-backend-xavm.onrender.com/api/filter/${params}`)
             dispatch(setListOfCars(response.data))
+            dispatch(setListChanged(!ListChanged));
         } else {
-            dispatch(fetchAllCars())
+            let response = await axios.get(`https://morent-backend-xavm.onrender.com/api/filter/`)
+            dispatch(setListOfCars(response.data))
+            dispatch(setListChanged(!ListChanged));
         }
     }
 
