@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllCars } from '../redux/slices/carList';
 import { setCurentAuthSession } from '../redux/slices/auth';
 import { setRenderList } from '../redux/slices/carList';
-import { AdsCard, CarItem, Pagination, Preloader } from '../components'; 
+import { AdsCard, CarItem, EmptyList, Pagination, Preloader } from '../components'; 
 import { Filter } from '../components/Filter/Filter';
 import axios from 'axios';
 
@@ -89,14 +89,16 @@ export const Home = () => {
                         <div className="main-content__container">
                             <Filter></Filter>
                             <div className="main-content__body">
-                                <div className="car-list">
+                            {renderList.length === 0
+                                ? <EmptyList/>
+                                : <div className="car-list">
                                     {status === "Loading" 
                                         ? <div className='item-body empty-car-list'>Loading...</div> 
-                                        : renderList.length === 0 
-                                            ? <div className='item-body empty-car-list'>Product list is empty</div> 
-                                            : renderList.map(data => <CarItem key={data.title} id={data.id} carName={data.title} carClass={data.cat_name} imgUrl={data.main_photo} specs={[data.gasoline, data.engine_name, data.capacity_name]} price={`$${data.price}.00`}></CarItem>)
+                                        : renderList.map(data => <CarItem key={data.title} id={data.id} carName={data.title} carClass={data.cat_name} imgUrl={data.main_photo} specs={[data.gasoline, data.engine_name, data.capacity_name]} price={`$${data.price}.00`}></CarItem>)
                                     }
-                                </div>
+                            </div>
+
+                            } 
                                 <Pagination reqLen={listOfCars.length} itemList={listOfCars} actionfn={setRenderList}></Pagination>
                             </div>
                         </div>

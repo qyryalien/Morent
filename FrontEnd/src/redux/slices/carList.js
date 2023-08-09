@@ -15,6 +15,7 @@ const postsSlice = createSlice({
 		renderList: [],
 		currentCarID: 0,
 		status: null,
+		listChanged: false
 	},
 	reducers: {
 		setRenderList: (state, action) => {
@@ -25,6 +26,9 @@ const postsSlice = createSlice({
 		},
 		setCurrentCarID: (state, action) => {
 			state.currentCarID = action.payload;
+		},
+		setListChanged: (state, action) => {
+			state.listChanged = action.payload;
 		},
 	},
 	extraReducers: {
@@ -40,5 +44,5 @@ const postsSlice = createSlice({
 		},
 	},
 });
-export const { setRenderList, setListOfCars, setCurrentCarID } = postsSlice.actions;
+export const { setRenderList, setListOfCars, setCurrentCarID, setListChanged } = postsSlice.actions;
 export default postsSlice.reducer;

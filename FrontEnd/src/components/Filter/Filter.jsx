@@ -3,8 +3,8 @@ import axios from 'axios';
 import { FiltersGroup } from "../FiltersGroup/FiltersGroup";
 
 import "./Filter.scss"
-
-
+import { useSelector, useDispatch } from "react-redux";
+import { setListOfCars } from "../../redux/slices/carList";
 
 export const Filter = () => {
     const [filtersError, setFiltersError] = React.useState(null);
@@ -63,8 +63,8 @@ export const Filter = () => {
                                     <FiltersGroup key={settingsFilterGroup[0]} title={settingsFilterGroup[0]} propertyList={settingsFilterGroup[1]}></FiltersGroup>
                                     // </SwiperSlide>
                                     )
-                                })}
-                                
+                                }
+                            )}                                
                         {/* </Swiper> */}
                     </div>
                 </div>
@@ -73,40 +73,73 @@ export const Filter = () => {
     )
     
     function toggleFiltersBodyState(e){
-        let elemet = document.querySelector(".filter-component");
-        elemet.classList.toggle("open-block");
-        e.currentTarget.classList.toggle("clicked");
-        
+        let filterComponent = document.querySelector(".filter-component");
+
+        filterComponent.classList.toggle("open-block");        
         document.querySelectorAll(".filter-item__spoiler-body").forEach(el => el.classList.add("open"))
     }
 
+    let [sortParametr, setSortParametr] = React.useState(1);
+    const dispatch = useDispatch();
+    let listCar = useSelector(state => state.carssList.listOfCars);
+    const ListChanged = useSelector(state => state.carssList.listChanged);
+    
+    function sortListCar (listCar, sortParametr) {
+        
+        if (sortParametr == 1) {
+            const sortable = [...Object.values(listCar)].sort((a, b) => parseInt(a.price) - parseInt(b.price));
+            dispatch(setListOfCars(sortable));
+        }
+        if (sortParametr == 2) {
+            const sortable = [...Object.values(listCar)].sort((a, b) => parseInt(b.price) - parseInt(a.price));
+            dispatch(setListOfCars(sortable));
+        }
+    }
+    
+    React.useEffect(() => {
+        sortListCar(listCar, sortParametr)
+    }, [sortParametr, ListChanged])
+
     HTMLsizeChoiser.set(1280,         
         <>
-        
+            <div className="filter-component__buttons-close visible filter-buttons-close">
+                <div className="filter-buttons__button-filter btn link" onClick={toggleFiltersBodyState}>Filters</div>
+                <select onClick={(e) => {setSortParametr(e.target.value)}} className="filter-buttons__select-filter btn btn_white ">
+                    <option  value={1}>From cheap to expensive</option>
+                    <option  value={2}>From expensive to cheap</option>
+                </select> 
+            </div>
             <div className='filter-component'>
                 <div className='filter-component__wrapper'>
-                    <div className="filter-component__body">
-                        {/* <Swiper  slides-per-view="2"> */}
-                            {(filtersList ? filtersList : Array(3)).map(settingsFilterGroup => {
-                                return(
-                                    // <SwiperSlide>
-                                    <FiltersGroup key={settingsFilterGroup[0]} title={settingsFilterGroup[0]} propertyList={settingsFilterGroup[1]}></FiltersGroup>
-                                    // </SwiperSlide>
-                                    )
-                                })}
-                                
-                        {/* </Swiper> */}
+                    <div className="filter-component__buttons-open filter-buttons-open">
+                        <div className="filter-buttons-open__text">Filters</div>
+                        <div className='filter-component__x-icon' onClick={toggleFiltersBodyState}>
+                            <img src={"/x_icon.png"} alt=""/>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div className='filter-component-wp'>
-                <div className='filter-component__plus-icon' onClick={toggleFiltersBodyState}>
-                    <img src={"/plus.svg"} alt=""/>
+                    
+                    <div className="filter-component__body-wrapper">
+                        <div className="filter-component__body">
+                            {/* <Swiper  slides-per-view="2"> */}
+                                {(filtersList ? filtersList : Array(3)).map(settingsFilterGroup => {
+                                    return(
+                                        // <SwiperSlide>
+                                        <FiltersGroup key={settingsFilterGroup[0]} title={settingsFilterGroup[0]} propertyList={settingsFilterGroup[1]}></FiltersGroup>
+                                        // </SwiperSlide>
+                                        )
+                                    })
+                                }
+                            {/* </Swiper> */}
+                        </div>
+                    </div>
+
+                    <div className='filter-component__buttons-open filter-buttons-open'>
+                        <div className="filter-buttons-open__show btn link" onClick={toggleFiltersBodyState}>Show</div>
+                    </div>
                 </div>
             </div>
         </>
     )
-
 
     return(
         HTMLsizeChoiser.get(size.innerWidth)
