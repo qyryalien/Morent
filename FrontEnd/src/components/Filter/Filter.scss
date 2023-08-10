@@ -84,6 +84,14 @@
             background-color: white;
             padding: 10px 20px;
             width: 100%;
+
+            select {
+                padding: 5px;
+            }
+
+            select:focus {
+                outline: none;
+            }
         }
 
         &__body-wrapper {
