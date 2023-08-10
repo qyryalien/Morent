@@ -1,7 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { Header, Footer } from "./components";
-import { About, Community, Home, Socials, Car, Login, Registration, Profile, ProfileEdit, Rent } from "./pages";
+import { Header, Footer, Preloader } from "./components";
+import { About, Home, Socials, Car, Login, Registration, Profile, ProfileEdit, Rent } from "./pages";
 
 function App() {
 	return (
@@ -9,8 +9,8 @@ function App() {
 			<Header></Header>
 			<Routes>
 				<Route path="/" element={<Home />}></Route>
-				<Route path="/About" element={<About />}></Route>
-				<Route path="/Community" element={<Community />}></Route>
+				<Route path="/about" element={<About />}></Route>
+				{/* <Route path="/preloader" element={<Preloader />}></Route> */}
 				<Route path="/socials" element={<Socials />}></Route>
 				<Route path="/car" element={<Car />}></Route>
 				<Route path="/login" element={<Login />}></Route>
