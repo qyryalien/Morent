@@ -13,11 +13,11 @@ export const Login = () => {
     const navigate = useNavigate();
     const {
         register,
-        formState:{errors},
+        formState:{errors, isValid},
         handleSubmit,
         reset
     } = useForm({
-        mode: "onBlur",
+        mode: "onChange",
     });
 
     const [error, setError] = React.useState(null);
@@ -78,15 +78,33 @@ export const Login = () => {
                             <label>
                                 Login
                                 <input placeholder="Your login" {...register("username", {
-                                    required: true,
+                                    required: "field is required",
+                                    minLength: {
+                                        value: 3,
+                                        message: 'minimum length 3 characters'
+                                    },
+                                    pattern: {
+                                        value: /^[A-z0-9]+$/,
+                                        message: 'login is not valid'
+                                    }
                                     
                                 })} />
+                                <div className="field-error">
+                                    {errors?.username?.message}
+                                </div>
                             </label>
                             <label>
                                 Password
-                                <input placeholder="Your password" {...register("password", {
-                                    required: true,
+                                <input placeholder="Your password" type="password" {...register("password", {
+                                    required: "field is required",
+                                    minLength: {
+                                        value: 8,
+                                        message: 'minimum length 8 characters'
+                                    },
                                 })} />
+                                <div className="field-error">
+                                    {errors?.password?.message}
+                                </div>
                             </label>                                            
                             <div className="login__sign-up sign-up">
                                 <div className="sign-up__text">Don`t have an account?</div>
@@ -94,7 +112,7 @@ export const Login = () => {
                             </div>
                             <div className="login__buttons">
                                 <Link to="/" className="login__btn btn btn_white">Back to main</Link>
-                                <button type="submit" className="login__btn btn">
+                                <button type="submit" className={`btn link ${!isValid ? "btn_disabled" : ''}`}>
                                     Login
                                 </button>
                             </div>

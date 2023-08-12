@@ -38,8 +38,6 @@
     display: flex;
     column-gap: 55px;
 
-
-
     &__description {
         display: flex;
         flex-direction: column;
@@ -50,6 +48,7 @@
         flex-direction: column;
         justify-content: space-around;
         row-gap: 12px;
+        margin-top: 10px;
     }
 
     @media(max-width: $tablet) {
@@ -109,11 +108,11 @@
 
 .car-description {
 
-    &__top-block {
-        @media(max-width: $mobile) {
-            margin-top: 25px;
-        }
-    }
+    // &__top-block {
+    //     @media(max-width: $mobile) {
+    //         margin-top: 25px;
+    //     }
+    // }
 
     &__text-block {
         margin-top: 50px;
@@ -121,14 +120,15 @@
         display: flex;
 
         @media(max-width: $tablet) {
-            margin-top: 15px;
+            margin-top: 0px;
         }
     }
 
     &__buttons-block {
         display: flex;
         justify-content: space-between;
-        margin-top: 45px;
+        flex: 1 1 auto;
+        align-items: flex-end;
 
         @media(max-width: $tablet) {
             display: grid;
