@@ -5,6 +5,8 @@ import { setCurrentCarID } from '../../redux/slices/carList';
 
 import "./CarItem.scss"
 
+const icons = ["/gas-station.svg", "/engine.svg", "/profile-2user.svg"];
+
 export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
     const dispatch = useDispatch();
     imgUrl = imgUrl.match(/\/\d+\.(png|jpg|jpeg)/gm);
@@ -49,7 +51,16 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                 <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl[0]}`} alt=""/>
             </div>
             <div className="item-body__specs">
-                {specs ? specs.map(characteristic => <p className='text'>{characteristic}</p>) : <p>None</p>}
+                {specs 
+                    ? specs.map((characteristic, index) => 
+                        <div className='specs__block'>
+                            <div className="specs__img">
+                                <img src={icons[index]} alt=""/>
+                            </div>
+                            <p className='text'>{characteristic}</p>
+                        </div>) 
+                    : <p>None</p>
+                }
                 <div className="item-body__price">
                     <p className='text'><span>{price}/</span>day</p>
                 </div>
@@ -72,9 +83,17 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
             <div className="item-body__img">
                 <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl[0]}`} alt=""/>
             </div>
-            <div className="item-body__specs">
-                {specs ? specs.map(characteristic => <p className='text'>{characteristic}</p>) : <p>None</p>}
-                
+            <div className="item-body__specs specs">
+                {specs 
+                    ? specs.map((characteristic, index) => 
+                        <div className='specs__block'>
+                            <div className="specs__img">
+                                <img src={icons[index]} alt=""/>
+                            </div>
+                            <p className='text'>{characteristic}</p>
+                        </div>) 
+                    : <p>None</p>
+                }
             </div>
             
             <div className="item-body__btns">
@@ -100,7 +119,16 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                         <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl[0]}`} alt=""/>
                     </div>
                     <div className="item-body__specs">
-                        {specs ? specs.map(characteristic => <p className='text'>{characteristic}</p>) : <p>None</p>}
+                    {specs 
+                        ? specs.map((characteristic, index) => 
+                            <div className='specs__block'>
+                                <div className="specs__img">
+                                    <img src={icons[index]} alt=""/>
+                                </div>
+                                <p className='text'>{characteristic}</p>
+                            </div>) 
+                        : <p>None</p>
+                    }
                     </div>
                 </div>
                 <div className='item-body__footer-block'>
