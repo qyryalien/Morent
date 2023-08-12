@@ -10,8 +10,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 // Import Swiper styles
 import 'swiper/scss';
-import 'swiper/css/navigation';
-// import 'swiper/css/pagination';
+// import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 // import 'swiper/css/scrollbar';
 
 export const Car = () => {
@@ -110,6 +110,31 @@ export const Car = () => {
                                     <div className="top-block__rating">star 4/5</div>
                                     <div className="top-block__reviev">440+ Reviewer</div>
                                 </div>
+                                <div className="car-body__galery galery">
+                                    <Swiper
+                                        modules={[Pagination, A11y]}
+                                        spaceBetween={10}
+                                        // loop={true}
+                                        slidesPerView={"auto"}
+                                        pagination={{clickable: true}}
+                                        >
+                                        <SwiperSlide>
+                                            <div className="galery__img-container">
+                                                <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.main_photo}`} alt=""/>
+                                            </div>
+                                        </SwiperSlide>
+                                        <SwiperSlide>
+                                            <div className="galery__img-container">
+                                                <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.inside_photo_one}`} alt=""/>
+                                            </div>
+                                        </SwiperSlide>
+                                        <SwiperSlide>
+                                            <div className="galery__img-container">
+                                                <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.inside_photo_two}`} alt=""/>
+                                            </div>
+                                        </SwiperSlide>
+                                    </Swiper>
+                                </div>
                                 <div className="car-description__text-block text-block">
                                     <div className="text-block__main-text">NISMO has become the embodiment of Nissan's outstanding performance, inspired by the most unforgiving proving ground, the "race track".</div>
                                     <div className="text-block__specs-block specs-block">
@@ -127,31 +152,7 @@ export const Car = () => {
                                 </div>
                                 
                             </div>
-                            <div className="car-body__galery galery">
-                            <Swiper
-                                modules={[Navigation, A11y]}
-                                spaceBetween={10}
-                                loop={true}
-                                slidesPerView={"auto"}
-                                navigation
-                                >
-                                <SwiperSlide>
-                                    <div className="galery__img-container">
-                                        <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.main_photo}`} alt=""/>
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <div className="galery__img-container">
-                                        <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.inside_photo_one}`} alt=""/>
-                                    </div>
-                                </SwiperSlide>
-                                <SwiperSlide>
-                                    <div className="galery__img-container">
-                                        <img src={`https://morent-backend-xavm.onrender.com/static${fullInfo.inside_photo_two}`} alt=""/>
-                                    </div>
-                                </SwiperSlide>
-                            </Swiper>
-                            </div>
+                            
                         </div>  
                     </div>
                 </div>     
