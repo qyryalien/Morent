@@ -63,7 +63,7 @@ export const Car = () => {
                                     <div className="top-block__reviev">440+ Reviewer</div>
                                 </div>
                                 <div className="car-description__text-block text-block">
-                                    <div className="text-block__main-text">NISMO has become the embodiment of Nissan's outstanding performance, inspired by the most unforgiving proving ground, the "race track".</div>
+                                    <div className="text-block__main-text">{fullInfo.text}</div>
                                     <div className="text-block__specs-block specs-block">
                                         <div className="specs-block__item">Gasoline <span>{fullInfo.gasoline}</span></div>
                                         <div className="specs-block__item">Capacity <span>{fullInfo.capacity_name}</span></div>
@@ -136,7 +136,7 @@ export const Car = () => {
                                     </Swiper>
                                 </div>
                                 <div className="car-description__text-block text-block">
-                                    <div className="text-block__main-text">NISMO has become the embodiment of Nissan's outstanding performance, inspired by the most unforgiving proving ground, the "race track".</div>
+                                    <div className="text-block__main-text">{fullInfo.text}</div>
                                     <div className="text-block__specs-block specs-block">
                                         <div className="specs-block__item">Gasoline <span>{fullInfo.gasoline}</span></div>
                                         <div className="specs-block__item">Capacity <span>{fullInfo.capacity_name}</span></div>
