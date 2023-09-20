@@ -9,7 +9,7 @@ const icons = ["/gas-station.svg", "/engine.svg", "/profile-2user.svg"];
 
 export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
     const dispatch = useDispatch();
-    imgUrl = imgUrl.match(/\/\d+\.(png|jpg|jpeg)/gm);
+    //imgUrl = imgUrl.match(/\/\d+\.(png|jpg|jpeg)/gm);
 
     const [size, setSize] = React.useState({});
     const ref = React.useRef(window);
@@ -48,7 +48,7 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                 <div className="item-body__carClass">{carClass}</div>
             </div>
             <div className="item-body__img">
-                <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl[0]}`} alt=""/>
+                <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl}`} alt=""/>
             </div>
             <div className="item-body__specs">
                 {specs 
