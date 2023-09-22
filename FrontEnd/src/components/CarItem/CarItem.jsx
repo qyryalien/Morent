@@ -48,8 +48,8 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                 <div className="item-body__carClass">{carClass}</div>
             </div>
             <div className="item-body__img">
-                {/* <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl}`} alt=""/> */}
-                <img src={imgUrl} alt=""/>
+                <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl}`} alt=""/>
+                {/* <img src={imgUrl} alt=""/> */}
             </div>
             <div className="item-body__specs">
                 {specs 
@@ -82,8 +82,8 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                 <div className="item-body__carClass">{carClass}</div>
             </div>
             <div className="item-body__img">
-                {/* <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl}`} alt=""/> */}
-                <img src={imgUrl} alt=""/>
+                <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl}`} alt=""/>
+                {/* <img src={imgUrl} alt=""/> */}
             </div>
             <div className="item-body__specs specs">
                 {specs 
@@ -118,8 +118,8 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                 </div>
                 <div className='item-body__center-block'>
                     <div className="item-body__img">
-                        {/* <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl}`} alt=""/> */}
-                        <img src={imgUrl} alt=""/>
+                        <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl}`} alt=""/>
+                        {/* <img src={imgUrl} alt=""/> */}
                     </div>
                     <div className="item-body__specs">
                     {specs 
