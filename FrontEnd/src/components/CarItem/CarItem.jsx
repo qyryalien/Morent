@@ -10,7 +10,7 @@ const icons = ["/gas-station.svg", "/engine.svg", "/profile-2user.svg"];
 export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
     const dispatch = useDispatch();
 
-    imgUrl = imgUrl.match(/(?<=.com\/).+(?=\.(png|jpg|jpeg))/gm);
+    imgUrl = imgUrl.match(/(?<=\/cars).+/gm);
 
     const [size, setSize] = React.useState({});
     const ref = React.useRef(window);
@@ -49,7 +49,7 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                 <div className="item-body__carClass">{carClass}</div>
             </div>
             <div className="item-body__img">
-                <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl}`} alt=""/>
+                <img src={`https://morent-backend-xavm.onrender.com/static/cars${imgUrl}`} alt=""/>
                 {/* <img src={imgUrl} alt=""/> */}
             </div>
             <div className="item-body__specs">
@@ -83,7 +83,7 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                 <div className="item-body__carClass">{carClass}</div>
             </div>
             <div className="item-body__img">
-                <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl}`} alt=""/>
+                <img src={`https://morent-backend-xavm.onrender.com/static/cars${imgUrl}`} alt=""/>
                 {/* <img src={imgUrl} alt=""/> */}
             </div>
             <div className="item-body__specs specs">
@@ -119,7 +119,7 @@ export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
                 </div>
                 <div className='item-body__center-block'>
                     <div className="item-body__img">
-                        <img src={`https://morent-backend-xavm.onrender.com/static${imgUrl}`} alt=""/>
+                        <img src={`https://morent-backend-xavm.onrender.com/static/cars${imgUrl}`} alt=""/>
                         {/* <img src={imgUrl} alt=""/> */}
                     </div>
                     <div className="item-body__specs">
