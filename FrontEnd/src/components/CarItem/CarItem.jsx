@@ -10,7 +10,7 @@ const icons = ["/gas-station.svg", "/engine.svg", "/profile-2user.svg"];
 export const CarItem = ({id, carName, carClass, imgUrl, specs, price}) => {
     const dispatch = useDispatch();
 
-    // imgUrl = imgUrl.match(/\/\d+\.(png|jpg|jpeg)/gm);
+    imgUrl = imgUrl.match(/(?<=.com\/).+(?=\.(png|jpg|jpeg))/gm);
 
     const [size, setSize] = React.useState({});
     const ref = React.useRef(window);
